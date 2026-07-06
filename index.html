@@ -449,8 +449,9 @@ function triggerIdleLogout(reason){
   if(!D || !D.user) return;
   addLog('Auto logout', reason + ' — ' + D.user.name);
   saveDB();
-  D.user = null; D.cart = []; D.searchQ = ''; D.showSearch = false;
   stopIdleTimer();
+  if(auth) auth.signOut();
+  D.cart = []; D.searchQ = ''; D.showSearch = false;
   const overlay = document.getElementById('idle-overlay');
   const msg = document.getElementById('idle-msg');
   if(msg) msg.textContent = reason + '. Please sign in again.';
@@ -805,6 +806,11 @@ function initFirebase(){
   const fbApp = firebase.initializeApp(firebaseConfig);
   db = firebase.firestore(fbApp);
   auth = firebase.auth(fbApp);
+  // SESSION persistence: login lasts only while this browser window/tab stays
+  // open. Closing the browser fully signs everyone out — important since
+  // this app runs on shared shop computers. Combined with the 3-minute idle
+  // timeout, sessions never linger indefinitely on a device.
+  auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
   window._docRef = db.collection('pharmacy').doc('data');
   window._accountsRef = db.collection('accounts');
 
@@ -1086,8 +1092,8 @@ function loginUI(){
     <div style="font-size:14px;color:#666;margin-bottom:.4rem;font-weight:500">${greetIcon} ${greet}! Please sign in to continue.</div>
     <div style="font-size:12px;color:#aaa;margin-bottom:1.3rem;font-weight:500" id="loginClock">${friendlyDate(TODAY)} · ${fmt12hm(new Date())}</div>
     ${alertEl()}
-    <div class="field"><label>Email</label><input id="ln" type="email" placeholder="you@example.com"/></div>
-    <div class="field"><label>Password</label><input type="password" id="lp" placeholder="Enter password"/></div>
+    <div class="field"><label>Email</label><input id="ln" type="email" autocomplete="off" placeholder="you@example.com"/></div>
+    <div class="field"><label>Password</label><input type="password" id="lp" autocomplete="off" placeholder="Enter password"/></div>
     <button class="btn bbl bfw" id="loginBtn">Sign in</button>
     <div style="text-align:center;margin-top:10px">
       <button class="btn" style="background:transparent;border:none;color:#185FA5;font-size:13px;font-weight:600;cursor:pointer;padding:4px" id="forgotBtn">🔑 Forgot password?</button>
