@@ -1,0 +1,2637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Gods Will OTC"/>
+  <meta name="application-name" content="Gods Will OTC"/>
+  <meta name="theme-color" content="#185FA5"/>
+  <meta name="description" content="God's Will OTC — Inventory & Transaction System"/>
+  <title>God's Will OTC</title>
+
+  <!-- PWA Manifest (inline via data URI so single-file works) -->
+  <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTWVkaVRyYWNrIFBoYXJtYWN5Iiwic2hvcnRfbmFtZSI6Ik1lZGlUcmFjayIsImRlc2NyaXB0aW9uIjoiSW52ZW50b3J5ICYgVHJhbnNhY3Rpb24gU3lzdGVtIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmNGY3ZmIiLCJ0aGVtZV9jb2xvciI6IiMxODVGQTUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0LXByaW1hcnkiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhacFpYZENiM2c5SWpBZ01DQXlNREFnTWpBd0lqNDhjM1IxYkdRK1BHUnZjQ0J3WVhRZ1ptbHNiRDBpSXpFNE5VWkJOU0lpSUhkcFpIUm9QU0l5TURBaUlHaGxhV2RvZEQwaU1qQXdJaUJ6ZEhsc1pUMGlZbUZ6WlNJK1BHSmxaVzR0Y21WdVpHOXVJR0p2Wm1sc1pUMGlNU0lnWW5rOUlqRTFPU0lnZEdsdFpUMGlNallpSUhkcFpIUm9QU0l6TVNFZ2FHVnBaMmgwUFNJek1TRStNPC9zdmc+IiwibmFtZSI6Ik1lZGlUcmFjayBQaGFybWFjeSIsInNpemVzIjoiYW55IiwidHlwZSI6ImltYWdlL3N2Zyt4bWwifV19"/>
+
+  <!-- Apple Touch Icon (inline SVG→PNG via canvas trick not needed — use SVG data URI) -->
+  <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgcng9IjQwIiBmaWxsPSIjMTg1RkE1Ii8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMTAiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNFNkYxRkIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIj5NPC90ZXh0Pjwvc3ZnPg=="/>
+
+  <!-- Prevent phone number detection -->
+  <meta name="format-detection" content="telephone=no"/>
+
+  <style>
+    /* ── PWA / Mobile shell ── */
+    html { height: 100%; background: #f4f7fb; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      background: #f4f7fb;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      /* Safe area insets for notched phones */
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+    }
+    /* Prevent input zoom on iOS (inputs must be ≥16px) */
+    input, select, textarea { font-size: 16px !important; }
+    /* Larger tap targets on mobile */
+    button { min-height: 40px; }
+    .bsm { min-height: 34px !important; }
+    /* App container */
+    #app-shell {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0.5rem 0.75rem;
+    }
+    /* Install banner */
+    #install-banner {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #185FA5;
+      color: #fff;
+      padding: 14px 16px;
+      padding-bottom: calc(14px + env(safe-area-inset-bottom));
+      z-index: 9999;
+      font-size: 14px;
+      font-weight: 600;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+    }
+    #install-banner span { flex: 1; line-height: 1.4; }
+    #install-banner button {
+      background: #fff;
+      color: #185FA5;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 36px;
+      white-space: nowrap;
+    }
+    #install-dismiss {
+      background: transparent !important;
+      color: #85B7EB !important;
+      padding: 8px 6px !important;
+      font-size: 20px !important;
+    }
+    /* Offline notice */
+    #offline-bar {
+      display: none;
+      background: #EF9F27;
+      color: #633806;
+      text-align: center;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    /* Custom scrollbar for webkit */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #B5D4F4; border-radius: 4px; }
+    /* CSS custom properties referenced by app */
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --color-text-primary: #1a1a1a;
+      --bg: #f4f7fb;
+      --bg-card: #ffffff;
+      --bg-sec: #ffffff;
+      --text: #1a1a1a;
+      --text-muted: #666666;
+      --border: #dde4ee;
+      --topbar-bg: #185FA5;
+      --input-bg: #ffffff;
+      --input-border: #c8d6e5;
+      --table-head: #E6F1FB;
+      --table-stripe: #f7fafd;
+      --shadow: 0 2px 10px rgba(24,95,165,0.07);
+    }
+    html.dark {
+      --bg: #0f1117;
+      --bg-card: #1a1f2e;
+      --bg-sec: #1a1f2e;
+      --text: #e8eaf0;
+      --text-muted: #9aa3b8;
+      --border: #2d3548;
+      --topbar-bg: #0c3060;
+      --input-bg: #242938;
+      --input-border: #3a4460;
+      --table-head: #1e2740;
+      --table-stripe: #1e2535;
+      --shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+    html.dark body { background: var(--bg); color: var(--text); }
+    html.dark .sec { background: var(--bg-sec); border-color: var(--border); }
+    html.dark input, html.dark select, html.dark textarea {
+      background: var(--input-bg) !important;
+      border-color: var(--input-border) !important;
+      color: var(--text) !important;
+    }
+    html.dark table thead tr { background: var(--table-head); }
+    html.dark .topbar { background: var(--topbar-bg) !important; }
+    html.dark .lwrap { background: var(--bg-card); border-color: var(--border); }
+    html.dark .modal { background: var(--bg-card); color: var(--text); }
+    html.dark .mk { background: var(--bg-card); border-color: var(--border); }
+    html.dark .crow { border-bottom-color: var(--border); }
+    html.dark .idle-box { background: var(--bg-card); }
+    html.dark .rzone { background: #2a1515; border-color: #5a2020; }
+    html.dark .alert.ain { background: #1a2a3a; border-color: #2d4a6a; color: #85B7EB; }
+    html.dark .alert.aok { background: #0d2a1a; border-color: #1a5a30; color: #5dba85; }
+    html.dark .alert.awn { background: #2a1f0a; border-color: #5a3f10; color: #d4a040; }
+    html.dark .alert.aer { background: #2a0f0f; border-color: #5a1a1a; color: #e07070; }
+    html.dark .sh { border-bottom-color: var(--border); }
+    html.dark .tabs { background: var(--bg-card); border-color: var(--border); }
+    html.dark .tab { color: var(--text-muted); }
+    html.dark .tab.on { background: #185FA5; color: #fff; }
+    html.dark .tw table tr:nth-child(even) { background: var(--table-stripe); }
+    html.dark #app-shell { background: var(--bg); }
+    html.dark html, html.dark body { background: var(--bg) !important; }
+  </style>
+</head>
+<body>
+
+<div id="offline-bar">⚡ You are offline — MediTrack is running from cache</div>
+
+<!-- pzone must be a direct child of body for print CSS to work -->
+<div id="pzone" style="display:none"></div>
+
+<!-- Install to Home Screen banner (shown on supported browsers) -->
+<div id="install-banner">
+  <span>📱 Install MediTrack on your device for faster access</span>
+  <button id="install-btn">Install App</button>
+  <button id="install-dismiss" style="">✕</button>
+</div>
+
+<div id="app-shell">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:15px;color:var(--color-text-primary);background:transparent}
+.app{padding:1rem 0;min-height:600px}
+
+.topbar{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#185FA5;border-radius:12px;margin-bottom:.85rem;flex-wrap:wrap}
+.tlogo{width:38px;height:38px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:#185FA5;flex-shrink:0}
+.tname{color:#E6F1FB;font-size:17px;font-weight:700}
+.tsub{color:#85B7EB;font-size:13px;font-weight:500}
+
+/* idle bar */
+.idle-txt{display:none}
+
+/* search */
+.sw{position:relative;flex:1;min-width:180px;max-width:340px}
+.sw input{width:100%;padding:9px 34px 9px 34px;border:1.5px solid #378ADD;border-radius:8px;background:rgba(255,255,255,0.18);color:#fff;font-size:14px;font-weight:500}
+.sw input:focus{outline:none;border-color:#E6F1FB;background:rgba(255,255,255,0.28)}
+.sw input::placeholder{color:#85B7EB}
+.si{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#85B7EB;font-size:14px;pointer-events:none}
+.sx{position:absolute;right:9px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:#85B7EB;cursor:pointer;font-size:15px;line-height:1;padding:0}
+.sx:hover{color:#fff}
+.sdrop{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1.5px solid #B5D4F4;border-radius:10px;z-index:9999;box-shadow:0 8px 28px rgba(24,95,165,.2);overflow:hidden;max-height:300px;overflow-y:auto}
+.sdi{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;cursor:pointer;border-bottom:1px solid #f0f4f8;gap:8px}
+.sdi:last-child{border-bottom:none}
+.sdi:hover{background:#E6F1FB}
+.sdn{font-size:14px;font-weight:600;color:#1a1a1a}
+.sdm{font-size:12px;color:#666;margin-top:2px;font-weight:500}
+.sdp{font-size:14px;font-weight:700;color:#185FA5}
+.sdnone{padding:13px 14px;font-size:14px;color:#666;font-weight:500}
+
+.spill{display:flex;align-items:center;gap:5px;font-size:12px;padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.12);color:#9FE1CB;white-space:nowrap;font-weight:600}
+.sdot{width:8px;height:8px;border-radius:50%;background:#1D9E75}
+.sdot.blink{background:#EF9F27;animation:blink .8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.tabs{display:flex;gap:3px;margin-bottom:1rem;background:#E6F1FB;padding:4px;border-radius:8px;flex-wrap:wrap}
+.tab{flex:1;min-width:80px;padding:8px 6px;border:none;border-radius:6px;background:transparent;color:#185FA5;font-size:13px;font-weight:600;cursor:pointer;text-align:center;white-space:nowrap}
+.tab.on{background:#185FA5;color:#E6F1FB;font-weight:700}
+.tab:hover:not(.on){background:#B5D4F4}
+.tabs.stf{background:#E1F5EE}
+.tabs.stf .tab{color:#0F6E56}
+.tabs.stf .tab.on{background:#1D9E75;color:#E1F5EE}
+.tabs.stf .tab:hover:not(.on){background:#9FE1CB}
+
+.sec{background:#fff;border:1.5px solid rgba(0,0,0,.1);border-radius:12px;padding:1.1rem 1.4rem;margin-bottom:1rem}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;padding-bottom:10px;border-bottom:2.5px solid #E6F1FB;gap:8px;flex-wrap:wrap}
+.sh h3{font-size:16px;font-weight:700;color:#185FA5}
+.sh.g{border-bottom-color:#E1F5EE}.sh.g h3{color:#0F6E56}
+.sh.p{border-bottom-color:#EEEDFE}.sh.p h3{color:#3C3489}
+.sh.o{border-bottom-color:#FAEEDA}.sh.o h3{color:#854F0B}
+
+.mc4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1rem}
+.mc3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1rem}
+.mc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:1rem}
+.mk{border-radius:10px;padding:14px}
+.mk.bl{background:#E6F1FB}.mk.bl .mv{color:#0C447C}.mk.bl .ml{color:#185FA5}
+.mk.gn{background:#EAF3DE}.mk.gn .mv{color:#27500A}.mk.gn .ml{color:#3B6D11}
+.mk.tl{background:#E1F5EE}.mk.tl .mv{color:#085041}.mk.tl .ml{color:#0F6E56}
+.mk.rd{background:#FCEBEB}.mk.rd .mv{color:#791F1F}.mk.rd .ml{color:#A32D2D}
+.mk.am{background:#FAEEDA}.mk.am .mv{color:#633806}.mk.am .ml{color:#854F0B}
+.ml{font-size:13px;margin-bottom:4px;font-weight:600}
+.mv{font-size:22px;font-weight:700}
+.ms{font-size:12px;margin-top:3px;font-weight:500}
+
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead tr{background:#E6F1FB}
+.tg thead tr{background:#E1F5EE}
+.tp thead tr{background:#EEEDFE}
+.to thead tr{background:#FAEEDA}
+th{text-align:left;font-weight:700;font-size:13px;color:#0C447C;padding:10px 11px;border-bottom:1.5px solid #B5D4F4}
+.tg th{color:#085041;border-bottom-color:#9FE1CB}
+.to th{color:#854F0B}
+td{padding:9px 11px;border-bottom:1px solid #f0f0f0;vertical-align:middle;font-size:14px;font-weight:500}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafafa}
+
+.tag{display:inline-block;font-size:12px;padding:3px 9px;border-radius:6px;font-weight:700}
+.trx{background:#FAECE7;color:#712B13}.totc{background:#EAF3DE;color:#27500A}
+.tsu{background:#E1F5EE;color:#085041}.tlo{background:#FCEBEB;color:#791F1F}
+.tok{background:#EAF3DE;color:#27500A}
+.the{background:#E8F5E9;color:#1B5E20}.tsp{background:#EDE7F6;color:#4527A0}
+.tam{background:#FEF3E2;color:#633806}
+.tcos{background:#FCE4EC;color:#880E4F}.tmd{background:#E3F2FD;color:#0D47A1}.tsup{background:#F3E5F5;color:#6A1B9A}
+.rm{background:#EEEDFE;color:#3C3489;font-size:12px;padding:3px 10px;border-radius:6px;font-weight:700}
+.rs{background:#E1F5EE;color:#085041;font-size:12px;padding:3px 10px;border-radius:6px;font-weight:700}
+
+.btn{padding:8px 16px;border:1.5px solid #ddd;border-radius:8px;background:#fff;color:#333;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+.btn:hover{background:#f5f5f5}
+.bbl{background:#185FA5;color:#fff;border-color:#185FA5}.bbl:hover{background:#0C447C}
+.bgn{background:#3B6D11;color:#EAF3DE;border-color:#3B6D11}.bgn:hover{background:#27500A}
+.btl{background:#1D9E75;color:#E1F5EE;border-color:#1D9E75}.btl:hover{background:#0F6E56}
+.brd{background:#FCEBEB;color:#791F1F;border-color:#F09595}.brd:hover{background:#F7C1C1}
+.bda{background:#E24B4A;color:#fff;border-color:#E24B4A}.bda:hover{background:#A32D2D}
+.bam{background:#FAEEDA;color:#633806;border-color:#EF9F27}.bam:hover{background:#FAC775}
+.bgr{background:#F1EFE8;color:#444;border-color:#ccc}.bgr:hover{background:#e0ded8}
+.bpu{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC}.bpu:hover{background:#CECBF6}
+.bor{background:#FFF3E0;color:#854F0B;border-color:#FFB74D}.bor:hover{background:#FFE0B2}
+.bsm{padding:5px 11px;font-size:13px}.bfw{width:100%}
+
+.field{margin-bottom:13px}
+.field label{display:block;font-size:13px;color:#444;margin-bottom:5px;font-weight:700}
+.field input,.field select,.field textarea{width:100%;padding:9px 11px;border:1.5px solid #ddd;border-radius:8px;background:#fff;color:#333;font-size:14px;font-weight:500}
+.field textarea{resize:vertical;min-height:56px}
+.hint{font-size:12px;color:#888;margin-top:3px;font-weight:500}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px}
+
+.ist{padding:7px 15px;border:1.5px solid #B5D4F4;border-radius:8px;background:transparent;color:#185FA5;font-size:13px;font-weight:700;cursor:pointer}
+.ist.on{background:#185FA5;color:#fff;border-color:#185FA5}
+
+.crow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f0f0f0}
+.crow:last-child{border-bottom:none}
+.qc{display:flex;align-items:center;gap:7px}
+.qc button{width:27px;height:27px;border:1.5px solid #ddd;border-radius:5px;background:#E6F1FB;cursor:pointer;font-size:16px;color:#0C447C;font-weight:700}
+.qc span{min-width:24px;text-align:center;font-weight:700;font-size:15px}
+
+.mwrap{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:5000;padding:1rem}
+.modal{background:#fff;border-radius:12px;padding:1.6rem;width:92%;max-width:500px;max-height:90vh;overflow-y:auto}
+.modal h3{font-size:17px;font-weight:700;margin-bottom:1rem;color:#185FA5}
+.modal h3.g{color:#0F6E56}.modal h3.o{color:#854F0B}
+
+.rrow{display:flex;justify-content:space-between;padding:5px 0;font-size:14px;font-weight:500}
+.rtot{display:flex;justify-content:space-between;padding:9px 0;margin-top:7px;border-top:2px solid #B5D4F4;font-weight:700;font-size:16px;color:#0C447C}
+.divider{height:1px;background:#eee;margin:11px 0}
+
+.alert{padding:11px 15px;border-radius:8px;font-size:14px;margin-bottom:11px;font-weight:600}
+.aok{background:#EAF3DE;color:#27500A;border:1.5px solid #97C459}
+.aer{background:#FCEBEB;color:#791F1F;border:1.5px solid #F09595}
+.awn{background:#FAEEDA;color:#633806;border:1.5px solid #EF9F27}
+.ain{background:#E6F1FB;color:#0C447C;border:1.5px solid #85B7EB}
+
+.lwrap{max-width:400px;margin:2rem auto;background:#fff;border:1.5px solid #ddd;border-radius:12px;padding:2.2rem}
+
+.dlbl{background:#E6F1FB;border-radius:8px;padding:8px 14px;font-size:15px;font-weight:700;color:#0C447C;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center}
+.dlbl.g{background:#E1F5EE;color:#085041}
+
+.blog{background:#f8f8f8;border-radius:8px;padding:1rem;font-size:13px;font-family:monospace;max-height:240px;overflow-y:auto;color:#555;line-height:1.8;font-weight:500}
+
+.rzone{border:2px dashed #F09595;border-radius:12px;padding:1.4rem;background:#FCEBEB}
+.rzone h4{color:#791F1F;font-size:16px;font-weight:700;margin-bottom:7px}
+.rzone p{color:#A32D2D;font-size:14px;margin-bottom:13px;line-height:1.6;font-weight:500}
+
+/* read-only inventory badge */
+.ro-badge{display:inline-flex;align-items:center;gap:5px;background:#EEEDFE;color:#3C3489;font-size:12px;padding:4px 10px;border-radius:6px;font-weight:700;margin-bottom:10px}
+
+/* idle overlay */
+.idle-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,30,70,0.92);z-index:10000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.idle-box{background:#fff;border-radius:16px;padding:2.5rem 2rem;max-width:380px;width:90%;text-align:center}
+.idle-box h2{font-size:20px;font-weight:800;color:#791F1F;margin-bottom:8px}
+.idle-box p{font-size:14px;color:#555;font-weight:500;margin-bottom:1.2rem;line-height:1.6}
+
+mark{background:#FFF3CD;color:inherit;border-radius:2px;padding:0 2px}
+
+/* dark mode toggle */
+.toggle-wrap{cursor:pointer;user-select:none}
+.toggle{width:50px;height:28px;border-radius:14px;background:#ccc;position:relative;transition:background .2s}
+.toggle.on{background:#185FA5}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.toggle.on::after{left:25px}
+
+/* ── Sidebar navigation ── */
+.sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:4000;opacity:0;transition:opacity .25s;pointer-events:none}
+.sidebar-overlay.open{opacity:1;pointer-events:all}
+.sidebar{position:fixed;top:0;left:-280px;width:260px;height:100%;background:#185FA5;z-index:4001;transition:left .25s;display:flex;flex-direction:column;box-shadow:4px 0 20px rgba(0,0,0,.25)}
+.sidebar.open{left:0}
+.sidebar-head{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.15)}
+.sidebar-logo{font-size:28px;font-weight:900;color:#fff;letter-spacing:1px}
+.sidebar-sub{font-size:12px;color:#85B7EB;font-weight:600;margin-top:2px}
+.sidebar-user{font-size:13px;color:#E6F1FB;font-weight:700;margin-top:8px;padding:6px 10px;background:rgba(255,255,255,.12);border-radius:8px}
+.sidebar-section{font-size:11px;color:#85B7EB;font-weight:700;letter-spacing:1px;padding:14px 20px 4px;text-transform:uppercase}
+.sidebar-item{display:flex;align-items:center;gap:12px;padding:11px 20px;font-size:14px;font-weight:600;color:#E6F1FB;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;transition:background .15s}
+.sidebar-item:hover{background:rgba(255,255,255,.12)}
+.sidebar-item.active{background:rgba(255,255,255,.22);color:#fff;font-weight:700}
+.sidebar-item .si-icon{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.sidebar-divider{height:1px;background:rgba(255,255,255,.15);margin:8px 0}
+.sidebar-footer{margin-top:auto;padding:16px 20px;border-top:1px solid rgba(255,255,255,.15)}
+html.dark .sidebar{background:#0c3060}
+html.dark .sidebar-item:hover{background:rgba(255,255,255,.08)}
+html.dark .sidebar-item.active{background:rgba(255,255,255,.15)}
+
+/* barcode scanner */{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:6000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+#barcodeVideo{width:min(360px,90vw);height:min(280px,55vh);border-radius:12px;object-fit:cover;border:3px solid #185FA5}
+.scan-line{position:absolute;width:min(360px,90vw);height:3px;background:rgba(24,95,165,.8);animation:scanAnim 2s linear infinite}
+@keyframes scanAnim{0%{top:calc(50% - min(140px,27.5vh))}100%{top:calc(50% + min(140px,27.5vh))}}
+#barcodeSearch{width:min(360px,90vw);padding:10px 14px;border-radius:10px;border:1.5px solid #B5D4F4;font-size:16px;font-weight:600}
+
+/* EOD report */
+.eod-card{background:var(--table-head,#E6F1FB);border-radius:10px;padding:14px 18px;margin-bottom:10px}
+.eod-stat{display:flex;justify-content:space-between;padding:5px 0;font-size:14px;font-weight:600;border-bottom:1px solid rgba(0,0,0,.06)}
+.eod-stat:last-child{border-bottom:none;font-size:16px;font-weight:800;color:#0C447C}
+
+@media print{
+  body>*{display:none!important}
+  #pzone{display:block!important;position:static;width:100%;padding:24px;font-family:Arial,sans-serif;font-size:14px;color:#000}
+  #install-banner,#offline-bar,#idle-overlay{display:none!important}
+}
+</style>
+
+<div id="idle-overlay" style="display:none" class="idle-overlay">
+  <div class="idle-box">
+    <h2 id="idle-title">⏱ Session Expired</h2>
+    <p id="idle-msg">No activity for 3 minutes. Please sign in again.</p>
+    <button class="btn bbl bfw" onclick="dismissIdle()">Sign in again</button>
+  </div>
+</div>
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<div id="sidebar" class="sidebar"></div>
+<div class="app" id="root"></div>
+<div id="barcodeModal" style="display:none">
+  <div style="color:#fff;font-size:18px;font-weight:700">📷 Scan barcode</div>
+  <div style="position:relative;display:flex;align-items:center;justify-content:center">
+    <video id="barcodeVideo" autoplay playsinline muted></video>
+    <div class="scan-line"></div>
+  </div>
+  <input id="barcodeSearch" placeholder="Or type medicine name to search…" autocomplete="off"/>
+  <div id="barcodeSuggestions" style="width:min(360px,90vw);background:#fff;border-radius:10px;overflow:hidden;max-height:200px;overflow-y:auto"></div>
+  <button class="btn bgr" id="closeBarcodeBtn" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.3)">✕ Close scanner</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+/* ════════════════════════════════════════
+   SESSION MANAGEMENT
+   • 3 min no activity on page  → logout
+   • 5 min tab hidden / away    → logout
+════════════════════════════════════════ */
+const IDLE_LIMIT   = 180;   // 3 minutes on-page inactivity (seconds)
+const AWAY_LIMIT   = 300;   // 5 minutes away from site (seconds)
+
+let idleSeconds  = 0;
+let idleInterval = null;
+let _awayStart   = null;   // timestamp when tab was hidden/blurred
+
+/* ── On-page idle countdown ── */
+function resetIdle(){
+  idleSeconds = 0;
+  updateIdleBar();
+}
+
+function startIdleTimer(){
+  clearInterval(idleInterval);
+  idleSeconds = 0;
+  idleInterval = setInterval(()=>{
+    if(!D || !D.user) return;
+    idleSeconds++;
+    updateIdleBar();
+    if(idleSeconds >= IDLE_LIMIT){
+      clearInterval(idleInterval);
+      triggerIdleLogout('No activity for 3 minutes');
+    }
+  }, 1000);
+}
+
+function stopIdleTimer(){
+  clearInterval(idleInterval);
+  idleSeconds = 0;
+}
+
+function updateIdleBar(){
+  const bar = document.getElementById('idleBar');
+  const txt = document.getElementById('idleTxt');
+  if(!bar || !txt) return;
+  const pct = Math.max(0, ((IDLE_LIMIT - idleSeconds) / IDLE_LIMIT) * 100);
+  bar.style.width = pct + '%';
+  const rem = IDLE_LIMIT - idleSeconds;
+  const m = Math.floor(rem / 60);
+  const s = rem % 60;
+  txt.textContent = 'Session expires in ' + m + 'm ' + String(s).padStart(2,'0') + 's · move mouse to reset';
+  bar.className = 'idle-bar' + (pct < 34 ? ' danger' : pct < 67 ? ' warn' : '');
+}
+
+function triggerIdleLogout(reason){
+  if(!D || !D.user) return;
+  addLog('Auto logout', reason + ' — ' + D.user.name);
+  saveDB();
+  D.user = null; D.cart = []; D.searchQ = ''; D.showSearch = false;
+  stopIdleTimer();
+  const overlay = document.getElementById('idle-overlay');
+  const msg = document.getElementById('idle-msg');
+  if(msg) msg.textContent = reason + '. Please sign in again.';
+  if(overlay) overlay.style.display = 'flex';
+  render();
+}
+
+function dismissIdle(){
+  document.getElementById('idle-overlay').style.display = 'none';
+  render();
+}
+
+/* ── Reset idle on any user interaction on the page ── */
+['click','keydown','mousemove','touchstart','scroll'].forEach(ev=>{
+  document.addEventListener(ev, ()=>{ if(D && D.user) resetIdle(); }, {passive: true});
+});
+
+/* ── Away-from-site tracking (tab switch, phone lock, browser minimise) ── */
+function handleVisibilityChange(){
+  if(!D || !D.user) return;
+  if(document.hidden){
+    // User left the page — record when
+    _awayStart = Date.now();
+  } else {
+    // User came back — check how long they were gone
+    if(_awayStart !== null){
+      const awaySeconds = Math.floor((Date.now() - _awayStart) / 1000);
+      _awayStart = null;
+      if(awaySeconds >= AWAY_LIMIT){
+        triggerIdleLogout('Away from site for ' + Math.floor(awaySeconds/60) + ' min');
+        return;
+      }
+    }
+    // They came back within 5 min — reset idle timer
+    resetIdle();
+  }
+}
+
+document.addEventListener('visibilitychange', handleVisibilityChange);
+
+// Also catch window blur/focus (desktop: switching apps or minimising)
+window.addEventListener('blur', ()=>{
+  if(D && D.user && _awayStart === null) _awayStart = Date.now();
+});
+window.addEventListener('focus', ()=>{
+  if(!D || !D.user) return;
+  if(_awayStart !== null){
+    const awaySeconds = Math.floor((Date.now() - _awayStart) / 1000);
+    _awayStart = null;
+    if(awaySeconds >= AWAY_LIMIT){
+      triggerIdleLogout('Away from site for ' + Math.floor(awaySeconds/60) + ' min');
+      return;
+    }
+  }
+  resetIdle();
+});
+
+
+/* ════════════════════════════════════════
+   STATE + PERSISTENCE
+════════════════════════════════════════ */
+// TODAY is always the real current date — recalculates every time it's used
+function getToday(){
+  const n=new Date();
+  return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+}
+// Keep TODAY as a getter so existing code still works
+Object.defineProperty(window,'TODAY',{get:()=>getToday()});
+
+/* ── Auto reload at midnight so the date always resets ── */
+function scheduleReloadAtMidnight(){
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(24, 0, 0, 0); // next midnight
+  const msUntilMidnight = midnight - now;
+  console.log('Auto reload scheduled in', Math.round(msUntilMidnight/60000), 'minutes');
+  setTimeout(()=>{
+    // Save any pending data before reloading
+    if(db && window._docRef) saveDB();
+    setTimeout(()=>{ location.reload(); }, 1000);
+  }, msUntilMidnight);
+}
+scheduleReloadAtMidnight();
+
+/* ── 12-hour clock helpers ── */
+function fmt12(date){
+  let h=date.getHours(),m=date.getMinutes(),s=date.getSeconds();
+  const ampm=h>=12?'PM':'AM';h=h%12||12;
+  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+' '+ampm;
+}
+function fmt12hm(date){
+  let h=date.getHours(),m=date.getMinutes();
+  const ampm=h>=12?'PM':'AM';h=h%12||12;
+  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+' '+ampm;
+}
+
+/* ── Friendly date: "Monday 20th April 2026" ── */
+function friendlyDate(dateStr){
+  const [y,mo,d]=dateStr.split('-').map(Number);
+  const dt=new Date(y,mo-1,d);
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const ord=n=>{const s=['th','st','nd','rd'];const v=n%100;return n+(s[(v-20)%10]||s[v]||s[0]);};
+  return days[dt.getDay()]+' '+ord(d)+' '+months[mo-1]+' '+y;
+}
+
+/* ── Time-of-day greeting ── */
+function timeGreeting(){
+  const h=new Date().getHours();
+  if(h>=5&&h<12)return'Good morning';
+  if(h>=12&&h<17)return'Good afternoon';
+  return'Good evening';
+}
+
+const ts=()=>TODAY+' '+fmt12(new Date());
+const hm=()=>fmt12hm(new Date());
+
+const DEF_INV=[];
+const DEF_TXN=[];
+
+// USERS is now populated from Firestore's 'accounts' collection (no passwords —
+// those live only inside Firebase Authentication, never in your synced data).
+// Shape: {uid, name, role, email}
+let USERS=[];
+
+/* ════════════════════════════════════════
+   FIREBASE FIRESTORE — REAL-TIME SYNC
+════════════════════════════════════════ */
+let db = null;
+let auth = null;
+let _unsubscribe = null;
+let _unsubscribeAccounts = null;
+
+const DEF_SUPPLIERS = [];
+
+const D={
+  user:null,tab:'dashboard',invTab:'add',
+  inventory:[],
+  transactions:[],
+  logins:[],
+  log:[],
+  suppliers:[],
+  nextId:1,nextTxn:1,nextSup:1,
+  cart:[],searchQ:'',showSearch:false,
+  alert:null,receipt:null,editItem:null,filterDate:'',
+  forgotMode:false,forgotStep:1,forgotUser:'',forgotSecOk:false,
+  newMed:{name:'',type:'OTC / General',price:'',qty:'',minQty:'',supplier:'',expiry:'',notes:''},
+  dupWarn:false,saveStatus:'saved',lastSaved:'—',_t:null,
+  supTab:'list',editSup:null,
+  newSup:{name:'',phone:'',email:'',location:''},
+  dbLoaded:false,
+  voidTxn:null,
+  pharmacy:{name:"God's Will OTC",address:'',phone:'',email:''},
+  darkMode: (localStorage.getItem('mt_dark')==='1'),
+  reportDate: '',
+  invTypeFilter: 'Cosmetics',
+  showResetDialog: false,
+  resetStep: 1,
+  blockedUsers: [],
+  sidebarOpen: false,
+};
+
+/* ── pill / alert ── */
+function pill(){
+  const e=document.getElementById('spill');if(!e)return;
+  e.innerHTML=D.saveStatus==='saving'?'<span class="sdot blink"></span>Saving…':D.saveStatus==='error'?'<span class="sdot" style="background:#E24B4A"></span>Sync error':`<span class="sdot"></span>Synced ${D.lastSaved}`;
+}
+function addLog(a,d=''){D.log.unshift({ts:ts(),action:a,detail:d,user:D.user?D.user.name:'System'});if(D.log.length>600)D.log.length=600;}
+
+/* ── Save entire state to Firestore ── */
+function saveDB(retries=3){
+  if(!db) return;
+  const payload = {
+    inventory:D.inventory,
+    transactions:D.transactions,
+    logins:D.logins,
+    log:D.log,
+    suppliers:D.suppliers,
+    nextId:D.nextId,
+    nextTxn:D.nextTxn,
+    nextSup:D.nextSup,
+    pharmacy:D.pharmacy,
+    blockedUsers:D.blockedUsers||[],
+    updatedAt: Date.now(),
+  };
+  window._docRef.set(payload)
+    .then(()=>{ D.lastSaved=hm(); D.saveStatus='saved'; pill(); })
+    .catch(e=>{
+      console.error('Firestore save error',e);
+      if(retries>0){
+        // Retry with exponential backoff
+        const delay=(4-retries)*1000;
+        setTimeout(()=>saveDB(retries-1), delay);
+      } else {
+        D.saveStatus='error'; pill();
+      }
+    });
+}
+
+/* ── Urgent save for account changes (blockedUsers only — real accounts   */
+/* live in the separate 'accounts' collection, synced automatically) ── */
+/* Uses update() instead of set() to avoid overwriting other data */
+function saveAccountsUrgent(){
+  if(!db) return;
+  window._docRef.update({
+    blockedUsers: D.blockedUsers||[],
+    updatedAt: Date.now(),
+  })
+  .then(()=>{ D.lastSaved=hm(); D.saveStatus='saved'; pill(); })
+  .catch(e=>{
+    // If update fails (doc doesn't exist yet), fall back to full save
+    console.warn('Urgent update failed, falling back to full save:', e.message);
+    saveDB();
+  });
+}
+
+/* ── Debounced auto-save (for typing/form changes) ── */
+function autoSave(){
+  D.saveStatus='saving'; pill();
+  clearTimeout(D._t);
+  D._t=setTimeout(()=>{ saveDB(); },800);
+}
+
+/* ── Immediate save (for sales, stock changes, transactions) ── */
+function saveNow(){
+  clearTimeout(D._t);
+  D.saveStatus='saving'; pill();
+  saveDB();
+}
+
+/* ── Apply cloud data into D (called by real-time listener) ── */
+function applyCloudData(data){
+  if(!data) return;
+
+  // Use hasOwnProperty so empty arrays [] and 0 values still apply
+  const has = k => Object.prototype.hasOwnProperty.call(data, k);
+
+  if(has('inventory'))    D.inventory    = data.inventory    || [];
+  if(has('transactions')) D.transactions = data.transactions || [];
+  if(has('logins'))       D.logins       = data.logins       || [];
+  if(has('log'))          D.log          = data.log          || [];
+  if(has('suppliers'))    D.suppliers    = data.suppliers    || [];
+  if(has('nextId'))       D.nextId       = data.nextId       || 1;
+  if(has('nextTxn'))      D.nextTxn      = data.nextTxn      || 1;
+  if(has('nextSup'))      D.nextSup      = data.nextSup      || 1;
+  if(has('pharmacy'))     D.pharmacy     = data.pharmacy     || D.pharmacy;
+  D.blockedUsers = data.blockedUsers || [];
+
+  D.lastSaved = hm();
+  D.saveStatus = 'saved';
+
+  // Force logout check using fresh cloud data (blockedUsers now stores uids)
+  if(D.user){
+    const isBlocked = D.blockedUsers.includes(D.user.uid);
+    if(isBlocked){
+      stopIdleTimer();
+      D.user = null; D.cart = []; D.searchQ = ''; D.showSearch = false;
+      const overlay = document.getElementById('idle-overlay');
+      const msg     = document.getElementById('idle-msg');
+      const ttl     = document.getElementById('idle-title');
+      if(msg) msg.textContent = 'Your account has been suspended by the Manager.';
+      if(ttl) ttl.textContent = '🚫 Account Suspended';
+      if(overlay) overlay.style.display = 'flex';
+      if(auth) auth.signOut();
+      render();
+      return;
+    }
+  }
+}
+
+/* ── Loading screen ── */
+function showLoadingScreen(){
+  document.getElementById('root').innerHTML=`
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:18px">
+      <div style="width:60px;height:60px;border-radius:50%;background:#185FA5;display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;font-weight:800">M</div>
+      <div style="font-size:18px;font-weight:700;color:#185FA5">God's Will OTC</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div style="width:10px;height:10px;border-radius:50%;background:#185FA5;animation:ping .9s ease-in-out infinite"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#185FA5;animation:ping .9s ease-in-out .3s infinite"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#185FA5;animation:ping .9s ease-in-out .6s infinite"></div>
+      </div>
+      <div style="font-size:14px;color:#888;font-weight:500">Connecting to cloud…</div>
+      <style>@keyframes ping{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}</style>
+    </div>`;
+}
+
+/* ── BARCODE SCANNER ── */
+let _scanStream = null;
+let _scanInterval = null;
+
+function addToCart(id){
+  const inv=D.inventory.find(i=>i.id===id);if(!inv||inv.qty<=0)return;
+  const c=D.cart.find(c=>c.id===id);
+  if(c){if(c.qty<inv.qty)c.qty++;}
+  else D.cart.push({id:inv.id,name:inv.name,price:inv.price,qty:1});
+}
+
+async function openBarcodeScanner(){
+  const modal=document.getElementById('barcodeModal');
+  if(!modal)return;
+  modal.style.display='flex';
+  const video=document.getElementById('barcodeVideo');
+  try{
+    _scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});
+    if(video){video.srcObject=_scanStream;video.play();}
+    // Use BarcodeDetector if available (Chrome Android)
+    if('BarcodeDetector' in window){
+      const detector=new BarcodeDetector({formats:['ean_13','ean_8','code_128','code_39','upc_a','upc_e','qr_code']});
+      _scanInterval=setInterval(async()=>{
+        if(!video||video.readyState<2)return;
+        try{
+          const barcodes=await detector.detect(video);
+          if(barcodes.length){
+            const code=barcodes[0].rawValue;
+            const item=D.inventory.find(i=>i.barcode===code||i.name.toLowerCase()===code.toLowerCase());
+            if(item){addToCart(item.id);closeBarcodeScanner();showAlert(item.name+' added to cart!','ok');render();}
+            else{
+              const bsearch=document.getElementById('barcodeSearch');
+              if(bsearch)bsearch.value=code;
+            }
+          }
+        }catch(e){}
+      },500);
+    }
+  }catch(e){
+    modal.style.display='none';
+    showAlert('Camera access denied. Use the search box instead.','aw');render();
+  }
+}
+
+function closeBarcodeScanner(){
+  const modal=document.getElementById('barcodeModal');
+  if(modal)modal.style.display='none';
+  if(_scanStream){_scanStream.getTracks().forEach(t=>t.stop());_scanStream=null;}
+  if(_scanInterval){clearInterval(_scanInterval);_scanInterval=null;}
+  const video=document.getElementById('barcodeVideo');
+  if(video){video.srcObject=null;}
+}
+
+/* ── Bootstrap Firebase then start real-time listener ── */
+function initFirebase(){
+  const firebaseConfig = {
+    apiKey: "AIzaSyBLFI8yzmsXCwm3c2qRrN674TH3ScC0hrY",
+    authDomain: "godswillotc-v2.firebaseapp.com",
+    projectId: "godswillotc-v2",
+    storageBucket: "godswillotc-v2.firebasestorage.app",
+    messagingSenderId: "155315998608",
+    appId: "1:155315998608:web:01ccd0d778c08a3e05ed15"
+  };
+
+  window._firebaseConfig = firebaseConfig;
+  const fbApp = firebase.initializeApp(firebaseConfig);
+  db = firebase.firestore(fbApp);
+  auth = firebase.auth(fbApp);
+  window._docRef = db.collection('pharmacy').doc('data');
+  window._accountsRef = db.collection('accounts');
+
+  // Keep the staff list (USERS) live-synced from the accounts collection.
+  // No passwords ever live here — only {uid, name, role, email}.
+  _unsubscribeAccounts = window._accountsRef.onSnapshot(qs=>{
+    USERS = qs.docs.map(d=>({uid:d.id, ...d.data()}));
+    if(D.dbLoaded) render();
+  });
+
+  // Show loading screen while first data arrives
+  showLoadingScreen();
+
+  // ── Auth state — restores session on reload, and drives login/logout ──
+  auth.onAuthStateChanged(fbUser=>{
+    if(fbUser){
+      window._accountsRef.doc(fbUser.uid).get().then(doc=>{
+        if(!doc.exists){
+          // No role record yet — sign out, something is misconfigured
+          console.warn('No account record for uid', fbUser.uid);
+          auth.signOut();
+          return;
+        }
+        const acc = doc.data();
+        if((D.blockedUsers||[]).includes(fbUser.uid)){
+          auth.signOut();
+          showAlert('This account has been suspended by the Manager.','er');
+          render();
+          return;
+        }
+        D.user = {uid:fbUser.uid, email:fbUser.email, name:acc.name, role:acc.role};
+        D.tab = D.tab==='login'?'dashboard':D.tab;
+        if(!D._justLoggedIn){ D._justLoggedIn=true; }
+        render();
+      });
+    } else {
+      D.user = null;
+      render();
+    }
+  });
+
+  // ── Real-time listener ──────────────────────────────────
+  _unsubscribe = window._docRef.onSnapshot(snap => {
+
+    if(snap.exists){
+      applyCloudData(snap.data());
+    } else {
+      // First ever run — no data yet, write defaults
+      console.log('No Firestore data — writing defaults…');
+      saveDB();
+    }
+
+    if(!D.dbLoaded){
+      D.dbLoaded = true;
+      render(); // first load
+    } else {
+      // Always re-render so all devices show latest data
+      // Only skip if a modal is open to avoid interrupting the user
+      if(!D.receipt && !D.editItem && !D.editSup && !D.showResetDialog){
+        render();
+      } else {
+        pill();
+      }
+    }
+
+  }, err => {
+    console.error('Firestore listener error:', err);
+    D.saveStatus = 'error';
+    if(!D.dbLoaded){ D.dbLoaded = true; render(); }
+    pill();
+  });
+}
+
+let alertT=null;
+function showAlert(msg,k='ok'){D.alert={msg,k};clearTimeout(alertT);alertT=setTimeout(()=>{D.alert=null;render();},4500);}
+const cur=n=>'GH₵ '+parseFloat(n).toFixed(2);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const MEDICINE_TYPES=['Cosmetics','OTC','Herbal','Prescription','Consumable','Medical Device','Supplement'];
+
+function typeTag(t){
+  const m={
+    'Cosmetics':'tcos','OTC':'totc','Herbal':'the',
+    'Prescription':'trx','Consumable':'tsu',
+    'Medical Device':'tmd','Supplement':'tsup',
+    // legacy types
+    'OTC / General':'totc','Prescription (POM)':'trx',
+    'Specialist':'tsp','Rx':'trx',
+  };
+  return`<span class="tag ${m[t]||'totc'}">${t}</span>`;
+}
+function stockTag(i){return i.qty<=i.minQty?'<span class="tag tlo">Low</span>':'<span class="tag tok">OK</span>';}
+
+/* ── Expiry helpers ── */
+function getToday(){
+  const n=new Date();
+  return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+}
+function expiryStatus(expiry){
+  if(!expiry)return null;
+  const [y,m]=expiry.split('-').map(Number);
+  const exp=new Date(y,m-1,1); // first of expiry month
+  const now=new Date(); now.setHours(0,0,0,0);
+  const days=Math.floor((exp-now)/(1000*60*60*24));
+  if(days<0)return{label:'Expired',cls:'tlo',days};
+  if(days<=30)return{label:'Expires in '+days+'d',cls:'tlo',days};
+  if(days<=60)return{label:'Expires in '+Math.ceil(days/30)+'mo',cls:'am',days};
+  return null;
+}
+function expiryTag(expiry){
+  const s=expiryStatus(expiry);
+  if(!s)return'';
+  return`<span class="tag ${s.cls}" style="margin-left:4px">${s.label}</span>`;
+}
+const alertEl=()=>D.alert?`<div class="alert a${D.alert.k}">${esc(D.alert.msg)}</div>`:'';
+function hl(s,q){if(!q)return esc(s);const r=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');return esc(s).replace(r,'<mark>$1</mark>');}
+function filteredInv(){const q=D.searchQ.toLowerCase().trim();if(!q)return D.inventory;return D.inventory.filter(i=>i.name.toLowerCase().includes(q)||i.type.toLowerCase().includes(q)||(i.supplier||'').toLowerCase().includes(q));}
+function searchResults(){const q=D.searchQ.toLowerCase().trim();if(!q)return[];return D.inventory.filter(i=>i.name.toLowerCase().includes(q)||i.type.toLowerCase().includes(q)||(i.supplier||'').toLowerCase().includes(q)).slice(0,8);}
+
+/* ── EXCEL: single day ── */
+function exportDayExcel(date){
+  if(typeof XLSX==='undefined'){showAlert('Excel library loading, try again.','aw');return;}
+  const txns=D.transactions.filter(t=>t.date===date);
+  if(!txns.length){showAlert('No transactions on '+date,'aw');return;}
+  const wb=XLSX.utils.book_new();
+  const rows=[["God's Will OTC — Daily Sales Report"],['Date: '+friendlyDate(date)],['Generated: '+ts()],[],
+    ['TXN ID','Time','Items Sold','Qty Total','Unit Prices (GH₵)','Total (GH₵)','Staff']];
+  txns.forEach(t=>rows.push([t.id,t.time||'',t.items.map(i=>i.name+' x'+i.qty).join(' | '),t.items.reduce((s,i)=>s+i.qty,0),t.items.map(i=>i.name+' @ '+cur(i.price)).join(' | '),t.total,t.staff]));
+  rows.push([],[  '','','','TOTAL →',parseFloat(txns.reduce((s,t)=>s+t.total,0).toFixed(2)),''],['','','','Transactions',txns.length,'']);
+  const ws=XLSX.utils.aoa_to_sheet(rows);ws['!cols']=[{wch:10},{wch:10},{wch:48},{wch:10},{wch:44},{wch:14},{wch:18}];
+  XLSX.utils.book_append_sheet(wb,ws,'Sales '+date);
+  XLSX.writeFile(wb,'MediTrack_Sales_'+date+'.xlsx');
+  addLog('Day Excel exported','Sales '+date);autoSave();
+  showAlert('Daily Excel for '+date+' downloaded — save to your monthly folder.','ok');
+}
+
+/* ── EXCEL: reorder / low stock list ── */
+function exportReorderExcel(){
+  if(typeof XLSX==='undefined'){showAlert('Excel library loading…','aw');return;}
+  const today=getToday();
+  const low=D.inventory.filter(i=>i.qty<=i.minQty);
+  const exp=D.inventory.filter(i=>i.expiry&&expiryStatus(i.expiry)!==null);
+  if(!low.length&&!exp.length){showAlert('No low stock or expiry alerts to export.','aw');return;}
+  const wb=XLSX.utils.book_new();
+  if(low.length){
+    const rows=[["God's Will OTC — Reorder List"],['Generated: '+friendlyDate(today)+' at '+fmt12hm(new Date())],[],
+      ['Medicine','Type','In Stock','Min Required','Shortfall','Supplier','Unit Price (GH₵)']];
+    low.forEach(i=>rows.push([i.name,i.type,i.qty,i.minQty,i.minQty-i.qty,i.supplier||'',i.price]));
+    const ws=XLSX.utils.aoa_to_sheet(rows);ws['!cols']=[{wch:28},{wch:12},{wch:10},{wch:13},{wch:10},{wch:18},{wch:15}];
+    XLSX.utils.book_append_sheet(wb,ws,'Low Stock Reorder');
+  }
+  if(exp.length){
+    const rows=[["God's Will OTC — Expiry Alerts"],['Generated: '+friendlyDate(today)+' at '+fmt12hm(new Date())],[],
+      ['Medicine','Type','Expiry','Status','In Stock','Supplier']];
+    exp.forEach(i=>{const s=expiryStatus(i.expiry);rows.push([i.name,i.type,i.expiry,s.label,i.qty,i.supplier||'']);});
+    const ws=XLSX.utils.aoa_to_sheet(rows);ws['!cols']=[{wch:28},{wch:12},{wch:12},{wch:20},{wch:10},{wch:18}];
+    XLSX.utils.book_append_sheet(wb,ws,'Expiry Alerts');
+  }
+  XLSX.writeFile(wb,'MediTrack_Reorder_'+today+'.xlsx');
+  addLog('Reorder list exported',today);autoSave();
+  showAlert('Reorder list downloaded.','ok');
+}
+
+
+function exportSupplierExcel(supId){
+  if(typeof XLSX==='undefined'){showAlert('Excel library loading…','aw');return;}
+  const wb=XLSX.utils.book_new();
+  const stamp=ts();
+
+  if(supId==='all'){
+    // All suppliers
+    const rows=[
+      ["God's Will OTC — Supplier Delivery Report (All Suppliers)"],
+      ['Generated: '+friendlyDate(TODAY)+' at '+fmt12hm(new Date())],[],
+      ['Supplier Name','Phone','Email','Location','Product Name','Product Type','Qty Supplied','Unit Price (GH₵)','Total Value (GH₵)','Date Received'],
+    ];
+    D.suppliers.forEach(s=>s.products.forEach(p=>{
+      rows.push([s.name,s.phone,s.email,s.location,p.name,p.type||'',p.qtySupplied,p.unitCost,parseFloat((p.qtySupplied*p.unitCost).toFixed(2)),p.date]);
+    }));
+    const grandTotal=D.suppliers.reduce((a,s)=>a+s.products.reduce((b,p)=>b+(p.qtySupplied*p.unitCost),0),0);
+    rows.push([],[  '','','','','','','GRAND TOTAL (GH₵)',parseFloat(grandTotal.toFixed(2)),'']);
+    const ws=XLSX.utils.aoa_to_sheet(rows);ws['!cols']=[{wch:18},{wch:14},{wch:24},{wch:16},{wch:26},{wch:14},{wch:13},{wch:16},{wch:16},{wch:15}];
+    XLSX.utils.book_append_sheet(wb,ws,'All Suppliers');
+  } else {
+    const s=D.suppliers.find(x=>x.id===+supId);if(!s)return;
+    const rows=[
+      ["God's Will OTC — Supplier Report: "+s.name],
+      ['Phone: '+s.phone+' | Email: '+s.email+' | Location: '+s.location],
+      ['Generated: '+friendlyDate(TODAY)+' at '+fmt12hm(new Date())],[],
+      ['Product Name','Product Type','Qty Supplied','Unit Price (GH₵)','Total Value (GH₵)','Date Received'],
+    ];
+    s.products.forEach(p=>rows.push([p.name,p.type||'',p.qtySupplied,p.unitCost,parseFloat((p.qtySupplied*p.unitCost).toFixed(2)),p.date]));
+    const tot=s.products.reduce((a,p)=>a+(p.qtySupplied*p.unitCost),0);
+    rows.push([],[  '','','Supplier Total (GH₵)',parseFloat(tot.toFixed(2)),'','']);
+    const ws=XLSX.utils.aoa_to_sheet(rows);ws['!cols']=[{wch:26},{wch:14},{wch:13},{wch:16},{wch:16},{wch:15}];
+    XLSX.utils.book_append_sheet(wb,ws,s.name.slice(0,31));
+  }
+  XLSX.writeFile(wb,'MediTrack_Supplier_'+(supId==='all'?'All':D.suppliers.find(x=>x.id===+supId)?.name||supId)+'_'+TODAY+'.xlsx');
+  addLog('Supplier Excel exported',supId==='all'?'All suppliers':'Supplier ID '+supId);autoSave();
+  showAlert('Supplier Excel downloaded with datestamp.','ok');
+}
+
+/* ── EXCEL: full backup ── */
+function exportFullExcel(){
+  if(typeof XLSX==='undefined'){showAlert('Excel loading…','aw');return;}
+  const wb=XLSX.utils.book_new();
+  const invR=[['ID','Medicine','Type','Price','Qty','Min','Value','Supplier','Expiry','Status']];
+  D.inventory.forEach(i=>invR.push([i.id,i.name,i.type,i.price,i.qty,i.minQty,+(i.qty*i.price).toFixed(2),i.supplier||'',i.expiry||'',i.qty<=i.minQty?'LOW':'OK']));
+  const wsI=XLSX.utils.aoa_to_sheet(invR);wsI['!cols']=[{wch:5},{wch:26},{wch:12},{wch:10},{wch:8},{wch:8},{wch:13},{wch:16},{wch:12},{wch:7}];
+  XLSX.utils.book_append_sheet(wb,wsI,'Inventory');
+  const txnR=[['TXN ID','Date','Time','Items','Qty','Total','Staff']];
+  D.transactions.forEach(t=>txnR.push([t.id,t.date,t.time||'',t.items.map(i=>i.name+' x'+i.qty).join(' | '),t.items.reduce((s,i)=>s+i.qty,0),t.total,t.staff]));
+  const wsT=XLSX.utils.aoa_to_sheet(txnR);wsT['!cols']=[{wch:10},{wch:13},{wch:9},{wch:48},{wch:8},{wch:13},{wch:18}];
+  XLSX.utils.book_append_sheet(wb,wsT,'All Transactions');
+  const supR=[['Supplier','Phone','Email','Location','Product','Type','Qty','Unit Price (GH₵)','Total Value (GH₵)','Date']];
+  D.suppliers.forEach(s=>s.products.forEach(p=>supR.push([s.name,s.phone,s.email,s.location,p.name,p.type||'',p.qtySupplied,p.unitCost,+(p.qtySupplied*p.unitCost).toFixed(2),p.date])));
+  const wsS=XLSX.utils.aoa_to_sheet(supR);wsS['!cols']=[{wch:18},{wch:14},{wch:22},{wch:16},{wch:24},{wch:12},{wch:10},{wch:16},{wch:16},{wch:13}];
+  XLSX.utils.book_append_sheet(wb,wsS,'Suppliers');
+  const logR=[['User','Role','Time']];[...D.logins].reverse().forEach(l=>{const u=USERS.find(u=>u.email===l.user)||{role:'staff'};logR.push([l.user,u.role,l.time]);});
+  const wsL=XLSX.utils.aoa_to_sheet(logR);XLSX.utils.book_append_sheet(wb,wsL,'Login Log');
+  const actR=[['Timestamp','User','Action','Detail']];D.log.forEach(e=>actR.push([e.ts,e.user,e.action,e.detail||'']));
+  const wsA=XLSX.utils.aoa_to_sheet(actR);XLSX.utils.book_append_sheet(wb,wsA,'Activity Log');
+  XLSX.writeFile(wb,'MediTrack_Backup_'+TODAY+'.xlsx');
+  addLog('Full backup exported');autoSave();showAlert('Full Excel backup downloaded.','ok');
+}
+
+/* ── PRINT ── */
+function printReceipt(id){
+  const t=D.transactions.find(x=>x.id===id);if(!t)return;
+  const ph=D.pharmacy||{};
+  const name=ph.name||"God's Will OTC";
+  const pa=document.getElementById('pzone');pa.style.display='block';
+  pa.innerHTML=`<div style="max-width:340px;margin:0 auto;font-family:Arial,sans-serif;font-size:14px">
+    <div style="text-align:center;margin-bottom:18px">
+      <div style="font-size:22px;font-weight:800">${name}</div>
+      ${ph.address?`<div style="color:#555;font-size:12px;margin-top:3px">${ph.address}</div>`:''}
+      ${ph.phone?`<div style="color:#555;font-size:12px">Tel: ${ph.phone}</div>`:''}
+      <div style="color:#555;margin-top:5px">Receipt — ${t.id}</div>
+      <div style="color:#555">${t.date} at ${t.time||''} · ${t.staff}</div>
+      ${t.customer?`<div style="color:#333;font-weight:700;margin-top:3px">Customer: ${t.customer}</div>`:''}
+    </div>
+    <hr style="border:none;border-top:1px dashed #aaa;margin:10px 0"/>
+    <table style="width:100%;font-size:14px"><tr style="font-weight:800"><td>Item</td><td style="text-align:center">Qty</td><td style="text-align:right">Amount</td></tr>
+    ${t.items.map(i=>`<tr><td style="padding:5px 0">${i.name}</td><td style="text-align:center">${i.qty}</td><td style="text-align:right">${cur(i.price*i.qty)}</td></tr>`).join('')}</table>
+    <hr style="border:none;border-top:2.5px solid #185FA5;margin:10px 0"/>
+    <div style="display:flex;justify-content:space-between;font-weight:800;font-size:16px"><span>TOTAL PAID</span><span>${cur(t.total)}</span></div>
+    <div style="text-align:center;color:#555;font-size:12px;margin-top:14px">Thank you for choosing ${name}!</div></div>`;
+  setTimeout(()=>{window.print();setTimeout(()=>{pa.style.display='none';pa.innerHTML='';},500);},100);
+  addLog('Receipt printed',id);autoSave();
+}
+
+/* ════════════════════════════════════════
+   RENDER
+════════════════════════════════════════ */
+function render(){
+  document.documentElement.classList.toggle('dark', !!D.darkMode);
+  document.getElementById('root').innerHTML=D.user?mainUI():loginUI();
+  attachAll();
+}
+
+function loginUI(){
+  if(D.forgotMode){
+    return`<div class="lwrap">
+      <div style="font-size:20px;font-weight:800;margin-bottom:5px;color:#185FA5">🔑 Forgot Password</div>
+      <div style="font-size:13px;color:#888;margin-bottom:1.4rem;font-weight:500">We'll email you a secure reset link.</div>
+      ${alertEl()}
+      <div class="field"><label>Your email</label><input id="fpEmail" type="email" placeholder="you@example.com" value="${esc(D.forgotEmail||'')}"/></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn bbl" style="flex:1" id="fpSendBtn">Send reset link</button>
+        <button class="btn" id="fpCancelBtn">Back to sign in</button>
+      </div>
+    </div>`;
+  }
+  const greet=timeGreeting();
+  const h=new Date().getHours();
+  const greetIcon=h>=5&&h<12?'🌅':h>=12&&h<17?'☀️':'🌙';
+  return`<div class="lwrap">
+    <div style="width:52px;height:52px;border-radius:50%;background:#185FA5;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:800;margin-bottom:1.1rem">M</div>
+    <div style="font-size:20px;font-weight:800;margin-bottom:5px">God's Will OTC</div>
+    <div style="font-size:14px;color:#666;margin-bottom:.4rem;font-weight:500">${greetIcon} ${greet}! Please sign in to continue.</div>
+    <div style="font-size:12px;color:#aaa;margin-bottom:1.3rem;font-weight:500" id="loginClock">${friendlyDate(TODAY)} · ${fmt12hm(new Date())}</div>
+    ${alertEl()}
+    <div class="field"><label>Email</label><input id="ln" type="email" placeholder="you@example.com"/></div>
+    <div class="field"><label>Password</label><input type="password" id="lp" placeholder="Enter password"/></div>
+    <button class="btn bbl bfw" id="loginBtn">Sign in</button>
+    <div style="text-align:center;margin-top:10px">
+      <button class="btn" style="background:transparent;border:none;color:#185FA5;font-size:13px;font-weight:600;cursor:pointer;padding:4px" id="forgotBtn">🔑 Forgot password?</button>
+    </div>
+  </div>`;
+}
+
+function idleBarHTML(){
+  const pct=Math.max(0,((IDLE_LIMIT-idleSeconds)/IDLE_LIMIT)*100);
+  const cls=pct<34?'danger':pct<67?'warn':'';
+  const rem=IDLE_LIMIT-idleSeconds;
+  const m=Math.floor(rem/60);
+  const s=rem%60;
+  return`<div style="width:100%;padding:4px 0 2px">
+    <div class="idle-bar-wrap"><div class="idle-bar ${cls}" id="idleBar" style="width:${pct}%"></div></div>
+    <div class="idle-txt" id="idleTxt">Session expires in ${m}m ${String(s).padStart(2,'0')}s · move mouse to reset</div>
+  </div>`;
+}
+
+function mainUI(){
+  const mgr=D.user.role==='manager';
+
+  // All nav items — sidebar shows everything
+  const mainItems=[
+    {k:'dashboard',  l:'Dashboard',    i:'🏠'},
+    {k:'sales',      l:'Sales',        i:'🛒'},
+    {k:'inventory',  l:'Inventory',    i:'📦'},
+  ];
+  const mgrItems=[
+    {k:'transactions',l:'Transactions',i:'📋'},
+    {k:'reports',    l:'Reports',      i:'📊'},
+    {k:'suppliers',  l:'Suppliers',    i:'🚚'},
+    {k:'logins',     l:'Logins',       i:'🔐'},
+    {k:'backup',     l:'Backup',       i:'💾'},
+  ];
+  const staffItems=[
+    {k:'mysales',    l:'My Sales',     i:'📊'},
+  ];
+  const bottomItems=[
+    {k:'account',   l:'Account',       i:'👤'},
+    {k:'settings',  l:'Settings',      i:'⚙️'},
+  ];
+
+  // Build sidebar HTML
+  const sidebarItems=[
+    ...mainItems,
+    ...(mgr?mgrItems:staffItems),
+    ...bottomItems,
+  ];
+
+  const sidebarHTML=`
+    <div class="sidebar-head">
+      <div class="sidebar-logo">God's Will OTC</div>
+      <div class="sidebar-sub">Pharmacy Management System</div>
+      <div class="sidebar-user">${mgr?'👔':'👤'} ${esc(D.user.name)} · <span style="opacity:.8">${mgr?'Manager':'Staff'}</span></div>
+    </div>
+    <div style="overflow-y:auto;flex:1">
+      <div class="sidebar-section">Navigation</div>
+      ${sidebarItems.map(item=>`
+        <button class="sidebar-item ${D.tab===item.k?'active':''}" data-stab="${item.k}">
+          <span class="si-icon">${item.i}</span>${item.l}
+        </button>`).join('')}
+      <div class="sidebar-divider"></div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="spill" id="spill" style="color:#85B7EB;font-size:12px;margin-bottom:8px"><span class="sdot"></span>Synced ${D.lastSaved}</div>
+      <button class="sidebar-item" id="logoutBtnSide" style="padding:10px;border-radius:8px;background:rgba(255,255,255,.12);color:#fff">
+        <span class="si-icon">🚪</span>Sign out
+      </button>
+    </div>`;
+
+  // Update sidebar DOM directly (outside root)
+  const sidebarEl=document.getElementById('sidebar');
+  const overlayEl=document.getElementById('sidebar-overlay');
+  if(sidebarEl) sidebarEl.innerHTML=sidebarHTML;
+  if(D.sidebarOpen){
+    if(sidebarEl) sidebarEl.classList.add('open');
+    if(overlayEl) overlayEl.classList.add('open');
+  } else {
+    if(sidebarEl) sidebarEl.classList.remove('open');
+    if(overlayEl) overlayEl.classList.remove('open');
+  }
+
+  const res=searchResults();const q=D.searchQ;
+  return`
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <button id="menuBtn" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:5px;padding:8px" title="Menu">
+          <span style="display:block;width:18px;height:2px;background:#fff;border-radius:2px"></span>
+          <span style="display:block;width:18px;height:2px;background:#fff;border-radius:2px"></span>
+          <span style="display:block;width:18px;height:2px;background:#fff;border-radius:2px"></span>
+        </button>
+        <div><div class="tname">God's Will OTC</div><div class="tsub" id="topClock">${friendlyDate(TODAY)} · ${fmt12hm(new Date())}</div></div>
+      </div>
+      <div class="sw" id="searchWrap">
+        <span class="si">⚲</span>
+        <input type="text" id="searchInput" placeholder="Search medicines…" value="${esc(q)}" autocomplete="off" spellcheck="false"/>
+        ${q?`<button class="sx" id="searchClear">✕</button>`:''}
+        ${q&&D.showSearch?`<div class="sdrop" id="searchDrop">
+          ${res.length===0?`<div class="sdnone">No results for "${esc(q)}"</div>`:
+            res.map(i=>`<div class="sdi" data-sid="${i.id}">
+              <div><div class="sdn">${hl(i.name,q)}</div><div class="sdm">${esc(i.type)} · Stock: <b>${i.qty}</b></div></div>
+              <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+                <span class="sdp">${cur(i.price)}</span>
+                ${D.tab==='sales'&&i.qty>0?`<button class="btn bsm btl" data-sadd="${i.id}">+ Add</button>`:''}
+              </div>
+            </div>`).join('')}
+        </div>`:``}
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;flex-shrink:0">
+        <span class="${mgr?'rm':'rs'}">${mgr?'Manager':'Staff'}</span>
+        <button class="btn bsm" id="logoutBtn" style="color:#E6F1FB;border-color:#378ADD;background:rgba(255,255,255,.12);font-size:13px">Sign out</button>
+      </div>
+    </div>
+    ${alertEl()}
+    ${pageContent(mgr)}
+    ${D.receipt?receiptModal():''}
+    ${D.editItem?editModal():''}
+    ${D.editSup?editSupModal():''}
+  `;}
+
+function pageContent(mgr){
+  const t=D.tab;
+  if(t==='dashboard')return dashboard(mgr);
+  if(t==='inventory')return mgr?inventoryPage():staffInventoryPage();
+  if(t==='sales')return salesPage();
+  if(t==='transactions'&&mgr)return txnPage();
+  if(t==='reports'&&mgr)return reportsPage();
+  if(t==='suppliers'&&mgr)return suppliersPage();
+  if(t==='logins'&&mgr)return loginsPage();
+  if(t==='backup'&&mgr)return backupPage();
+  if(t==='account')return accountPage();
+  if(t==='settings'&&mgr)return settingsPage();
+  if(t==='mysales'&&!mgr)return mySales();
+  return '';
+}
+
+/* ── DASHBOARD ── */
+function dashboard(mgr){
+  const today=getToday();
+  const tQ=D.inventory.reduce((s,i)=>s+i.qty,0);
+  const tV=D.inventory.reduce((s,i)=>s+(i.qty*i.price),0);
+  const todT=D.transactions.filter(t=>t.date===today);
+  const myT=mgr?todT:todT.filter(t=>t.staff===D.user.name);
+  const low=D.inventory.filter(i=>i.qty<=i.minQty);
+  const expiring=D.inventory.filter(i=>i.expiry&&expiryStatus(i.expiry)!==null);
+
+  // Staff performance for today (manager only)
+  const staffSummary=mgr?USERS.filter(u=>u.role==='staff').map(u=>{
+    const st=todT.filter(t=>t.staff===u.name);
+    return{name:u.name,sales:st.length,revenue:st.reduce((s,t)=>s+t.total,0)};
+  }).filter(u=>u.sales>0):[];
+
+  return`
+    <div class="${mgr?'mc4':'mc2'}">
+      <div class="mk bl"><div class="ml">Items in stock</div><div class="mv">${tQ}</div><div class="ms" style="color:#185FA5">${D.inventory.length} products</div></div>
+      ${mgr?`<div class="mk gn"><div class="ml">Stock value</div><div class="mv" style="font-size:17px">${cur(tV)}</div></div>`:''}
+      ${mgr?`<div class="mk tl"><div class="ml">Today's revenue</div><div class="mv" style="font-size:17px">${cur(todT.filter(t=>!t.voided).reduce((s,t)=>s+t.total,0))}</div><div class="ms" style="color:#1D9E75">${todT.filter(t=>!t.voided).length} sale(s)</div></div>`:''}
+      ${mgr?`<div class="mk gn"><div class="ml">All time revenue</div><div class="mv" style="font-size:17px">${cur(D.transactions.filter(t=>!t.voided).reduce((s,t)=>s+t.total,0))}</div></div>`:''}
+      <div class="mk ${low.length?'rd':'gn'}"><div class="ml">Low stock items</div><div class="mv">${low.length}</div><div class="ms">${low.length?'⚠ Need reorder':'All good'}</div></div>
+    </div>
+
+    ${expiring.length?`<div class="sec"><div class="sh o"><h3>⏰ Expiry alerts (${expiring.length})</h3>${mgr?`<button class="btn bsm bam" id="reorderExportBtn">⬇ Reorder list Excel</button>`:''}</div>
+      <div class="tw"><table class="to"><thead><tr><th>Medicine</th><th>Type</th><th>Expiry</th><th>Status</th><th>In stock</th></tr></thead><tbody>
+        ${expiring.map(i=>{const s=expiryStatus(i.expiry);return`<tr style="${s.days<0?'background:#FFF0F0':s.days<=30?'background:#FFF8F0':''}">
+          <td><strong>${esc(i.name)}</strong></td><td>${typeTag(i.type)}</td>
+          <td style="font-size:13px;color:#666">${i.expiry}</td>
+          <td><span class="tag ${s.cls}">${s.label}</span></td>
+          <td style="font-weight:700;${s.days<0?'color:#791F1F':''}">${i.qty}</td>
+        </tr>`}).join('')}
+      </tbody></table></div></div>`:''}
+
+    ${low.length?`<div class="sec"><div class="sh"><h3>⚠ Low stock alerts (${low.length})</h3>${mgr?`<button class="btn bsm brd" id="lowStockExportBtn">⬇ Reorder Excel</button>`:''}</div>
+      <div class="tw"><table><thead><tr><th>Medicine</th><th>Type</th><th>In stock</th><th>Min required</th>${!mgr?'<th>Action</th>':''}</tr></thead><tbody>
+        ${low.map(i=>`<tr><td><strong>${esc(i.name)}</strong></td><td>${typeTag(i.type)}</td><td style="color:#791F1F;font-weight:700">${i.qty}</td><td>${i.minQty}</td>${!mgr?`<td><span style="font-size:12px;color:#791F1F;font-weight:600">Notify manager to reorder</span></td>`:''}</tr>`).join('')}
+    </tbody></table></div></div>`:''}
+
+    ${mgr&&staffSummary.length?`<div class="sec"><div class="sh g"><h3>👥 Staff performance today</h3></div>
+      <div class="tw"><table class="tg"><thead><tr><th>Staff member</th><th>Sales today</th><th>Revenue today</th></tr></thead><tbody>
+        ${staffSummary.map(u=>`<tr><td style="font-weight:700">${esc(u.name)}</td><td style="font-weight:700;color:#0F6E56">${u.sales} sale(s)</td><td style="font-weight:700;color:#085041">${cur(u.revenue)}</td></tr>`).join('')}
+      </tbody></table></div></div>`:''}
+
+    <div class="sec"><div class="sh ${mgr?'':'g'}"><h3>Today's transactions — ${friendlyDate(today)}</h3></div>
+      ${myT.length?`<div class="tw"><table class="${mgr?'':'tg'}"><thead><tr><th>ID</th><th>Time</th><th>Items</th><th>Total</th>${mgr?'<th>Staff</th>':''}<th></th></tr></thead><tbody>
+        ${myT.map(t=>`<tr ${t.voided?'style="opacity:0.5;text-decoration:line-through"':''}><td style="font-family:monospace;font-size:13px;color:#185FA5;font-weight:700">${t.id}${t.voided?'<span class="tag tlo" style="margin-left:4px">Voided</span>':''}</td><td style="color:#666">${t.time}</td><td>${t.items.length} item(s)</td><td style="font-weight:700">${cur(t.total)}</td>${mgr?`<td style="font-weight:600">${esc(t.staff)}</td>`:''}<td style="display:flex;gap:5px">
+          ${!t.voided?`<button class="btn bsm bam" data-receipt="${t.id}">Receipt</button><button class="btn bsm bgr" data-print="${t.id}">Print</button>`:''}
+          ${mgr&&!t.voided?`<button class="btn bsm bda" data-void="${t.id}">Void</button>`:''}
+        </td></tr>`).join('')}
+      </tbody></table></div>`:`<div style="color:#888;font-size:14px;padding:8px 0;font-weight:500">No transactions yet today.</div>`}
+    </div>`;
+}
+
+/* ── MANAGER INVENTORY ── */
+function inventoryPage(){
+  const activeType = D.invTypeFilter || MEDICINE_TYPES[0];
+  const q = D.searchQ;
+  const n = D.newMed;
+  let items = filteredInv().filter(i=>i.type===activeType);
+
+  return`
+    <!-- Category tabs — selecting sets the active type automatically -->
+    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px">
+      ${MEDICINE_TYPES.map(t=>`<button class="ist ${activeType===t?'on':''}" data-itf="${t}">${t}</button>`).join('')}
+    </div>
+    <div style="display:flex;gap:7px;margin-bottom:1rem;flex-wrap:wrap;align-items:center">
+      <button class="ist ${D.invTab==='add'?'on':''}" data-it="add">+ Add new</button>
+      <button class="ist ${D.invTab==='restock'?'on':''}" data-it="restock">Restock</button>
+      <button class="ist ${D.invTab==='list'?'on':''}" data-it="list">View all</button>
+      <button class="btn bda bsm" id="clearAllInvBtn" style="margin-left:auto">🗑 Clear all</button>
+    </div>
+
+    ${D.invTab==='add'?`<div class="sec"><div class="sh"><h3>Add new ${activeType} product</h3>
+      <span style="font-size:13px;color:#666">Category: <strong>${activeType}</strong> — selected automatically</span>
+    </div>
+      ${D.dupWarn?`<div class="alert awn">⚠ Similar name already exists — confirm this is a different product.</div>`:''}
+      <div class="g2">
+        <div class="field"><label>Product name *</label><input id="nn" placeholder="e.g. Chloroquine 250mg" value="${esc(n.name)}"/></div>
+        <div class="field"><label>Supplier</label><input id="ns" value="${esc(n.supplier)}"/></div>
+      </div>
+      <div class="g3">
+        <div class="field"><label>Unit price (GH₵) *</label><input id="np" type="number" step="0.01" min="0" value="${n.price}"/></div>
+        <div class="field"><label>Opening qty *</label><input id="nq" type="number" min="0" value="${n.qty}"/></div>
+        <div class="field"><label>Min stock level *</label><input id="nm" type="number" min="0" value="${n.minQty}"/></div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Expiry date</label><input id="ne" type="month" value="${n.expiry}"/></div>
+        <div class="field"><label>Notes (optional)</label><input id="no" value="${esc(n.notes)}" placeholder="Any notes"/></div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn" id="clrNew">Clear</button>
+        <button class="btn bgn" id="addNew">Add to ${activeType}</button>
+      </div></div>`:''}
+
+    ${D.invTab!=='add'?`<div class="sec"><div class="sh">
+      <h3>${D.invTab==='restock'?'Restock':'All'} — ${activeType}</h3>
+      <span style="font-size:13px;color:#666;font-weight:600">${items.length} product(s)</span>
+    </div>
+      ${items.length===0?`<div style="text-align:center;padding:2.5rem;color:#888;font-size:15px;font-weight:600">📦 No ${activeType} products yet.<br><br><button class="btn bbl" data-it="add">+ Add ${activeType} product</button></div>`:
+      `<div class="tw"><table><thead><tr><th>Product</th><th>Price</th><th>Stock</th><th>Min</th><th>Status</th><th>Supplier</th><th>Expiry</th><th>Actions</th></tr></thead><tbody>
+        ${items.map(i=>`<tr><td><strong>${hl(i.name,q)}</strong></td><td style="font-weight:700">${cur(i.price)}</td><td style="font-weight:700">${i.qty}</td><td>${i.minQty}</td><td>${stockTag(i)}</td><td style="font-size:13px;color:#666">${esc(i.supplier||'—')}</td><td style="font-size:13px;color:#666">${i.expiry||'—'}</td>
+          <td style="display:flex;gap:5px">
+            ${D.invTab==='restock'?`<button class="btn bsm bbl" data-restock="${i.id}">+ Stock</button>`:''}
+            <button class="btn bsm bam" data-edit="${i.id}">Edit</button>
+            <button class="btn bsm brd" data-del="${i.id}">Remove</button>
+          </td></tr>`).join('')}
+      </tbody></table></div>`}
+    </div>`:''}`;
+}
+
+
+function staffInventoryPage(){
+  const items=filteredInv();const q=D.searchQ;
+  const low=D.inventory.filter(i=>i.qty<=i.minQty);
+  return`
+    ${low.length?`<div class="sec"><div class="sh g"><h3>⚠ Low stock alerts</h3></div>
+      <div class="tw"><table class="tg"><thead><tr><th>Medicine</th><th>Type</th><th>In stock</th><th>Min required</th></tr></thead><tbody>
+        ${low.map(i=>`<tr style="background:#FFF8F8"><td><strong>${esc(i.name)}</strong></td><td>${typeTag(i.type)}</td><td style="color:#791F1F;font-weight:700">${i.qty}</td><td>${i.minQty}</td></tr>`).join('')}
+      </tbody></table></div></div>`:'<div class="alert aok" style="margin-bottom:1rem">✅ All stock levels are above minimum — no alerts.</div>'}
+    <div class="sec"><div class="sh g"><h3>All products</h3><span style="font-size:13px;color:#555;font-weight:600">${items.length} shown${q?' for "'+esc(q)+'"':''}</span></div>
+      ${items.length===0?`<div style="text-align:center;padding:2rem;color:#888;font-size:15px;font-weight:600">📦 No products found.</div>`:
+      `<div class="tw"><table class="tg"><thead><tr><th>Medicine name</th><th>Type</th><th>Qty in stock</th><th>Min level</th><th>Status</th><th>Expiry</th></tr></thead><tbody>
+        ${items.map(i=>`<tr><td><strong>${hl(i.name,q)}</strong></td><td>${typeTag(i.type)}</td><td style="font-weight:700;${i.qty<=i.minQty?'color:#791F1F':''}">${i.qty}</td><td>${i.minQty}</td><td>${stockTag(i)}</td><td style="font-size:13px;color:#666">${i.expiry||'—'}</td></tr>`).join('')}
+      </tbody></table></div>`}
+    </div>`;
+}
+
+/* ── SALES ── */
+function salesPage(){
+  const q=D.searchQ;
+  const typeFilter=D.salesTypeFilter||'';
+  let items=filteredInv();
+  if(typeFilter)items=items.filter(i=>i.type===typeFilter);
+  const cartTotal=D.cart.reduce((s,c)=>s+(c.price*c.qty),0);
+  const isStaff=D.user.role==='staff';
+  const types=MEDICINE_TYPES;
+  return`<div class="g2" style="align-items:start">
+    <div class="sec"><div class="sh ${isStaff?'g':''}"><h3>Medicines${q?` — "${esc(q)}"`:''}  <span style="font-size:13px;font-weight:600;color:#666">(${items.length})</span></h3>
+      <button class="btn bsm bam" id="openBarcode">📷 Scan</button>
+    </div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px">
+        <button class="ist ${!typeFilter?'on':''}" data-stf="">All</button>
+        ${types.map(t=>`<button class="ist ${typeFilter===t?'on':''}" data-stf="${t}">${t}</button>`).join('')}
+      </div>
+      <div class="tw"><table class="${isStaff?'tg':''}"><thead><tr><th>Name</th><th>Type</th><th>Price</th><th>Stock</th><th></th></tr></thead><tbody>
+        ${items.length===0?`<tr><td colspan="5" style="text-align:center;padding:2rem;color:#888;font-weight:600">📦 No products available.</td></tr>`:
+        items.map(i=>`<tr><td style="font-weight:600">${hl(i.name,q)}</td><td>${typeTag(i.type)}</td><td style="font-weight:700">${cur(i.price)}</td><td style="font-weight:600">${i.qty}</td>
+          <td>${i.qty>0?`<button class="btn bsm ${isStaff?'btl':'bbl'}" data-ac="${i.id}">Add</button>`:'<span style="color:#791F1F;font-size:13px;font-weight:700">Out</span>'}</td></tr>`).join('')}
+      </tbody></table></div></div>
+    <div><div class="sec"><div class="sh ${isStaff?'g':''}"><h3>Current sale</h3></div>
+      ${D.cart.length===0?`<div style="color:#888;font-size:14px;padding:8px 0;font-weight:500">No items yet.</div>`:
+        D.cart.map(c=>`<div class="crow">
+          <div><div style="font-weight:700;font-size:15px">${esc(c.name)}</div><div style="font-size:13px;color:#666;font-weight:500">${cur(c.price)} each</div></div>
+          <div style="display:flex;align-items:center;gap:9px">
+            <div class="qc"><button data-dec="${c.id}">−</button><span>${c.qty}</span><button data-inc="${c.id}">+</button></div>
+            <div style="font-weight:700;min-width:65px;text-align:right;font-size:15px">${cur(c.price*c.qty)}</div>
+            <button class="btn bsm brd" data-rm="${c.id}">✕</button>
+          </div></div>`).join('')+`
+        <div class="divider"></div>
+        <div class="field"><label>Customer name (optional)</label><input id="custName" placeholder="Patient / customer name" value="${esc(D.custName||'')}"/></div>
+        <div style="display:flex;justify-content:space-between;font-weight:700;font-size:17px;margin-bottom:1rem;color:#0C447C"><span>Total</span><span>${cur(cartTotal)}</span></div>
+        <div style="display:flex;gap:8px"><button class="btn brd" id="clrCart">Clear</button><button class="btn ${isStaff?'btl':'bbl'} bfw" id="checkout">Complete sale</button></div>`}
+    </div></div></div>`;
+}
+
+/* ── MY SALES ── */
+function mySales(){
+  const myT=D.transactions.filter(t=>t.staff===D.user.name);
+  const fd=D.filterDate;const fil=fd?myT.filter(t=>t.date===fd):myT;
+  const grouped={};[...fil].reverse().forEach(t=>{if(!grouped[t.date])grouped[t.date]=[];grouped[t.date].push(t);});
+  const dates=[...new Set(myT.map(t=>t.date))].sort().reverse();
+  const todM=myT.filter(t=>t.date===getToday());
+  return`
+    <div class="mc3">
+      <div class="mk tl"><div class="ml">Today's sales</div><div class="mv" style="font-size:17px">${cur(todM.reduce((s,t)=>s+t.total,0))}</div><div class="ms" style="color:#1D9E75">${todM.length} sale(s)</div></div>
+      <div class="mk gn"><div class="ml">Filtered period</div><div class="mv" style="font-size:17px">${cur(fil.reduce((s,t)=>s+t.total,0))}</div><div class="ms" style="color:#3B6D11">${fil.length} sale(s)</div></div>
+      <div class="mk bl"><div class="ml">All-time sales</div><div class="mv" style="font-size:17px">${cur(myT.reduce((s,t)=>s+t.total,0))}</div><div class="ms" style="color:#185FA5">${myT.length} total</div></div>
+    </div>
+    <div class="sec"><div class="sh g"><h3>My sales — ${esc(D.user.name)}</h3>
+      <div style="display:flex;gap:8px;align-items:center">
+        <select id="fdSel" style="padding:6px 10px;border:1.5px solid #9FE1CB;border-radius:7px;font-size:13px;font-weight:600">
+          <option value="">All dates</option>${dates.map(d=>`<option value="${d}" ${fd===d?'selected':''}>${d}</option>`).join('')}
+        </select>
+        ${fd?`<button class="btn bsm btl" id="clrFd">Show all</button>`:''}
+      </div></div>
+      ${Object.keys(grouped).length===0?`<div style="color:#888;font-size:14px;padding:8px 0;font-weight:500">No sales yet.</div>`:
+        Object.entries(grouped).map(([date,txns])=>{
+          const dt=txns.reduce((s,t)=>s+t.total,0);
+          return`<div style="margin-bottom:1.1rem">
+            <div class="dlbl g"><span>${date===getToday()?'📅 Today — '+date:date}</span>
+              <div style="display:flex;align-items:center;gap:10px"><span>${cur(dt)} · ${txns.length} sale(s)</span>
+                <button class="btn bsm bgn" data-dayxl="${date}">⬇ Day Excel</button>
+              </div></div>
+            <div class="tw"><table class="tg"><thead><tr><th>ID</th><th>Time</th><th>Items</th><th>Total</th><th></th></tr></thead><tbody>
+              ${txns.map(t=>`<tr><td style="font-family:monospace;font-size:13px;color:#0F6E56;font-weight:700">${t.id}</td><td style="color:#666">${t.time||''}</td><td style="font-size:13px">${t.items.map(i=>esc(i.name)+' ×'+i.qty).join(', ')}</td><td style="font-weight:700;color:#085041">${cur(t.total)}</td>
+                <td style="display:flex;gap:5px"><button class="btn bsm bam" data-receipt="${t.id}">Receipt</button><button class="btn bsm bgr" data-print="${t.id}">Print</button></td></tr>`).join('')}
+            </tbody></table></div></div>`;
+        }).join('')}
+    </div>`;
+}
+
+/* ── TRANSACTIONS ── */
+function txnPage(){
+  const today=getToday();
+  const all=[...D.transactions].reverse();
+  const grouped={};all.forEach(t=>{if(!grouped[t.date])grouped[t.date]=[];grouped[t.date].push(t);});
+  return`<div class="sec"><div class="sh"><h3>All transactions (${all.length})</h3><button class="btn bsm bgn" id="xlFullBtn">⬇ Full Excel backup</button></div>
+    <div style="font-size:14px;color:#555;margin-bottom:12px;font-weight:500">Each date has its own <strong>Download day Excel</strong> button — save to your monthly folder.</div>
+    ${Object.entries(grouped).map(([date,txns])=>{
+      const activeT=txns.filter(t=>!t.voided);
+      const dt=activeT.reduce((s,t)=>s+t.total,0);
+      return`<div style="margin-bottom:1.2rem">
+        <div class="dlbl"><span>${date===today?'📅 Today — '+date:date}</span>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:14px">${cur(dt)} · ${activeT.length} sale(s)${txns.length>activeT.length?' ('+( txns.length-activeT.length)+' voided)':''}</span>
+            <button class="btn bsm bgn" data-dayxl="${date}">⬇ Day Excel</button>
+            <button class="btn bsm bpu" data-printday="${date}">🖨 Print day</button>
+          </div></div>
+        <div class="tw"><table><thead><tr><th>TXN ID</th><th>Time</th><th>Items sold</th><th>Total</th><th>Staff</th><th></th></tr></thead><tbody>
+          ${txns.map(t=>`<tr ${t.voided?'style="opacity:0.5"':''}><td style="font-family:monospace;font-size:13px;color:#185FA5;font-weight:700">${t.id}${t.voided?'<span class="tag tlo" style="margin-left:4px">Voided</span>':''}</td><td style="color:#666">${t.time||''}</td><td style="font-size:13px;${t.voided?'text-decoration:line-through':''}">${t.items.map(i=>esc(i.name)+' ×'+i.qty).join(', ')}</td><td style="font-weight:700;${t.voided?'text-decoration:line-through':''}">${cur(t.total)}</td><td style="font-weight:600">${esc(t.staff)}</td>
+            <td style="display:flex;gap:5px">
+              ${!t.voided?`<button class="btn bsm bam" data-receipt="${t.id}">Receipt</button><button class="btn bsm bgr" data-print="${t.id}">Print</button><button class="btn bsm bda" data-void="${t.id}">Void</button>`:'<span style="font-size:12px;color:#888">Voided</span>'}
+            </td></tr>`).join('')}
+        </tbody></table>
+        <div style="display:flex;justify-content:flex-end;padding:8px 0;font-size:15px;font-weight:700;color:#0C447C">Day total: ${cur(dt)}</div></div>
+      </div>`;
+    }).join('')}
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;font-weight:700;font-size:16px;color:#0C447C"><span>Grand total (excl. voided)</span><span>${cur(all.filter(t=>!t.voided).reduce((s,t)=>s+t.total,0))}</span></div>
+  </div>`;
+}
+
+/* ── REPORTS ── */
+function reportsPage(){
+  const todT=D.transactions.filter(t=>t.date===getToday());
+  const allRev=D.transactions.reduce((s,t)=>s+t.total,0);
+  const sVal=D.inventory.reduce((s,i)=>s+(i.qty*i.price),0);
+  const sold={};D.transactions.forEach(t=>t.items.forEach(i=>{sold[i.name]=(sold[i.name]||0)+i.qty;}));
+  const top=Object.entries(sold).sort((a,b)=>b[1]-a[1]);
+  const bySt={};D.transactions.forEach(t=>{bySt[t.staff]=(bySt[t.staff]||0)+t.total;});
+  return`
+    <div class="mc4">
+      <div class="mk tl"><div class="ml">Today's revenue</div><div class="mv" style="font-size:15px">${cur(todT.reduce((s,t)=>s+t.total,0))}</div><div class="ms" style="color:#1D9E75">${todT.length} sales</div></div>
+      <div class="mk bl"><div class="ml">All-time revenue</div><div class="mv" style="font-size:15px">${cur(allRev)}</div></div>
+      <div class="mk gn"><div class="ml">Stock value</div><div class="mv" style="font-size:15px">${cur(sVal)}</div></div>
+      <div class="mk am"><div class="ml">Products</div><div class="mv">${D.inventory.length}</div></div>
+    </div>
+    <div class="g2" style="align-items:start">
+      <div class="sec"><div class="sh"><h3>Top-selling medicines</h3></div><div class="tw"><table><thead><tr><th>#</th><th>Medicine</th><th>Units sold</th></tr></thead><tbody>${top.map(([n,q],i)=>`<tr><td style="color:#666;font-weight:600">${i+1}</td><td style="font-weight:600">${esc(n)}</td><td style="font-weight:700;color:#185FA5">${q}</td></tr>`).join('')}</tbody></table></div></div>
+      <div class="sec"><div class="sh"><h3>Revenue by staff</h3></div><div class="tw"><table><thead><tr><th>Staff</th><th>Total sales</th></tr></thead><tbody>${Object.entries(bySt).map(([n,v])=>`<tr><td style="font-weight:600">${esc(n)}</td><td style="font-weight:700;color:#185FA5">${cur(v)}</td></tr>`).join('')}</tbody></table></div></div>
+    </div>`;
+}
+
+/* ── SUPPLIERS PORTAL ── */
+function suppliersPage(){
+  const st=D.supTab;
+  return`
+    <div style="display:flex;gap:7px;margin-bottom:1rem;flex-wrap:wrap">
+      <button class="ist ${st==='list'?'on':''}" data-st="list">All suppliers (${D.suppliers.length})</button>
+      <button class="ist ${st==='add'?'on':''}" data-st="add">+ Add supplier</button>
+      <button class="ist ${st==='delivery'?'on':''}" data-st="delivery">+ Record delivery</button>
+      <button class="btn bsm bgn" id="xlSupAllBtn" style="margin-left:auto">⬇ Export all suppliers Excel</button>
+    </div>
+
+    ${st==='list'?`
+    <div class="sec"><div class="sh o"><h3>Supplier directory</h3></div>
+      ${D.suppliers.length===0?`<div style="color:#888;font-size:14px;font-weight:500;padding:8px 0">No suppliers yet.</div>`:
+      D.suppliers.map(s=>{
+        const totalVal=s.products.reduce((x,p)=>x+(p.qtySupplied*p.unitCost),0);
+        const totalQty=s.products.reduce((x,p)=>x+p.qtySupplied,0);
+        return`<div style="border:1.5px solid #FAEEDA;border-radius:10px;padding:1.1rem;margin-bottom:1rem;background:#FFFDF8">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+            <div>
+              <div style="font-size:18px;font-weight:800;color:#633806">${esc(s.name)}</div>
+              <div style="font-size:13px;color:#666;font-weight:500;margin-top:4px;line-height:1.8">
+                📞 <strong>${esc(s.phone)}</strong> &nbsp;·&nbsp; ✉ <strong>${esc(s.email)}</strong><br>
+                📍 <strong>${esc(s.location)}</strong>
+              </div>
+              <div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">
+                <span style="background:#FAEEDA;color:#854F0B;font-size:13px;padding:3px 10px;border-radius:6px;font-weight:700">Total qty supplied: ${totalQty}</span>
+                <span style="background:#E1F5EE;color:#085041;font-size:13px;padding:3px 10px;border-radius:6px;font-weight:700">Total supply value: ${cur(totalVal)}</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:7px;flex-shrink:0">
+              <button class="btn bsm bgn" data-xlsup="${s.id}">⬇ Excel</button>
+              <button class="btn bsm bor" data-editsup="${s.id}">Edit</button>
+              <button class="btn bsm brd" data-delsup="${s.id}">Remove</button>
+            </div>
+          </div>
+          ${s.products.length?`<div class="tw"><table class="to"><thead><tr><th>Product name</th><th>Type</th><th>Qty supplied</th><th>Unit price (GH₵)</th><th>Total value (GH₵)</th><th>Date received</th></tr></thead><tbody>
+            ${s.products.map(p=>`<tr><td style="font-weight:600">${esc(p.name)}</td><td>${typeTag(p.type||'OTC')}</td><td style="font-weight:700">${p.qtySupplied}</td><td style="font-weight:600">${cur(p.unitCost)}</td><td style="font-weight:700;color:#633806">${cur(p.qtySupplied*p.unitCost)}</td><td style="font-size:13px;color:#666;font-weight:500">${p.date}</td></tr>`).join('')}
+            <tr style="background:#FAEEDA"><td colspan="2" style="font-weight:700;color:#854F0B">Totals</td><td style="font-weight:700;color:#854F0B">${totalQty}</td><td></td><td style="font-weight:700;color:#854F0B">${cur(totalVal)}</td><td></td></tr>
+          </tbody></table></div>`:`<div style="font-size:14px;color:#888;font-weight:500">No deliveries recorded yet.</div>`}
+        </div>`;
+      }).join('')}
+    </div>`:''}
+
+    ${st==='add'?`
+    <div class="sec"><div class="sh o"><h3>Add new supplier</h3></div>
+      <div class="g2">
+        <div class="field"><label>Supplier name *</label><input id="spName" placeholder="e.g. PharmaCo Ghana"/></div>
+        <div class="field"><label>Phone number *</label><input id="spPhone" placeholder="0244000000"/></div>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Email address</label><input id="spEmail" placeholder="info@supplier.gh" type="email"/></div>
+        <div class="field"><label>Location / address</label><input id="spLoc" placeholder="e.g. Accra, Ghana"/></div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn" id="clrSup">Clear</button>
+        <button class="btn bor" id="addSupBtn">Add supplier</button>
+      </div>
+    </div>`:''}
+
+    ${st==='delivery'?`
+    <div class="sec"><div class="sh o"><h3>Record new delivery</h3></div>
+      ${D.suppliers.length===0?`<div class="alert awn">No suppliers yet — add a supplier first.</div>`:''}
+      <div class="g2">
+        <div class="field"><label>Supplier *</label>
+          <select id="dlSupId"><option value="">Select supplier…</option>${D.suppliers.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select>
+        </div>
+        <div class="field"><label>Medicine *</label>
+          <select id="dlInvId"><option value="">Select medicine…</option>${D.inventory.map(i=>`<option value="${i.id}">${esc(i.name)}</option>`).join('')}</select>
+        </div>
+      </div>
+      <div class="field"><label>Product type *</label>
+        <select id="dlType">${['OTC / General','Prescription (POM)','Herbal','Specialist','Supplement','Medical Device','Consumable'].map(t=>`<option>${t}</option>`).join('')}</select>
+      </div>
+      <div class="g3">
+        <div class="field"><label>Qty supplied *</label><input id="dlQty" type="number" min="1" placeholder="e.g. 100"/></div>
+        <div class="field"><label>Unit price (GH₵) *</label><input id="dlCost" type="number" step="0.01" min="0" placeholder="e.g. 1.50"/></div>
+        <div class="field"><label>Date received *</label><input id="dlDate" type="date" value="${TODAY}"/></div>
+      </div>
+      <div style="background:#E1F5EE;border-radius:8px;padding:10px 14px;font-size:14px;color:#085041;font-weight:600;margin-bottom:12px">✅ Recording a delivery automatically adds the quantity to the medicine's stock.</div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn bor" id="recDelBtn">Record delivery &amp; update stock</button>
+      </div>
+    </div>`:''}
+  `;
+}
+
+/* ── LOGINS ── */
+function loginsPage(){
+  return`<div class="sec"><div class="sh"><h3>Staff login log</h3></div><div class="tw"><table><thead><tr><th>User</th><th>Role</th><th>Login time</th></tr></thead><tbody>
+    ${[...D.logins].reverse().map(l=>{const u=USERS.find(u=>u.email===l.user)||{role:'staff'};return`<tr><td style="font-weight:700">${esc(l.user)}</td><td><span class="${u.role==='manager'?'rm':'rs'}">${u.role==='manager'?'Manager':'Staff'}</span></td><td style="font-family:monospace;font-size:13px;color:#666">${l.time}</td></tr>`;}).join('')}
+  </tbody></table></div></div>`;
+}
+
+/* ── BACKUP ── */
+function backupPage(){
+  return`
+    <div class="sec"><div class="sh"><h3>Download full Excel backup</h3></div>
+      <p style="font-size:14px;color:#555;margin-bottom:13px;font-weight:500">Downloads a complete <strong>.xlsx workbook</strong> — Inventory · All Transactions · Suppliers · Login Log · Activity Log.</p>
+      <button class="btn bgn" id="xlFullBtn2">⬇ Download full MediTrack Excel backup</button>
+    </div>
+    <div class="sec"><div class="sh"><h3>Activity log (${D.log.length} events)</h3><button class="btn bsm bgr" id="clrLog">Clear log</button></div>
+      <div class="blog">${D.log.length===0?'No activity yet.':D.log.map(e=>`<div><span style="color:#378ADD">[${e.ts}]</span> <span style="color:#3B6D11">${esc(e.action)}</span>${e.detail?' — '+esc(e.detail):''} <span style="color:#888">(${esc(e.user)})</span></div>`).join('')}</div>
+    </div>`;
+}
+
+/* ── ACCOUNT ── */
+function accountPage(){
+  const mgr=D.user.role==='manager';
+  const staffUsers=USERS.filter(u=>u.uid!==D.user.uid);
+
+  if(mgr){
+    /* ── MANAGER VIEW ── */
+    return`
+      <!-- Staff accounts list -->
+      <div class="sec"><div class="sh p"><h3>👥 Staff accounts (${staffUsers.length})</h3>
+        <button class="btn bbl bsm" id="showCreateStaff">+ Create new staff account</button>
+      </div>
+      ${staffUsers.length===0?`<div style="color:#888;font-size:14px;font-weight:500;padding:8px 0">No staff accounts yet.</div>`:
+        `<div class="tw"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+          ${staffUsers.map(u=>{
+            const blocked=(D.blockedUsers||[]).includes(u.uid);
+            return`<tr ${blocked?'style="opacity:0.6"':''}>
+              <td style="font-weight:700">${esc(u.name)}</td>
+              <td style="font-size:13px;color:#666">${esc(u.email||'')}</td>
+              <td><span class="${u.role==='manager'?'rm':'rs'}">${u.role==='manager'?'Manager':'Staff'}</span></td>
+              <td><span class="tag ${blocked?'tlo':'tok'}">${blocked?'🚫 Suspended':'✅ Active'}</span></td>
+              <td style="display:flex;gap:6px;flex-wrap:wrap">
+                <button class="btn bsm bpu" data-editstaff="${esc(u.uid)}">Edit</button>
+                <button class="btn bsm bam" data-resetstaff="${esc(u.email||'')}">Send reset link</button>
+                <button class="btn bsm ${blocked?'btl':'bam'}" data-suspendstaff="${esc(u.uid)}">${blocked?'Unsuspend':'Suspend'}</button>
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody></table></div>`}
+      <div class="alert ain" style="margin-top:10px;font-size:13px">Suspending blocks access instantly. Fully deleting an account requires the Firebase Console (Authentication tab), since that action isn't available from the app itself.</div>
+      </div>
+
+      <!-- Create new staff account form (hidden by default) -->
+      <div class="sec" id="createStaffForm" style="display:none;max-width:500px"><div class="sh p"><h3>➕ Create new staff account</h3></div>
+        <div class="field"><label>Full name *</label><input type="text" id="newStaffName" placeholder="e.g. Kwame Asante"/></div>
+        <div class="field"><label>Email *</label><input type="email" id="newStaffEmail" placeholder="staff@example.com"/></div>
+        <div class="field"><label>Role *</label>
+          <select id="newStaffRole">
+            <option value="staff">Staff</option>
+            <option value="manager">Manager</option>
+          </select>
+        </div>
+        <div class="field"><label>Temporary password * (min 6 characters)</label><input type="password" id="newStaffPass" placeholder="Set a temporary password"/></div>
+        <div class="field"><label>Confirm password *</label><input type="password" id="newStaffPassC" placeholder="Repeat password"/></div>
+        <div class="alert ain" style="font-size:13px">Share this temporary password with them directly — they should change it on first login (Account → Change my password), or you can send them a reset link anytime from the staff list.</div>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="btn bgn" id="createStaffBtn">Create account</button>
+          <button class="btn bgr" id="cancelCreateStaff">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Edit staff (name/role only — passwords are never editable by anyone but the account owner) -->
+      <div class="sec" id="editStaffForm" style="display:none;max-width:500px"><div class="sh p"><h3 id="editStaffTitle">✏️ Edit staff account</h3></div>
+        <input type="hidden" id="editStaffUid"/>
+        <div class="field"><label>Full name</label><input type="text" id="editStaffName" placeholder="Full name"/></div>
+        <div class="field"><label>Role</label>
+          <select id="editStaffRole">
+            <option value="staff">Staff</option>
+            <option value="manager">Manager</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="btn bbl" id="saveStaffEdit">Save changes</button>
+          <button class="btn bgr" id="cancelStaffEdit">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Manager's own password -->
+      <div class="sec" style="max-width:500px"><div class="sh p"><h3>🔒 Change my password</h3></div>
+        <div class="field"><label>Current password</label><input type="password" id="pwCur" placeholder="Enter current password"/></div>
+        <div class="field"><label>New password (min 6 characters)</label><input type="password" id="pwNew" placeholder="New password"/></div>
+        <div class="field"><label>Confirm new password</label><input type="password" id="pwCon" placeholder="Repeat new password"/></div>
+        <button class="btn bpu" id="pwSave">Update my password</button>
+      </div>`;
+  }
+
+  /* ── STAFF VIEW — password change only ── */
+  return`
+    <div class="alert ain" style="margin-bottom:1rem">
+      👤 Logged in as <strong>${esc(D.user.name)}</strong> (${esc(D.user.email||'')}). You can update your password below. To change your name or role, contact the Manager.
+    </div>
+
+    <div class="sec" style="max-width:500px"><div class="sh p"><h3>🔒 Change my password</h3></div>
+      <div class="field"><label>Current password</label><input type="password" id="pwCur" placeholder="Enter current password"/></div>
+      <div class="field"><label>New password (min 6 characters)</label><input type="password" id="pwNew" placeholder="New password"/></div>
+      <div class="field"><label>Confirm new password</label><input type="password" id="pwCon" placeholder="Repeat new password"/></div>
+      <button class="btn bpu" id="pwSave">Update password</button>
+    </div>`;
+}
+
+/* ── END-OF-DAY REPORT ── */
+function buildEOD(date){
+  const txns=D.transactions.filter(t=>t.date===date&&!t.voided);
+  const allTxns=D.transactions.filter(t=>t.date===date);
+  const voided=allTxns.filter(t=>t.voided);
+  const total=txns.reduce((s,t)=>s+t.total,0);
+
+  // Top selling items
+  const itemMap={};
+  txns.forEach(t=>t.items.forEach(i=>{
+    if(!itemMap[i.name])itemMap[i.name]={name:i.name,qty:0,revenue:0};
+    itemMap[i.name].qty+=i.qty;
+    itemMap[i.name].revenue+=i.price*i.qty;
+  }));
+  const topItems=Object.values(itemMap).sort((a,b)=>b.revenue-a.revenue).slice(0,5);
+
+  // Staff performance
+  const staffMap={};
+  txns.forEach(t=>{
+    if(!staffMap[t.staff])staffMap[t.staff]={name:t.staff,sales:0,revenue:0};
+    staffMap[t.staff].sales++;
+    staffMap[t.staff].revenue+=t.total;
+  });
+  const staffPerf=Object.values(staffMap).sort((a,b)=>b.revenue-a.revenue);
+
+  return{date,txns,voided,total,topItems,staffPerf,txnCount:txns.length};
+}
+
+function renderEOD(date){
+  const r=buildEOD(date);
+  if(!r.txnCount&&!r.voided.length) return`<div style="color:#888;font-size:14px;padding:8px 0">No transactions recorded for ${friendlyDate(date)}.</div>`;
+  return`
+    <div class="eod-card">
+      <div style="font-weight:800;font-size:16px;color:#0C447C;margin-bottom:10px">📅 ${friendlyDate(date)}</div>
+      <div class="eod-stat"><span>Total transactions</span><span>${r.txnCount}</span></div>
+      ${r.voided.length?`<div class="eod-stat"><span>Voided transactions</span><span style="color:#791F1F">${r.voided.length}</span></div>`:''}
+      <div class="eod-stat"><span>Total revenue</span><span style="color:#0F6E56">${cur(r.total)}</span></div>
+    </div>
+    ${r.topItems.length?`<div class="eod-card">
+      <div style="font-weight:700;font-size:14px;color:#0C447C;margin-bottom:8px">🏆 Top selling items</div>
+      ${r.topItems.map((i,n)=>`<div class="eod-stat"><span>${n+1}. ${esc(i.name)}</span><span>${i.qty} units · ${cur(i.revenue)}</span></div>`).join('')}
+    </div>`:''}
+    ${r.staffPerf.length?`<div class="eod-card">
+      <div style="font-weight:700;font-size:14px;color:#0C447C;margin-bottom:8px">👥 Staff performance</div>
+      ${r.staffPerf.map(s=>`<div class="eod-stat"><span>${esc(s.name)}</span><span>${s.sales} sale(s) · ${cur(s.revenue)}</span></div>`).join('')}
+    </div>`:''}`;
+}
+
+function exportEODExcel(date){
+  if(typeof XLSX==='undefined'){showAlert('Excel library loading…','aw');return;}
+  const r=buildEOD(date);
+  const wb=XLSX.utils.book_new();
+  const ph=D.pharmacy||{};
+
+  // Summary sheet
+  const sum=[
+    [ph.name||"God's Will OTC"],['End-of-Day Report — '+friendlyDate(date)],['Generated: '+ts()],[],
+    ['SUMMARY'],['Total transactions',r.txnCount],['Voided transactions',r.voided.length],['Total revenue (GH₵)',r.total],[],
+    ['TOP SELLING ITEMS'],['Item','Units Sold','Revenue (GH₵)'],
+    ...r.topItems.map(i=>[i.name,i.qty,i.revenue]),[],
+    ['STAFF PERFORMANCE'],['Staff','Sales','Revenue (GH₵)'],
+    ...r.staffPerf.map(s=>[s.name,s.sales,s.revenue]),
+  ];
+  const ws1=XLSX.utils.aoa_to_sheet(sum);
+  ws1['!cols']=[{wch:30},{wch:15},{wch:18}];
+  XLSX.utils.book_append_sheet(wb,ws1,'Summary');
+
+  // Transactions sheet
+  const txnRows=[['TXN ID','Time','Items','Total','Staff','Customer']];
+  r.txns.forEach(t=>txnRows.push([t.id,t.time||'',t.items.map(i=>i.name+' ×'+i.qty).join(', '),t.total,t.staff,t.customer||'']));
+  const ws2=XLSX.utils.aoa_to_sheet(txnRows);
+  ws2['!cols']=[{wch:10},{wch:10},{wch:40},{wch:12},{wch:15},{wch:20}];
+  XLSX.utils.book_append_sheet(wb,ws2,'Transactions');
+
+  XLSX.writeFile(wb,'MediTrack_EOD_'+date+'.xlsx');
+  addLog('EOD report exported',date);autoSave();
+  showAlert('End-of-day report downloaded.','ok');
+}
+
+function printEOD(date){
+  const r=buildEOD(date);
+  const ph=D.pharmacy||{};
+  const pa=document.getElementById('pzone');pa.style.display='block';
+  pa.innerHTML=`<div style="max-width:680px;margin:0 auto;font-family:Arial,sans-serif;font-size:14px">
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:22px;font-weight:800">${ph.name||"God's Will OTC"}</div>
+      <div style="font-size:16px;font-weight:700;margin-top:4px">End-of-Day Report</div>
+      <div style="color:#555;margin-top:3px">${friendlyDate(date)}</div>
+      <div style="color:#888;font-size:12px">Printed: ${ts()}</div>
+    </div>
+    <hr style="border:none;border-top:2px solid #185FA5;margin:12px 0"/>
+    <table style="width:100%;margin-bottom:16px"><tr><td style="font-size:15px;font-weight:700">Total transactions:</td><td style="text-align:right;font-size:15px;font-weight:700">${r.txnCount}</td></tr>
+    <tr><td style="font-size:15px;font-weight:700">Total revenue:</td><td style="text-align:right;font-size:18px;font-weight:800;color:#0C447C">${cur(r.total)}</td></tr></table>
+    ${r.topItems.length?`<div style="font-weight:700;margin-bottom:6px">🏆 Top selling items</div>
+    <table style="width:100%;margin-bottom:16px;font-size:13px"><tr style="font-weight:700"><td>Item</td><td style="text-align:right">Units</td><td style="text-align:right">Revenue</td></tr>
+    ${r.topItems.map(i=>`<tr><td>${i.name}</td><td style="text-align:right">${i.qty}</td><td style="text-align:right">${cur(i.revenue)}</td></tr>`).join('')}</table>`:''}
+    ${r.staffPerf.length?`<div style="font-weight:700;margin-bottom:6px">👥 Staff performance</div>
+    <table style="width:100%;font-size:13px"><tr style="font-weight:700"><td>Staff</td><td style="text-align:right">Sales</td><td style="text-align:right">Revenue</td></tr>
+    ${r.staffPerf.map(s=>`<tr><td>${s.name}</td><td style="text-align:right">${s.sales}</td><td style="text-align:right">${cur(s.revenue)}</td></tr>`).join('')}</table>`:''}
+  </div>`;
+  setTimeout(()=>{window.print();setTimeout(()=>{pa.style.display='none';pa.innerHTML='';},500);},100);
+}
+
+
+function settingsPage(){
+  const ph=D.pharmacy||{};
+  const today=getToday();
+  return`
+    <div class="sec" style="max-width:520px"><div class="sh"><h3>🏥 Pharmacy details (shown on receipts)</h3></div>
+      <div class="field"><label>Pharmacy name *</label><input id="phName" value="${esc(ph.name||"God's Will OTC")}" placeholder="Your pharmacy name"/></div>
+      <div class="field"><label>Address</label><input id="phAddr" value="${esc(ph.address||'')}" placeholder="Street, city"/></div>
+      <div class="g2">
+        <div class="field"><label>Phone number</label><input id="phPhone" value="${esc(ph.phone||'')}" placeholder="0244000000"/></div>
+        <div class="field"><label>Email</label><input id="phEmail" value="${esc(ph.email||'')}" placeholder="pharmacy@email.com"/></div>
+      </div>
+      <button class="btn bbl" id="savePharmacy">Save pharmacy details</button>
+    </div>
+
+    <div class="sec" style="max-width:520px"><div class="sh"><h3>🌙 Display</h3></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0">
+        <div>
+          <div style="font-weight:700;font-size:15px">Dark mode</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:3px">Easier on the eyes at night</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="darkToggle" ${D.darkMode?'checked':''} style="display:none"/>
+          <div class="toggle ${D.darkMode?'on':''}"></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="sec"><div class="sh o"><h3>📊 End-of-day report</h3></div>
+      <div class="field"><label>Select date</label>
+        <input type="date" id="eodDate" value="${D.reportDate||today}" max="${today}"/>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn bbl" id="eodViewBtn">View report</button>
+        <button class="btn bgn" id="eodExcelBtn">⬇ Export Excel</button>
+        <button class="btn bpu" id="eodPrintBtn">🖨 Print report</button>
+      </div>
+      <div id="eodReport" style="margin-top:1rem"></div>
+    </div>
+
+    <div class="sec"><div class="sh"><h3>Auto-save &amp; session</h3></div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:14px;padding:9px 15px;border-radius:8px;background:#E1F5EE;color:#085041;margin-bottom:8px;font-weight:600"><span class="sdot"></span>Auto-save active · Last synced: <strong>${D.lastSaved||'—'}</strong></div>
+      <div style="font-size:14px;color:var(--text-muted);font-weight:500;margin-bottom:12px">⏱ <strong>3 minutes</strong> of no activity on the page → auto logout. <strong>5 minutes</strong> away from the site (tab switch, phone lock) → auto logout. Any interaction resets the timer.</div>
+      <button class="btn bbl" id="manSave">Save now</button>
+    </div>
+    <div class="rzone">
+      <h4>⚠ Reset entire system</h4>
+      <p>Permanently erases <strong>all</strong> inventory, transactions, suppliers, logins and logs. The site will be completely blank. This cannot be undone.</p>
+      <button class="btn bda" id="resetBtn">Clear everything &amp; start fresh</button>
+    </div>
+
+    ${D.showResetDialog?`<div class="mwrap"><div class="modal">
+      <h3 class="o">⚠ Confirm System Reset</h3>
+      <div class="alert aer" style="margin-bottom:1rem">This will permanently delete ALL data — inventory, sales, transactions, suppliers, users and logs. The system will be completely blank.</div>
+      ${D.resetStep===1?`
+        <p style="font-size:14px;font-weight:600;margin-bottom:1rem">Step 1 of 2 — Are you absolutely sure you want to delete everything?</p>
+        <div style="display:flex;gap:8px">
+          <button class="btn bda" id="resetConfirm1">Yes, I want to delete everything</button>
+          <button class="btn" id="resetCancel">Cancel</button>
+        </div>`:''}
+      ${D.resetStep===2?`
+        <p style="font-size:14px;font-weight:600;margin-bottom:1rem">Step 2 of 2 — Enter your Manager password to confirm:</p>
+        <div class="field"><input type="password" id="resetPwd" placeholder="Enter your password"/></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn bda" id="resetConfirm2">Delete all data now</button>
+          <button class="btn" id="resetCancel">Cancel</button>
+        </div>`:''}
+    </div></div>`:''}
+`; // end settingsPage return
+}
+
+/* ── MODALS ── */
+function receiptModal(){
+  const t=D.transactions.find(x=>x.id===D.receipt);
+  if(!t) return`<div class="mwrap"><div class="modal">
+    <h3>Receipt</h3>
+    <div class="alert awn">Receipt data could not be loaded. Please close and try again.</div>
+    <div style="margin-top:13px;display:flex;gap:8px;justify-content:center">
+      <button class="btn bgr" id="closeR">Close</button>
+    </div>
+  </div></div>`;
+  const ph=D.pharmacy||{};
+  return`<div class="mwrap"><div class="modal">
+    <h3>Receipt — ${t.id}${t.voided?'<span class="tag tlo" style="margin-left:8px">VOIDED</span>':''}</h3>
+    <div style="text-align:center;margin-bottom:13px">
+      <div style="font-weight:800;font-size:17px">${esc(ph.name||"God's Will OTC")}</div>
+      ${ph.address?`<div style="font-size:12px;color:#888;margin-top:2px">${esc(ph.address)}</div>`:''}
+      ${ph.phone?`<div style="font-size:12px;color:#888">Tel: ${esc(ph.phone)}</div>`:''}
+      <div style="font-size:13px;color:#666;font-weight:500;margin-top:6px">${t.date} at ${t.time||''} · ${esc(t.staff)}</div>
+      ${t.customer?`<div style="font-size:13px;color:#555;font-weight:600;margin-top:3px">Customer: ${esc(t.customer)}</div>`:''}
+    </div>
+    <div style="background:#E6F1FB;border-radius:9px;padding:13px">
+      ${t.items.map(i=>`<div class="rrow"><span>${esc(i.name)} × ${i.qty}</span><span style="font-weight:700">${cur(i.price*i.qty)}</span></div>`).join('')}
+      <div class="rtot"><span>Total paid</span><span>${cur(t.total)}</span></div>
+    </div>
+    <div style="text-align:center;margin-top:11px;font-size:13px;color:#666;font-weight:500">Thank you for choosing ${esc(ph.name||"God's Will OTC")}!</div>
+    <div style="margin-top:13px;display:flex;gap:8px;justify-content:center">
+      <button class="btn bgr" id="closeR">Close</button>
+      ${!t.voided?`<button class="btn bpu" data-print="${t.id}">🖨 Print receipt</button>`:''}
+    </div>
+  </div></div>`;
+}
+
+function editModal(){
+  const i=D.editItem;
+  return`<div class="mwrap"><div class="modal">
+    <h3>Edit — ${esc(i.name)}</h3>
+    <div class="field"><label>Product name</label><input id="en" value="${esc(i.name)}"/></div>
+    <div class="g2">
+      <div class="field"><label>Category / Type</label><select id="et">${MEDICINE_TYPES.map(t=>`<option ${i.type===t?'selected':''}>${t}</option>`).join('')}</select></div>
+      <div class="field"><label>Price (GH₵)</label><input id="ep" type="number" step="0.01" value="${i.price}"/></div>
+    </div>
+    <div class="g3">
+      <div class="field"><label>Qty in stock</label><input id="eq" type="number" value="${i.qty}"/></div>
+      <div class="field"><label>Min stock level</label><input id="em" type="number" value="${i.minQty}"/></div>
+      <div class="field"><label>Expiry</label><input id="ee" type="month" value="${i.expiry||''}"/></div>
+    </div>
+    <div class="g2">
+      <div class="field"><label>Supplier</label><input id="es" value="${esc(i.supplier||'')}"/></div>
+      <div class="field"><label>Notes</label><input id="en2" value="${esc(i.notes||'')}"/></div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:9px">
+      <button class="btn" id="cancelEdit">Cancel</button>
+      <button class="btn bbl" id="saveEdit">Save changes</button>
+    </div>
+  </div></div>`;
+}
+
+function editSupModal(){
+  const s=D.editSup;
+  return`<div class="mwrap"><div class="modal">
+    <h3 class="o">Edit supplier — ${esc(s.name)}</h3>
+    <div class="field"><label>Supplier name</label><input id="esName" value="${esc(s.name)}"/></div>
+    <div class="g2">
+      <div class="field"><label>Phone</label><input id="esPhone" value="${esc(s.phone)}"/></div>
+      <div class="field"><label>Email</label><input id="esEmail" value="${esc(s.email)}"/></div>
+    </div>
+    <div class="field"><label>Location</label><input id="esLoc" value="${esc(s.location)}"/></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:9px">
+      <button class="btn" id="cancelSupEdit">Cancel</button>
+      <button class="btn bor" id="saveSupEdit">Save changes</button>
+    </div>
+  </div></div>`;
+}
+
+/* ════════════════════════════════════════
+   EVENT BINDING
+════════════════════════════════════════ */
+function attachAll(){
+  const $=id=>document.getElementById(id);
+
+  /* login — Firebase Authentication */
+  const lb=$('loginBtn');
+  if(lb)lb.onclick=()=>{
+    const email=($('ln').value||'').trim();
+    const p=$('lp').value||'';
+    if(!email||!p){showAlert('Enter your email and password.','er');render();return;}
+    lb.disabled=true; lb.textContent='Signing in…';
+    auth.signInWithEmailAndPassword(email,p)
+      .then(cred=>{
+        // onAuthStateChanged (in initFirebase) picks up D.user, role, logging.
+        D.logins.push({user:email,time:ts()});
+        addLog('Login',email+' signed in');autoSave();
+        startIdleTimer();
+        const greet=timeGreeting();
+        const h=new Date().getHours();
+        const icon=h>=5&&h<12?'🌅':h>=12&&h<17?'☀️':'🌙';
+        showAlert(icon+' '+greet+'! Welcome back.','ok');
+        D.tab='dashboard';
+        render();
+      })
+      .catch(e=>{
+        showAlert('Incorrect email or password.','er');
+        render();
+      });
+  };
+
+  /* forgot password — Firebase sends a real reset email, no security questions */
+  const fbtn=$('forgotBtn');
+  if(fbtn)fbtn.onclick=()=>{D.forgotMode=true;D.forgotEmail='';D.alert=null;render();};
+
+  const fpCancel=$('fpCancelBtn');
+  if(fpCancel)fpCancel.onclick=()=>{D.forgotMode=false;D.forgotEmail='';D.alert=null;render();};
+
+  const fpSend=$('fpSendBtn');
+  if(fpSend)fpSend.onclick=()=>{
+    const email=($('fpEmail').value||'').trim();
+    if(!email){showAlert('Enter your email address.','er');render();return;}
+    fpSend.disabled=true; fpSend.textContent='Sending…';
+    auth.sendPasswordResetEmail(email)
+      .then(()=>{
+        showAlert('✅ If an account exists for that email, a reset link has been sent.','ok');
+        D.forgotMode=false;
+        render();
+      })
+      .catch(e=>{
+        // Same message regardless of whether the email exists, to avoid leaking which emails have accounts
+        showAlert('✅ If an account exists for that email, a reset link has been sent.','ok');
+        D.forgotMode=false;
+        render();
+      });
+  };
+
+  const lo=$('logoutBtn');
+  if(lo)lo.onclick=()=>{
+    addLog('Logout',D.user.name+' signed out');autoSave();
+    stopIdleTimer();
+    auth.signOut();
+    D.tab='dashboard';D.cart=[];D.searchQ='';D.showSearch=false;render();
+  };
+
+  /* tabs */
+  /* ── Sidebar navigation ── */
+  const menuBtn=$('menuBtn');
+  if(menuBtn)menuBtn.onclick=(e)=>{
+    e.stopPropagation();
+    D.sidebarOpen=!D.sidebarOpen;
+    const sb=document.getElementById('sidebar');
+    const ov=document.getElementById('sidebar-overlay');
+    if(sb)sb.classList.toggle('open',D.sidebarOpen);
+    if(ov)ov.classList.toggle('open',D.sidebarOpen);
+  };
+
+  // Close sidebar on overlay click
+  const ovEl=document.getElementById('sidebar-overlay');
+  if(ovEl)ovEl.onclick=()=>{
+    D.sidebarOpen=false;
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+  };
+
+  // Sidebar nav items
+  document.querySelectorAll('[data-stab]').forEach(b=>b.onclick=()=>{
+    D.tab=b.dataset.stab;
+    D.sidebarOpen=false;
+    D.searchQ='';D.showSearch=false;
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+    render();
+  });
+
+  // Sidebar sign out button
+  const lbSide=$('logoutBtnSide');
+  if(lbSide)lbSide.onclick=()=>{
+    addLog('Logout',D.user.name+' signed out');autoSave();
+    D.user=null;D.cart=[];D.tab='dashboard';D.sidebarOpen=false;
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+    render();
+  };
+  document.querySelectorAll('[data-it]').forEach(t=>t.onclick=()=>{D.invTab=t.dataset.it;render();});
+  document.querySelectorAll('[data-st]').forEach(t=>t.onclick=()=>{D.supTab=t.dataset.st;render();});
+
+  /* search */
+  const si=$('searchInput');
+  if(si){
+    si.oninput=function(){
+      D.searchQ=this.value;D.showSearch=this.value.trim().length>0;
+      const drop=$('searchDrop');const wrap=$('searchWrap');
+      if(D.showSearch){
+        const res=searchResults();const q=D.searchQ;
+        const html=res.length===0?`<div class="sdnone">No results for "${esc(q)}"</div>`:
+          res.map(i=>`<div class="sdi" data-sid="${i.id}" style="cursor:pointer">
+            <div><div class="sdn">${hl(i.name,q)}</div><div class="sdm">${esc(i.type)} · Stock: <b>${i.qty}</b> · ${esc(i.supplier||'')}</div></div>
+            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+              <span class="sdp">${cur(i.price)}</span>
+              ${D.tab==='sales'&&i.qty>0?`<button class="btn bsm btl" data-sadd="${i.id}">+ Add</button>`:''}
+            </div>
+          </div>`).join('');
+        if(drop)drop.innerHTML=html;
+        else if(wrap){const nd=document.createElement('div');nd.className='sdrop';nd.id='searchDrop';nd.innerHTML=html;wrap.appendChild(nd);}
+        document.querySelectorAll('[data-sid]').forEach(el=>el.onclick=()=>{D.showSearch=false;D.tab='sales';render();});
+        document.querySelectorAll('[data-sadd]').forEach(el=>el.onclick=ev=>{
+          ev.stopPropagation();
+          const id=+el.dataset.sadd;const item=D.inventory.find(i=>i.id===id);
+          if(!item||item.qty===0){showAlert('Out of stock.','er');return;}
+          const ex=D.cart.find(c=>c.id===id);
+          if(ex){if(ex.qty<item.qty)ex.qty++;else{showAlert('Not enough stock.','er');return;}}
+          else D.cart.push({...item,qty:1});
+          D.showSearch=false;D.tab='sales';showAlert(item.name+' added.','ok');render();
+        });
+      }else{if(drop)drop.remove();}
+    };
+    si.onfocus=function(){if(D.searchQ.trim()){D.showSearch=true;si.oninput&&si.oninput.call(si);}};
+    si.onkeydown=function(e){if(e.key==='Escape'){D.searchQ='';D.showSearch=false;render();}};
+  }
+  const sc=$('searchClear');if(sc)sc.onclick=()=>{D.searchQ='';D.showSearch=false;render();};
+  document.addEventListener('click',function h(e){const w=document.getElementById('searchWrap');if(w&&!w.contains(e.target)){const d=document.getElementById('searchDrop');if(d){d.remove();D.showSearch=false;}document.removeEventListener('click',h);}});
+
+  /* clear all inventory */
+  const cai=$('clearAllInvBtn');
+  if(cai)cai.onclick=()=>{
+    if(!confirm('⚠ Clear ALL inventory? Every medicine will be removed. Cannot be undone.'))return;
+    if(!confirm('Final confirmation — all '+D.inventory.length+' medicines will be permanently deleted.'))return;
+    D.inventory=[];D.nextId=1;addLog('Inventory cleared','All medicines removed');autoSave();
+    showAlert('All inventory cleared.','ok');render();
+  };
+
+  /* add medicine */
+  const nn=$('nn');if(nn)nn.oninput=e=>{D.newMed.name=e.target.value;const v=e.target.value.toLowerCase().trim();D.dupWarn=v.length>2&&D.inventory.some(i=>i.name.toLowerCase().includes(v));};
+  const an=$('addNew');
+  if(an)an.onclick=()=>{
+    const nm=($('nn').value||'').trim();
+    const ty=D.invTypeFilter||MEDICINE_TYPES[0]; // type comes from selected category tab
+    const pr=parseFloat($('np').value);
+    const qt=parseInt($('nq').value);
+    const mn=parseInt($('nm').value);
+    const sp=($('ns').value||'').trim();
+    const ex=$('ne').value||'';
+    const nt=($('no').value||'').trim();
+    if(!nm){showAlert('Enter a product name.','er');render();return;}
+    if(isNaN(pr)||pr<0){showAlert('Enter a valid price.','er');render();return;}
+    if(isNaN(qt)||qt<0){showAlert('Enter a valid quantity.','er');render();return;}
+    if(isNaN(mn)||mn<0){showAlert('Enter a min stock level.','er');render();return;}
+    if(D.inventory.find(i=>i.name.toLowerCase()===nm.toLowerCase())){showAlert('"'+nm+'" already exists.','er');render();return;}
+    D.inventory.push({id:D.nextId++,name:nm,type:ty,price:pr,qty:qt,minQty:mn,supplier:sp,expiry:ex,notes:nt});
+    addLog('Added product',nm+' ('+ty+')');saveNow();
+    D.newMed={name:'',type:ty,price:'',qty:'',minQty:'',supplier:'',expiry:'',notes:''};D.dupWarn=false;
+    showAlert('"'+nm+'" added to '+ty+'.','ok');D.invTab='list';render();
+  };
+  const cn=$('clrNew');if(cn)cn.onclick=()=>{D.newMed={name:'',type:D.invTypeFilter||MEDICINE_TYPES[0],price:'',qty:'',minQty:'',supplier:'',expiry:'',notes:''};D.dupWarn=false;render();};
+
+  document.querySelectorAll('[data-restock]').forEach(b=>b.onclick=()=>{
+    const item=D.inventory.find(i=>i.id===+b.dataset.restock);
+    const a=prompt('Restock "'+item.name+'" (current: '+item.qty+')\nQty to add:');
+    const n=parseInt(a);if(!isNaN(n)&&n>0){item.qty+=n;addLog('Restock','"'+item.name+'" +'+n);saveNow();showAlert('+'+n+' added. Stock: '+item.qty,'ok');render();}
+  });
+  document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{D.editItem={...D.inventory.find(i=>i.id===+b.dataset.edit)};render();});
+  const se=$('saveEdit');
+  if(se)se.onclick=()=>{
+    const it=D.inventory.find(i=>i.id===D.editItem.id);
+    it.name=$('en').value.trim()||it.name;
+    it.type=$('et').value;
+    it.price=parseFloat($('ep').value)||it.price;
+    it.qty=parseInt($('eq').value)||0;
+    it.minQty=parseInt($('em').value)||0;
+    it.supplier=$('es').value.trim();
+    it.expiry=$('ee').value;
+    it.notes=($('en2')?.value||'').trim();
+    addLog('Edited product',it.name+' ('+it.type+')');saveNow();
+    D.editItem=null;showAlert('✅ Product updated.','ok');render();
+  };
+  const ce=$('cancelEdit');if(ce)ce.onclick=()=>{D.editItem=null;render();};
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+    const it=D.inventory.find(i=>i.id===+b.dataset.del);
+    if(confirm('Remove "'+it.name+'"?')){D.inventory=D.inventory.filter(i=>i.id!==+b.dataset.del);addLog('Removed',it.name);saveNow();showAlert('Removed.','ok');render();}
+  });
+
+  /* sales */
+  document.querySelectorAll('[data-ac]').forEach(b=>b.onclick=()=>{
+    const id=+b.dataset.ac,item=D.inventory.find(i=>i.id===id);
+    const ex=D.cart.find(c=>c.id===id);
+    if(ex){if(ex.qty<item.qty)ex.qty++;else{showAlert('Not enough stock.','er');render();return;}}
+    else D.cart.push({...item,qty:1});render();
+  });
+  document.querySelectorAll('[data-inc]').forEach(b=>b.onclick=()=>{const id=+b.dataset.inc,item=D.inventory.find(i=>i.id===id),c=D.cart.find(c=>c.id===id);if(c.qty<item.qty)c.qty++;else showAlert('Not enough stock.','er');render();});
+  document.querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=>{const id=+b.dataset.dec,c=D.cart.find(c=>c.id===id);if(c.qty>1)c.qty--;else D.cart=D.cart.filter(x=>x.id!==id);render();});
+  document.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{D.cart=D.cart.filter(c=>c.id!==+b.dataset.rm);render();});
+  const cc=$('clrCart');if(cc)cc.onclick=()=>{D.cart=[];render();};
+  const co=$('checkout');
+  if(co)co.onclick=()=>{
+    if(!D.cart.length){showAlert('Add items first.','er');render();return;}
+    const today=getToday(); // always recalculate — handles midnight rollover
+    const custInput=$('custName');
+    const customer=(custInput?custInput.value:'').trim();
+    const id='TXN'+String(D.nextTxn++).padStart(3,'0');
+    const items=D.cart.map(c=>({name:c.name,qty:c.qty,price:c.price}));
+    const total=parseFloat(D.cart.reduce((s,c)=>s+(c.price*c.qty),0).toFixed(2));
+    D.cart.forEach(c=>{const inv=D.inventory.find(i=>i.id===c.id);if(inv)inv.qty-=c.qty;});
+    D.transactions.push({id,date:today,time:hm(),items,total,staff:D.user.name,customer,voided:false});
+    D.custName='';
+    addLog('Sale completed',id+' '+cur(total)+' by '+D.user.name+(customer?' for '+customer:''));saveNow();
+    D.cart=[];D.receipt=id;showAlert('Sale '+id+' recorded!','ok');render();
+  };
+
+  /* inventory type filter */
+  document.querySelectorAll('[data-itf]').forEach(b=>b.onclick=()=>{D.invTypeFilter=b.dataset.itf;render();});
+
+  /* sales type filter */
+  document.querySelectorAll('[data-stf]').forEach(b=>b.onclick=()=>{D.salesTypeFilter=b.dataset.stf;render();});
+
+  /* customer name live save */
+  const custNameEl=$('custName');if(custNameEl)custNameEl.oninput=()=>{D.custName=custNameEl.value;};
+  document.querySelectorAll('[data-receipt]').forEach(b=>b.onclick=()=>{D.receipt=b.dataset.receipt;render();});
+  const cr=$('closeR');if(cr)cr.onclick=()=>{D.receipt=null;render();};
+  document.querySelectorAll('[data-print]').forEach(b=>b.onclick=()=>printReceipt(b.dataset.print));
+
+  /* void transaction */
+  document.querySelectorAll('[data-void]').forEach(b=>b.onclick=()=>{
+    const id=b.dataset.void;
+    const t=D.transactions.find(x=>x.id===id);if(!t)return;
+    if(!confirm('Void transaction '+id+'?\nThis will return items to stock. Cannot be undone.'))return;
+    t.voided=true;
+    t.items.forEach(item=>{const inv=D.inventory.find(i=>i.name===item.name);if(inv)inv.qty+=item.qty;});
+    addLog('Transaction voided',id+' by '+D.user.name);saveNow();
+    showAlert('Transaction '+id+' voided and stock restored.','ok');render();
+  });
+
+  /* reorder / low stock export */
+  const reb=$('reorderExportBtn');if(reb)reb.onclick=()=>exportReorderExcel();
+  const lsb=$('lowStockExportBtn');if(lsb)lsb.onclick=()=>exportReorderExcel();
+
+  /* pharmacy settings save */
+  const sph=$('savePharmacy');
+  if(sph)sph.onclick=()=>{
+    const n=($('phName').value||'').trim();
+    if(!n){showAlert('Pharmacy name cannot be empty.','er');return;}
+    D.pharmacy={name:n,address:($('phAddr').value||'').trim(),phone:($('phPhone').value||'').trim(),email:($('phEmail').value||'').trim()};
+    addLog('Pharmacy details updated',n);autoSave();showAlert('Pharmacy details saved. Receipts will now show "'+n+'".','ok');render();
+  };
+
+  /* dark mode toggle */
+  const dmt=$('darkToggle');
+  if(dmt)dmt.onchange=()=>{
+    D.darkMode=dmt.checked;
+    localStorage.setItem('mt_dark',D.darkMode?'1':'0');
+    document.documentElement.classList.toggle('dark',D.darkMode);
+    const tog=dmt.nextElementSibling;if(tog)tog.classList.toggle('on',D.darkMode);
+  };
+
+  /* EOD report */
+  const eodV=$('eodViewBtn');const eodE=$('eodExcelBtn');const eodP=$('eodPrintBtn');const eodD=$('eodDate');
+  if(eodV)eodV.onclick=()=>{
+    const date=(eodD?eodD.value:'')||getToday();D.reportDate=date;
+    const rpt=$('eodReport');if(rpt)rpt.innerHTML=renderEOD(date);
+  };
+  if(eodE)eodE.onclick=()=>exportEODExcel((eodD?eodD.value:'')||getToday());
+  if(eodP)eodP.onclick=()=>printEOD((eodD?eodD.value:'')||getToday());
+
+  /* barcode scanner */
+  const obtn=$('openBarcode');
+  if(obtn)obtn.onclick=()=>openBarcodeScanner();
+  const cbtn=$('closeBarcodeBtn');
+  if(cbtn)cbtn.onclick=()=>closeBarcodeScanner();
+  const bsearch=$('barcodeSearch');
+  if(bsearch){
+    bsearch.oninput=()=>{
+      const q=(bsearch.value||'').toLowerCase().trim();
+      const sug=$('barcodeSuggestions');
+      if(!sug)return;
+      if(!q){sug.innerHTML='';return;}
+      const matches=D.inventory.filter(i=>i.name.toLowerCase().includes(q)&&i.qty>0).slice(0,6);
+      sug.innerHTML=matches.map(i=>`<div data-bac="${i.id}" style="padding:10px 14px;cursor:pointer;font-size:14px;font-weight:600;border-bottom:1px solid #eee">${esc(i.name)} — ${cur(i.price)} (${i.qty} in stock)</div>`).join('');
+      sug.querySelectorAll('[data-bac]').forEach(b=>b.onclick=()=>{
+        addToCart(+b.dataset.bac);
+        closeBarcodeScanner();
+        showAlert(b.textContent.split('—')[0].trim()+' added to cart.','ok');
+        render();
+      });
+    };
+  }
+
+  /* day excel + print day */
+  document.querySelectorAll('[data-dayxl]').forEach(b=>b.onclick=()=>exportDayExcel(b.dataset.dayxl));
+  document.querySelectorAll('[data-printday]').forEach(b=>b.onclick=()=>{
+    const date=b.dataset.printday;const txns=D.transactions.filter(t=>t.date===date);
+    if(!txns.length){showAlert('No transactions on '+date,'aw');return;}
+    const pa=document.getElementById('pzone');pa.style.display='block';
+    pa.innerHTML=`<div style="font-family:Arial,sans-serif;font-size:14px;max-width:720px;margin:0 auto">
+      <div style="text-align:center;margin-bottom:18px"><div style="font-size:22px;font-weight:800">${D.pharmacy&&D.pharmacy.name?D.pharmacy.name:"God's Will OTC"}</div><div style="font-size:15px;font-weight:700;margin-top:4px">Daily Sales Report — ${friendlyDate(date)}</div><div style="font-size:13px;color:#555">Printed: ${ts()}</div></div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr style="background:#E6F1FB"><th style="padding:8px;text-align:left;border-bottom:2px solid #185FA5">TXN ID</th><th style="padding:8px;border-bottom:2px solid #185FA5">Time</th><th style="padding:8px;border-bottom:2px solid #185FA5">Items</th><th style="padding:8px;text-align:right;border-bottom:2px solid #185FA5">Total</th><th style="padding:8px;border-bottom:2px solid #185FA5">Staff</th></tr></thead>
+      <tbody>${txns.map(t=>`<tr><td style="padding:7px 8px;border-bottom:1px solid #eee;font-family:monospace">${t.id}</td><td style="padding:7px 8px;border-bottom:1px solid #eee">${t.time||''}</td><td style="padding:7px 8px;border-bottom:1px solid #eee">${t.items.map(i=>i.name+' ×'+i.qty).join(', ')}</td><td style="padding:7px 8px;border-bottom:1px solid #eee;text-align:right;font-weight:700">${cur(t.total)}</td><td style="padding:7px 8px;border-bottom:1px solid #eee">${t.staff}</td></tr>`).join('')}</tbody></table>
+      <div style="margin-top:12px;text-align:right;font-size:15px;font-weight:800">Day total: ${cur(txns.reduce((s,t)=>s+t.total,0))}</div></div>`;
+    setTimeout(()=>{window.print();setTimeout(()=>{pa.style.display='none';pa.innerHTML='';},500);},100);
+    addLog('Day printed',date);autoSave();
+  });
+
+  /* my sales filter */
+  const fds=$('fdSel');if(fds)fds.onchange=e=>{D.filterDate=e.target.value;render();};
+  const cfd=$('clrFd');if(cfd)cfd.onclick=()=>{D.filterDate='';render();};
+
+  /* suppliers */
+  const asb=$('addSupBtn');
+  if(asb)asb.onclick=()=>{
+    const nm=($('spName').value||'').trim(),ph=($('spPhone').value||'').trim(),em=($('spEmail').value||'').trim(),lo=($('spLoc').value||'').trim();
+    if(!nm){showAlert('Enter supplier name.','er');render();return;}
+    if(!ph){showAlert('Enter phone number.','er');render();return;}
+    D.suppliers.push({id:D.nextSup++,name:nm,phone:ph,email:em,location:lo,products:[]});
+    addLog('Supplier added',nm);saveNow();showAlert('"'+nm+'" added.','ok');D.supTab='list';render();
+  };
+  const csp=$('clrSup');if(csp)csp.onclick=()=>render();
+
+  const rdb=$('recDelBtn');
+  if(rdb)rdb.onclick=()=>{
+    const supId=parseInt($('dlSupId').value);const invId=parseInt($('dlInvId').value);
+    const type=$('dlType').value;
+    const qty=parseInt($('dlQty').value);const cost=parseFloat($('dlCost').value);const date=$('dlDate').value;
+    if(!supId){showAlert('Select a supplier.','er');render();return;}
+    if(!invId){showAlert('Select a medicine.','er');render();return;}
+    if(isNaN(qty)||qty<1){showAlert('Enter a valid quantity.','er');render();return;}
+    if(isNaN(cost)||cost<0){showAlert('Enter a valid unit price.','er');render();return;}
+    const sup=D.suppliers.find(s=>s.id===supId);const med=D.inventory.find(i=>i.id===invId);
+    sup.products.push({invId,name:med.name,type,qtySupplied:qty,unitCost:cost,totalValue:parseFloat((qty*cost).toFixed(2)),date});
+    med.qty+=qty;
+    addLog('Delivery recorded',sup.name+' → '+qty+' × '+med.name);saveNow();
+    showAlert(qty+' units of "'+med.name+'" from '+sup.name+' added to stock.','ok');D.supTab='list';render();
+  };
+
+  /* supplier excel */
+  const xlsa=$('xlSupAllBtn');if(xlsa)xlsa.onclick=()=>exportSupplierExcel('all');
+  document.querySelectorAll('[data-xlsup]').forEach(b=>b.onclick=()=>exportSupplierExcel(b.dataset.xlsup));
+  document.querySelectorAll('[data-editsup]').forEach(b=>b.onclick=()=>{D.editSup={...D.suppliers.find(s=>s.id===+b.dataset.editsup)};render();});
+  const sse=$('saveSupEdit');
+  if(sse)sse.onclick=()=>{
+    const s=D.suppliers.find(s=>s.id===D.editSup.id);
+    s.name=$('esName').value.trim()||s.name;s.phone=$('esPhone').value.trim();s.email=$('esEmail').value.trim();s.location=$('esLoc').value.trim();
+    addLog('Supplier edited',s.name);autoSave();D.editSup=null;showAlert('Supplier updated.','ok');render();
+  };
+  const cse=$('cancelSupEdit');if(cse)cse.onclick=()=>{D.editSup=null;render();};
+  document.querySelectorAll('[data-delsup]').forEach(b=>b.onclick=()=>{
+    const s=D.suppliers.find(s=>s.id===+b.dataset.delsup);
+    if(confirm('Remove supplier "'+s.name+'"?')){D.suppliers=D.suppliers.filter(x=>x.id!==+b.dataset.delsup);addLog('Supplier removed',s.name);autoSave();showAlert('Removed.','ok');render();}
+  });
+
+  /* account / password — Firebase Auth (requires re-entering current password) */
+  const pws=$('pwSave');
+  if(pws)pws.onclick=()=>{
+    const c=($('pwCur').value||'');const nw=($('pwNew').value||'').trim();const cn=($('pwCon').value||'').trim();
+    if(!c){showAlert('Enter your current password.','er');render();return;}
+    if(nw.length<6){showAlert('New password must be 6+ characters.','er');render();return;}
+    if(nw!==cn){showAlert('Passwords do not match.','er');render();return;}
+    pws.disabled=true;
+    const cred=firebase.auth.EmailAuthProvider.credential(D.user.email,c);
+    auth.currentUser.reauthenticateWithCredential(cred)
+      .then(()=>auth.currentUser.updatePassword(nw))
+      .then(()=>{addLog('Password changed',D.user.name);showAlert('Password updated.','ok');render();})
+      .catch(e=>{showAlert(e.code==='auth/wrong-password'?'Current password incorrect.':'Could not update password: '+e.message,'er');render();});
+  };
+
+  /* ── MANAGER: staff account management ── */
+  const scb=$('showCreateStaff');
+  if(scb)scb.onclick=()=>{
+    const f=$('createStaffForm');
+    if(f){f.style.display=f.style.display==='none'?'block':'none';}
+  };
+  const ccb=$('cancelCreateStaff');
+  if(ccb)ccb.onclick=()=>{const f=$('createStaffForm');if(f)f.style.display='none';};
+
+  // Create new staff account — uses a secondary Firebase app instance so the
+  // Manager's own session isn't replaced by the new account's session.
+  const csb=$('createStaffBtn');
+  if(csb)csb.onclick=()=>{
+    const nm=($('newStaffName').value||'').trim();
+    const email=($('newStaffEmail').value||'').trim();
+    const role=($('newStaffRole').value||'staff');
+    const pw=($('newStaffPass').value||'').trim();
+    const pc=($('newStaffPassC').value||'').trim();
+    if(!nm){showAlert('Enter a name for the account.','er');return;}
+    if(!email){showAlert('Enter an email for the account.','er');return;}
+    if(pw.length<6){showAlert('Password must be at least 6 characters.','er');return;}
+    if(pw!==pc){showAlert('Passwords do not match.','er');return;}
+    csb.disabled=true; csb.textContent='Creating…';
+    const secondaryName='StaffCreate_'+Date.now();
+    const secondaryApp=firebase.initializeApp(window._firebaseConfig,secondaryName);
+    const secondaryAuth=secondaryApp.auth();
+    secondaryAuth.createUserWithEmailAndPassword(email,pw)
+      .then(cred=>{
+        return window._accountsRef.doc(cred.user.uid).set({name:nm,role,email});
+      })
+      .then(()=>{
+        addLog(role+' account created',nm+' ('+email+') by '+D.user.name);
+        showAlert('✅ '+role.charAt(0).toUpperCase()+role.slice(1)+' account created for "'+nm+'".','ok');
+        const f=$('createStaffForm');if(f)f.style.display='none';
+        return secondaryAuth.signOut();
+      })
+      .catch(e=>{showAlert('Could not create account: '+e.message,'er');})
+      .finally(()=>{secondaryApp.delete().catch(()=>{});csb.disabled=false;csb.textContent='Create account';render();});
+  };
+
+  // Show edit form for a staff member (name/role only)
+  document.querySelectorAll('[data-editstaff]').forEach(b=>b.onclick=()=>{
+    const uid=b.dataset.editstaff;
+    const u=USERS.find(x=>x.uid===uid);if(!u)return;
+    const f=$('editStaffForm');const t=$('editStaffTitle');
+    if(f){
+      f.style.display='block';
+      if(t)t.textContent='✏️ Edit — '+u.name;
+      $('editStaffUid').value=uid;
+      $('editStaffName').value=u.name;
+      if($('editStaffRole'))$('editStaffRole').value=u.role||'staff';
+      f.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+
+  // Save staff edit — updates the accounts/{uid} Firestore doc only
+  const sse2=$('saveStaffEdit');
+  if(sse2)sse2.onclick=()=>{
+    const uid=($('editStaffUid').value||'').trim();
+    const newName=($('editStaffName').value||'').trim();
+    const newRole=($('editStaffRole').value||'staff');
+    const u=USERS.find(x=>x.uid===uid);
+    if(!u){showAlert('Staff not found.','er');return;}
+    if(!newName){showAlert('Name cannot be empty.','er');return;}
+    sse2.disabled=true;
+    window._accountsRef.doc(uid).update({name:newName,role:newRole})
+      .then(()=>{
+        addLog('Staff account updated',u.name+(newName!==u.name?' → '+newName:'')+' by '+D.user.name);
+        showAlert('✅ Updated "'+newName+'".','ok');
+        const f=$('editStaffForm');if(f)f.style.display='none';
+        render();
+      })
+      .catch(e=>{showAlert('Could not save: '+e.message,'er');render();});
+  };
+  const cse2=$('cancelStaffEdit');
+  if(cse2)cse2.onclick=()=>{const f=$('editStaffForm');if(f)f.style.display='none';};
+
+  // Send a password reset email on behalf of a staff member
+  document.querySelectorAll('[data-resetstaff]').forEach(b=>b.onclick=()=>{
+    const email=b.dataset.resetstaff;
+    if(!email){showAlert('No email on file for this account.','er');render();return;}
+    auth.sendPasswordResetEmail(email)
+      .then(()=>{showAlert('✅ Reset link sent to '+email+'.','ok');render();})
+      .catch(e=>{showAlert('Could not send reset link: '+e.message,'er');render();});
+  });
+
+  // Suspend / unsuspend staff — instant force logout on their device (by uid)
+  document.querySelectorAll('[data-suspendstaff]').forEach(b=>b.onclick=()=>{
+    const uid=b.dataset.suspendstaff;
+    const u=USERS.find(x=>x.uid===uid);
+    const blocked=D.blockedUsers||[];
+    const isBlocked=blocked.includes(uid);
+    if(isBlocked){
+      D.blockedUsers=blocked.filter(n=>n!==uid);
+      addLog('Account unsuspended',(u?u.name:uid)+' by '+D.user.name);
+      showAlert('"'+(u?u.name:uid)+'" has been unsuspended. They can log in again.','ok');
+    } else {
+      D.blockedUsers=[...blocked,uid];
+      addLog('Account suspended',(u?u.name:uid)+' by '+D.user.name);
+      showAlert('"'+(u?u.name:uid)+'" suspended and will be logged out on all devices instantly.','ok');
+    }
+    saveAccountsUrgent();render();
+  });
+
+  /* backup + settings */
+  [$('xlFullBtn'),$('xlFullBtn2')].forEach(b=>{if(b)b.onclick=exportFullExcel;});
+  const clg=$('clrLog');if(clg)clg.onclick=()=>{if(confirm('Clear activity log?')){D.log=[];autoSave();showAlert('Log cleared.','ok');render();}};
+  const ms=$('manSave');if(ms)ms.onclick=()=>{saveDB();addLog('Manual save');showAlert('Saved.','ok');render();};
+
+  // Reset button — show dialog step 1
+  const rb=$('resetBtn');
+  if(rb)rb.onclick=()=>{D.showResetDialog=true;D.resetStep=1;render();};
+
+  // Reset cancel
+  const rc=$('resetCancel');
+  if(rc)rc.onclick=()=>{D.showResetDialog=false;D.resetStep=1;render();};
+
+  // Reset confirm step 1
+  const rc1=$('resetConfirm1');
+  if(rc1)rc1.onclick=()=>{D.resetStep=2;render();};
+
+  // Reset confirm step 2 — verify password via Firebase Auth then wipe
+  const rc2=$('resetConfirm2');
+  if(rc2)rc2.onclick=()=>{
+    const pwd=($('resetPwd').value||'').trim();
+    if(!pwd){showAlert('Enter your password.','er');render();return;}
+    rc2.disabled=true;
+    const cred=firebase.auth.EmailAuthProvider.credential(D.user.email,pwd);
+    auth.currentUser.reauthenticateWithCredential(cred)
+      .then(()=>{
+        // Wipe everything
+        D.inventory=[];
+        D.transactions=[];
+        D.logins=[];
+        D.log=[];
+        D.suppliers=[];
+        D.cart=[];
+        D.nextId=1;D.nextTxn=1;D.nextSup=1;
+        D.showResetDialog=false;D.resetStep=1;
+        addLog('SYSTEM RESET','All data permanently wiped by '+D.user.name);
+        saveDB();
+        showAlert('✅ System reset complete. All data has been erased.','ok');
+        D.tab='dashboard';render();
+      })
+      .catch(e=>{
+        rc2.disabled=false;
+        showAlert('Incorrect password — reset cancelled.','er');render();
+      });
+  };
+}
+
+/* ── Live clock — reliable update using multiple methods ── */
+function updateClock(){
+  const now=new Date();
+  const d=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  const timeStr=friendlyDate(d)+' · '+fmt12hm(now);
+  const el=document.getElementById('topClock');
+  if(el) el.textContent=timeStr;
+  const lc=document.getElementById('loginClock');
+  if(lc) lc.textContent=timeStr;
+}
+
+// Update every second via setInterval
+setInterval(updateClock, 1000);
+
+// Also update immediately when tab becomes visible again
+// (fixes throttled/paused timers when tab was in background)
+document.addEventListener('visibilitychange', ()=>{
+  if(!document.hidden) updateClock();
+});
+
+// Also update on any user interaction (click, key, scroll)
+// so clock is always fresh when user is active
+['click','keydown','mousemove'].forEach(ev=>{
+  document.addEventListener(ev, updateClock, {passive:true});
+});
+
+// Force re-sync from Firebase when window regains focus
+// This ensures data is always fresh when coming back to the tab or next day
+window.addEventListener('focus', ()=>{
+  if(db && window._docRef && D.dbLoaded){
+    window._docRef.get().then(snap=>{
+      if(snap.exists){
+        applyCloudData(snap.data());
+        if(D.user) render();
+      }
+    }).catch(e=>console.warn('Focus sync failed:',e));
+  }
+  updateClock();
+});
+
+// Run once immediately
+updateClock();
+
+// Firebase will call render() once data is loaded
+</script>
+
+<!-- Firebase v9 compat SDKs (work as global firebase.* in browser) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<script>
+// Start Firebase after SDKs load
+initFirebase();
+</script>
+
+</div><!-- /app-shell -->
+
+<script>
+/* ══════════════════════════════════════════
+   SERVICE WORKER REGISTRATION
+══════════════════════════════════════════ */
+if('serviceWorker' in navigator){
+  // Inline service worker as a blob so no separate file is needed
+  const swCode = `
+const CACHE = 'meditrack-v9';
+const ASSETS = [self.location.href];
+
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(cached => {
+      if(cached) return cached;
+      return fetch(e.request).then(resp => {
+        if(resp && resp.status === 200 && resp.type === 'basic'){
+          const clone = resp.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone));
+        }
+        return resp;
+      }).catch(() => cached);
+    })
+  );
+});
+`;
+  const blob = new Blob([swCode], {type:'application/javascript'});
+  const swURL = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swURL, {scope: '/'})
+    .then(reg => console.log('SW registered', reg.scope))
+    .catch(e => console.log('SW reg failed (normal for file://):', e));
+}
+
+/* ══════════════════════════════════════════
+   INSTALL TO HOME SCREEN PROMPT
+══════════════════════════════════════════ */
+let deferredPrompt = null;
+const banner = document.getElementById('install-banner');
+const installBtn = document.getElementById('install-btn');
+const dismissBtn = document.getElementById('install-dismiss');
+
+// Android / Chrome: capture beforeinstallprompt
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  banner.style.display = 'flex';
+});
+
+installBtn.addEventListener('click', async () => {
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    const {outcome} = await deferredPrompt.userChoice;
+    if(outcome === 'accepted') banner.style.display = 'none';
+    deferredPrompt = null;
+  }
+});
+
+dismissBtn.addEventListener('click', () => {
+  banner.style.display = 'none';
+  sessionStorage.setItem('installDismissed','1');
+});
+
+// iOS Safari: show manual instructions if not already installed
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isInStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+const dismissed = sessionStorage.getItem('installDismissed');
+
+if(isIOS && !isInStandalone && !dismissed){
+  // Override install button for iOS with share instructions
+  setTimeout(() => {
+    banner.style.display = 'flex';
+    installBtn.textContent = 'How to install';
+    installBtn.onclick = () => {
+      alert('To install MediTrack on your iPhone/iPad:\n\n1. Tap the Share button (□↑) at the bottom of Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" — done!');
+    };
+  }, 2500);
+}
+
+/* ══════════════════════════════════════════
+   OFFLINE / ONLINE DETECTION
+══════════════════════════════════════════ */
+const offlineBar = document.getElementById('offline-bar');
+function updateOnlineStatus(){
+  offlineBar.style.display = navigator.onLine ? 'none' : 'block';
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
+
+/* ══════════════════════════════════════════
+   EXTRA MOBILE UX
+══════════════════════════════════════════ */
+// Prevent double-tap zoom on buttons
+document.addEventListener('dblclick', e => {
+  if(e.target.tagName === 'BUTTON') e.preventDefault();
+}, {passive: false});
+
+// Add bottom padding so install banner doesn't cover content
+if(!isInStandalone){
+  document.getElementById('app-shell').style.paddingBottom = '4rem';
+}
+</script>
+
+</body>
+</html>
