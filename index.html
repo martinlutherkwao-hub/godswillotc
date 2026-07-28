@@ -13,7 +13,7 @@
   <title>God's Will OTC</title>
 
   <!-- PWA Manifest (inline via data URI so single-file works) -->
-  <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTWVkaVRyYWNrIFBoYXJtYWN5Iiwic2hvcnRfbmFtZSI6Ik1lZGlUcmFjayIsImRlc2NyaXB0aW9uIjoiSW52ZW50b3J5ICYgVHJhbnNhY3Rpb24gU3lzdGVtIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmNGY3ZmIiLCJ0aGVtZV9jb2xvciI6IiMxODVGQTUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0LXByaW1hcnkiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhacFpYZENiM2c5SWpBZ01DQXlNREFnTWpBd0lqNDhjM1IxYkdRK1BHUnZjQ0J3WVhRZ1ptbHNiRDBpSXpFNE5VWkJOU0lpSUhkcFpIUm9QU0l5TURBaUlHaGxhV2RvZEQwaU1qQXdJaUJ6ZEhsc1pUMGlZbUZ6WlNJK1BHSmxaVzR0Y21WdVpHOXVJR0p2Wm1sc1pUMGlNU0lnWW5rOUlqRTFPU0lnZEdsdFpUMGlNallpSUhkcFpIUm9QU0l6TVNFZ2FHVnBaMmgwUFNJek1TRStNPC9zdmc+IiwibmFtZSI6Ik1lZGlUcmFjayBQaGFybWFjeSIsInNpemVzIjoiYW55IiwidHlwZSI6ImltYWdlL3N2Zyt4bWwifV19"/>
+  <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTWVkaVRyYWNrIFBoYXJtYWN5Iiwic2hvcnRfbmFtZSI6Ik1lZGlUcmFjayIsImRlc2NyaXB0aW9uIjoiSW52ZW50b3J5ICYgVHJhbnNhY3Rpb24gU3lzdGVtIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmNGY3ZmIiLCJ0aGVtZV9jb2xvciI6IiMxODVGQTUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0LXByaW1hcnkiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhacFpYZENiM2c5SWpBZ01DQXlNREFnTWpBd0lqNDhjM1IxYkdRK1BHUnZjQ0J3WVhRZ1ptbHNiRDBpSXpFNE5VWkJOU0lpSUhkcFpIUm9QU0l5TURBaUlHaGxhV2RvZEQwaU1qQXdJaUJ6ZEhsc1pUMGlZbUZ6WlNJK1BHSmxaVzR0Y21WdVpHOXVJR0p2Wmpsc1pUMGlNU0lnWW5rOUlqRTFPU0lnZEdsdFpUMGlNallpSUhkcFpIUm9QU0l6TVNFZ2FHVnBaMmgwUFNJek1TRStNPC9zdmc+IiwibmFtZSI6Ik1lZGlUcmFjayBQaGFybWFjeSIsInNpemVzIjoiYW55IiwidHlwZSI6ImltYWdlL3N2Zyt4bWwifV19"/>
 
   <!-- Apple Touch Icon (inline SVG→PNG via canvas trick not needed — use SVG data URI) -->
   <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgcng9IjQwIiBmaWxsPSIjMTg1RkE1Ii8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMTAiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNFNkYxRkIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIj5NPC90ZXh0Pjwvc3ZnPg=="/>
@@ -448,7 +448,9 @@ function updateIdleBar(){
 function triggerIdleLogout(reason){
   if(!D || !D.user) return;
   addLog('Auto logout', reason + ' — ' + D.user.name);
-  saveDB();
+  // Intentionally NOT calling saveDB() here — this tab may be stale after
+  // being idle/backgrounded, and a full save would risk overwriting newer
+  // data saved by other devices in the meantime.
   stopIdleTimer();
   if(auth) auth.signOut();
   D.cart = []; D.searchQ = ''; D.showSearch = false;
@@ -529,9 +531,10 @@ function scheduleReloadAtMidnight(){
   const msUntilMidnight = midnight - now;
   console.log('Auto reload scheduled in', Math.round(msUntilMidnight/60000), 'minutes');
   setTimeout(()=>{
-    // Save any pending data before reloading
-    if(db && window._docRef) saveDB();
-    setTimeout(()=>{ location.reload(); }, 1000);
+    // Do NOT save here — this tab may hold a stale copy of shared data if it's
+    // been backgrounded for a long time, and pushing it would risk overwriting
+    // newer data saved by other devices. Just reload; the listener re-syncs fresh.
+    location.reload();
   }, msUntilMidnight);
 }
 scheduleReloadAtMidnight();
@@ -1990,7 +1993,7 @@ function attachAll(){
 
   const lo=$('logoutBtn');
   if(lo)lo.onclick=()=>{
-    addLog('Logout',D.user.name+' signed out');autoSave();
+    addLog('Logout',D.user.name+' signed out');
     stopIdleTimer();
     auth.signOut();
     D.tab='dashboard';D.cart=[];D.searchQ='';D.showSearch=false;render();
@@ -2029,7 +2032,7 @@ function attachAll(){
   // Sidebar sign out button
   const lbSide=$('logoutBtnSide');
   if(lbSide)lbSide.onclick=()=>{
-    addLog('Logout',D.user.name+' signed out');autoSave();
+    addLog('Logout',D.user.name+' signed out');
     D.user=null;D.cart=[];D.tab='dashboard';D.sidebarOpen=false;
     document.getElementById('sidebar').classList.remove('open');
     document.getElementById('sidebar-overlay').classList.remove('open');
@@ -2099,18 +2102,58 @@ function attachAll(){
     if(isNaN(pr)||pr<0){showAlert('Enter a valid price.','er');render();return;}
     if(isNaN(qt)||qt<0){showAlert('Enter a valid quantity.','er');render();return;}
     if(isNaN(mn)||mn<0){showAlert('Enter a min stock level.','er');render();return;}
-    if(D.inventory.find(i=>i.name.toLowerCase()===nm.toLowerCase())){showAlert('"'+nm+'" already exists.','er');render();return;}
-    D.inventory.push({id:D.nextId++,name:nm,type:ty,price:pr,qty:qt,minQty:mn,supplier:sp,expiry:ex,notes:nt});
-    addLog('Added product',nm+' ('+ty+')');saveNow();
-    D.newMed={name:'',type:ty,price:'',qty:'',minQty:'',supplier:'',expiry:'',notes:''};D.dupWarn=false;
-    showAlert('"'+nm+'" added to '+ty+'.','ok');D.invTab='list';render();
+    an.disabled=true;
+    D.saveStatus='saving';pill();
+    db.runTransaction(tx=>tx.get(window._docRef).then(doc=>{
+      const data=doc.data()||{};
+      const inv=data.inventory||[];
+      if(inv.find(i=>i.name.toLowerCase()===nm.toLowerCase())) throw{__dup:true};
+      const nextId=data.nextId||1;
+      inv.push({id:nextId,name:nm,type:ty,price:pr,qty:qt,minQty:mn,supplier:sp,expiry:ex,notes:nt});
+      tx.update(window._docRef,{inventory:inv,nextId:nextId+1,updatedAt:Date.now()});
+      return inv;
+    })).then(inv=>{
+      D.inventory=inv;D.nextId=Math.max(D.nextId,inv.reduce((m,i)=>Math.max(m,i.id),0)+1);
+      addLog('Added product',nm+' ('+ty+')');
+      D.lastSaved=hm();D.saveStatus='saved';pill();
+      D.newMed={name:'',type:ty,price:'',qty:'',minQty:'',supplier:'',expiry:'',notes:''};D.dupWarn=false;
+      an.disabled=false;
+      showAlert('"'+nm+'" added to '+ty+'.','ok');D.invTab='list';render();
+    }).catch(e=>{
+      an.disabled=false;
+      if(e&&e.__dup){showAlert('"'+nm+'" already exists.','er');}
+      else{console.error('Add item failed',e);showAlert('Save failed — check connection and try again.','er');D.saveStatus='error';}
+      pill();render();
+    });
   };
   const cn=$('clrNew');if(cn)cn.onclick=()=>{D.newMed={name:'',type:D.invTypeFilter||MEDICINE_TYPES[0],price:'',qty:'',minQty:'',supplier:'',expiry:'',notes:''};D.dupWarn=false;render();};
 
   document.querySelectorAll('[data-restock]').forEach(b=>b.onclick=()=>{
-    const item=D.inventory.find(i=>i.id===+b.dataset.restock);
-    const a=prompt('Restock "'+item.name+'" (current: '+item.qty+')\nQty to add:');
-    const n=parseInt(a);if(!isNaN(n)&&n>0){item.qty+=n;addLog('Restock','"'+item.name+'" +'+n);saveNow();showAlert('+'+n+' added. Stock: '+item.qty,'ok');render();}
+    const id=+b.dataset.restock;
+    const localItem=D.inventory.find(i=>i.id===id);
+    if(!localItem)return;
+    const a=prompt('Restock "'+localItem.name+'" (current: '+localItem.qty+')\nQty to add:');
+    const n=parseInt(a);
+    if(isNaN(n)||n<=0)return;
+    D.saveStatus='saving';pill();
+    db.runTransaction(tx=>tx.get(window._docRef).then(doc=>{
+      const data=doc.data()||{};
+      const inv=data.inventory||[];
+      const it=inv.find(i=>i.id===id);
+      if(!it) throw{__missing:true};
+      it.qty+=n;
+      tx.update(window._docRef,{inventory:inv,updatedAt:Date.now()});
+      return {inv,newQty:it.qty,name:it.name};
+    })).then(r=>{
+      D.inventory=r.inv;
+      addLog('Restock','"'+r.name+'" +'+n);
+      D.lastSaved=hm();D.saveStatus='saved';pill();
+      showAlert('+'+n+' added. Stock: '+r.newQty,'ok');render();
+    }).catch(e=>{
+      console.error('Restock failed',e);
+      showAlert('Restock failed — check connection and try again.','er');
+      D.saveStatus='error';pill();render();
+    });
   });
   document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{D.editItem={...D.inventory.find(i=>i.id===+b.dataset.edit)};render();});
   const se=$('saveEdit');
@@ -2150,14 +2193,37 @@ function attachAll(){
     const today=getToday(); // always recalculate — handles midnight rollover
     const custInput=$('custName');
     const customer=(custInput?custInput.value:'').trim();
-    const id='TXN'+String(D.nextTxn++).padStart(3,'0');
-    const items=D.cart.map(c=>({name:c.name,qty:c.qty,price:c.price}));
-    const total=parseFloat(D.cart.reduce((s,c)=>s+(c.price*c.qty),0).toFixed(2));
-    D.cart.forEach(c=>{const inv=D.inventory.find(i=>i.id===c.id);if(inv)inv.qty-=c.qty;});
-    D.transactions.push({id,date:today,time:hm(),items,total,staff:D.user.name,customer,voided:false});
-    D.custName='';
-    addLog('Sale completed',id+' '+cur(total)+' by '+D.user.name+(customer?' for '+customer:''));saveNow();
-    D.cart=[];D.receipt=id;showAlert('Sale '+id+' recorded!','ok');render();
+    const cartSnapshot=D.cart.map(c=>({id:c.id,name:c.name,qty:c.qty,price:c.price}));
+    co.disabled=true;D.saveStatus='saving';pill();
+    db.runTransaction(tx=>tx.get(window._docRef).then(doc=>{
+      const data=doc.data()||{};
+      const inv=data.inventory||[];
+      const txns=data.transactions||[];
+      const nextTxn=data.nextTxn||1;
+      // Verify stock is still available using the FRESH server copy
+      for(const c of cartSnapshot){
+        const it=inv.find(i=>i.id===c.id);
+        if(!it||it.qty<c.qty) throw{__oos:true,name:c.name};
+      }
+      cartSnapshot.forEach(c=>{inv.find(i=>i.id===c.id).qty-=c.qty;});
+      const id='TXN'+String(nextTxn).padStart(3,'0');
+      const total=parseFloat(cartSnapshot.reduce((s,c)=>s+(c.price*c.qty),0).toFixed(2));
+      txns.push({id,date:today,time:hm(),items:cartSnapshot.map(c=>({name:c.name,qty:c.qty,price:c.price})),total,staff:D.user.name,customer,voided:false});
+      tx.update(window._docRef,{inventory:inv,transactions:txns,nextTxn:nextTxn+1,updatedAt:Date.now()});
+      return {inv,txns,id,total};
+    })).then(r=>{
+      D.inventory=r.inv;D.transactions=r.txns;D.custName='';
+      D.nextTxn=Math.max(D.nextTxn,r.txns.length+1);
+      addLog('Sale completed',r.id+' '+cur(r.total)+' by '+D.user.name+(customer?' for '+customer:''));
+      D.lastSaved=hm();D.saveStatus='saved';pill();
+      D.cart=[];D.receipt=r.id;showAlert('Sale '+r.id+' recorded!','ok');
+      co.disabled=false;render();
+    }).catch(e=>{
+      co.disabled=false;
+      if(e&&e.__oos){showAlert('"'+e.name+'" no longer has enough stock — someone else may have just sold it. Refresh and try again.','er');}
+      else{console.error('Checkout failed',e);showAlert('Sale failed to save — check connection and try again.','er');D.saveStatus='error';}
+      pill();render();
+    });
   };
 
   /* inventory type filter */
@@ -2175,12 +2241,30 @@ function attachAll(){
   /* void transaction */
   document.querySelectorAll('[data-void]').forEach(b=>b.onclick=()=>{
     const id=b.dataset.void;
-    const t=D.transactions.find(x=>x.id===id);if(!t)return;
+    const localT=D.transactions.find(x=>x.id===id);if(!localT)return;
     if(!confirm('Void transaction '+id+'?\nThis will return items to stock. Cannot be undone.'))return;
-    t.voided=true;
-    t.items.forEach(item=>{const inv=D.inventory.find(i=>i.name===item.name);if(inv)inv.qty+=item.qty;});
-    addLog('Transaction voided',id+' by '+D.user.name);saveNow();
-    showAlert('Transaction '+id+' voided and stock restored.','ok');render();
+    D.saveStatus='saving';pill();
+    db.runTransaction(tx=>tx.get(window._docRef).then(doc=>{
+      const data=doc.data()||{};
+      const inv=data.inventory||[];
+      const txns=data.transactions||[];
+      const t=txns.find(x=>x.id===id);
+      if(!t) throw{__missing:true};
+      if(t.voided) throw{__already:true};
+      t.voided=true;
+      t.items.forEach(item=>{const it=inv.find(i=>i.name===item.name);if(it)it.qty+=item.qty;});
+      tx.update(window._docRef,{inventory:inv,transactions:txns,updatedAt:Date.now()});
+      return {inv,txns};
+    })).then(r=>{
+      D.inventory=r.inv;D.transactions=r.txns;
+      addLog('Transaction voided',id+' by '+D.user.name);
+      D.lastSaved=hm();D.saveStatus='saved';pill();
+      showAlert('Transaction '+id+' voided and stock restored.','ok');render();
+    }).catch(e=>{
+      if(e&&e.__already){showAlert('Already voided.','aw');}
+      else{console.error('Void failed',e);showAlert('Void failed — check connection and try again.','er');D.saveStatus='error';}
+      pill();render();
+    });
   });
 
   /* reorder / low stock export */
@@ -2276,11 +2360,30 @@ function attachAll(){
     if(!invId){showAlert('Select a medicine.','er');render();return;}
     if(isNaN(qty)||qty<1){showAlert('Enter a valid quantity.','er');render();return;}
     if(isNaN(cost)||cost<0){showAlert('Enter a valid unit price.','er');render();return;}
-    const sup=D.suppliers.find(s=>s.id===supId);const med=D.inventory.find(i=>i.id===invId);
-    sup.products.push({invId,name:med.name,type,qtySupplied:qty,unitCost:cost,totalValue:parseFloat((qty*cost).toFixed(2)),date});
-    med.qty+=qty;
-    addLog('Delivery recorded',sup.name+' → '+qty+' × '+med.name);saveNow();
-    showAlert(qty+' units of "'+med.name+'" from '+sup.name+' added to stock.','ok');D.supTab='list';render();
+    rdb.disabled=true;D.saveStatus='saving';pill();
+    db.runTransaction(tx=>tx.get(window._docRef).then(doc=>{
+      const data=doc.data()||{};
+      const inv=data.inventory||[];
+      const suppliers=data.suppliers||[];
+      const sup=suppliers.find(s=>s.id===supId);
+      const med=inv.find(i=>i.id===invId);
+      if(!sup||!med) throw{__missing:true};
+      sup.products.push({invId,name:med.name,type,qtySupplied:qty,unitCost:cost,totalValue:parseFloat((qty*cost).toFixed(2)),date});
+      med.qty+=qty;
+      tx.update(window._docRef,{inventory:inv,suppliers:suppliers,updatedAt:Date.now()});
+      return {inv,suppliers,supName:sup.name,medName:med.name};
+    })).then(r=>{
+      D.inventory=r.inv;D.suppliers=r.suppliers;
+      addLog('Delivery recorded',r.supName+' → '+qty+' × '+r.medName);
+      D.lastSaved=hm();D.saveStatus='saved';pill();
+      rdb.disabled=false;
+      showAlert(qty+' units of "'+r.medName+'" from '+r.supName+' added to stock.','ok');D.supTab='list';render();
+    }).catch(e=>{
+      rdb.disabled=false;
+      console.error('Record delivery failed',e);
+      showAlert('Could not record delivery — check connection and try again.','er');
+      D.saveStatus='error';pill();render();
+    });
   };
 
   /* supplier excel */
