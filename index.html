@@ -13,7 +13,7 @@
   <title>God's Will OTC</title>
 
   <!-- PWA Manifest (inline via data URI so single-file works) -->
-  <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTWVkaVRyYWNrIFBoYXJtYWN5Iiwic2hvcnRfbmFtZSI6Ik1lZGlUcmFjayIsImRlc2NyaXB0aW9uIjoiSW52ZW50b3J5ICYgVHJhbnNhY3Rpb24gU3lzdGVtIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmNGY3ZmIiLCJ0aGVtZV9jb2xvciI6IiMxODVGQTUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0LXByaW1hcnkiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhacFpYZENiM2c5SWpBZ01DQXlNREFnTWpBd0lqNDhjM1IxYkdRK1BHUnZjQ0J3WVhRZ1ptbHNiRDBpSXpFNE5VWkJOU0lpSUhkcFpIUm9QU0l5TURBaUlHaGxhV2RvZEQwaU1qQXdJaUJ6ZEhsc1pUMGlZbUZ6WlNJK1BHSmxaVzR0Y21WdVpHOXVJR0p2Wmpsc1pUMGlNU0lnWW5rOUlqRTFPU0lnZEdsdFpUMGlNallpSUhkcFpIUm9QU0l6TVNFZ2FHVnBaMmgwUFNJek1TRStNPC9zdmc+IiwibmFtZSI6Ik1lZGlUcmFjayBQaGFybWFjeSIsInNpemVzIjoiYW55IiwidHlwZSI6ImltYWdlL3N2Zyt4bWwifV19"/>
+  <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTWVkaVRyYWNrIFBoYXJtYWN5Iiwic2hvcnRfbmFtZSI6Ik1lZGlUcmFjayIsImRlc2NyaXB0aW9uIjoiSW52ZW50b3J5ICYgVHJhbnNhY3Rpb24gU3lzdGVtIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmNGY3ZmIiLCJ0aGVtZV9jb2xvciI6IiMxODVGQTUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0LXByaW1hcnkiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhacFpYZENiM2c5SWpBZ01DQXlNREFnTWpBd0lqNDhjM1IxYkdRK1BHUnZjQ0J3WVhRZ1ptbHNiRDBpSXpFNE5VWkJOU0lpSUhkcFpIUm9QU0l5TURBaUlHaGxhV2RvZEQwaU1qQXdJaUJ6ZEhsc1pUMGlZbUZ6WlNJK1BHSmxaVzR0Y21WdVpHOXVJR0p2Wm1sc1pUMGlNU0lnWW5rOUlqRTFPU0lnZEdsdFpUMGlNallpSUhkcFpIUm9QU0l6TVNFZ2FHVnBaMmgwUFNJek1TRStNPC9zdmc+IiwibmFtZSI6Ik1lZGlUcmFjayBQaGFybWFjeSIsInNpemVzIjoiYW55IiwidHlwZSI6ImltYWdlL3N2Zyt4bWwifV19"/>
 
   <!-- Apple Touch Icon (inline SVG→PNG via canvas trick not needed — use SVG data URI) -->
   <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgcng9IjQwIiBmaWxsPSIjMTg1RkE1Ii8+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMTAiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNFNkYxRkIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIj5NPC90ZXh0Pjwvc3ZnPg=="/>
@@ -30,7 +30,6 @@
       background: #f4f7fb;
       min-height: 100vh;
       min-height: -webkit-fill-available;
-      /* Safe area insets for notched phones */
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
       padding-left: env(safe-area-inset-left);
@@ -38,18 +37,14 @@
       -webkit-tap-highlight-color: transparent;
       -webkit-touch-callout: none;
     }
-    /* Prevent input zoom on iOS (inputs must be ≥16px) */
     input, select, textarea { font-size: 16px !important; }
-    /* Larger tap targets on mobile */
     button { min-height: 40px; }
     .bsm { min-height: 34px !important; }
-    /* App container */
     #app-shell {
       max-width: 900px;
       margin: 0 auto;
       padding: 0.5rem 0.75rem;
     }
-    /* Install banner */
     #install-banner {
       display: none;
       position: fixed;
@@ -84,7 +79,6 @@
       padding: 8px 6px !important;
       font-size: 20px !important;
     }
-    /* Offline notice */
     #offline-bar {
       display: none;
       background: #EF9F27;
@@ -94,11 +88,9 @@
       font-size: 13px;
       font-weight: 700;
     }
-    /* Custom scrollbar for webkit */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #B5D4F4; border-radius: 4px; }
-    /* CSS custom properties referenced by app */
     :root {
       --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       --color-text-primary: #1a1a1a;
@@ -161,10 +153,8 @@
 
 <div id="offline-bar">⚡ You are offline — MediTrack is running from cache</div>
 
-<!-- pzone must be a direct child of body for print CSS to work -->
 <div id="pzone" style="display:none"></div>
 
-<!-- Install to Home Screen banner (shown on supported browsers) -->
 <div id="install-banner">
   <span>📱 Install MediTrack on your device for faster access</span>
   <button id="install-btn">Install App</button>
@@ -177,16 +167,11 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);font-size:15px;color:var(--color-text-primary);background:transparent}
 .app{padding:1rem 0;min-height:600px}
-
 .topbar{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#185FA5;border-radius:12px;margin-bottom:.85rem;flex-wrap:wrap}
 .tlogo{width:38px;height:38px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:#185FA5;flex-shrink:0}
 .tname{color:#E6F1FB;font-size:17px;font-weight:700}
 .tsub{color:#85B7EB;font-size:13px;font-weight:500}
-
-/* idle bar */
 .idle-txt{display:none}
-
-/* search */
 .sw{position:relative;flex:1;min-width:180px;max-width:340px}
 .sw input{width:100%;padding:9px 34px 9px 34px;border:1.5px solid #378ADD;border-radius:8px;background:rgba(255,255,255,0.18);color:#fff;font-size:14px;font-weight:500}
 .sw input:focus{outline:none;border-color:#E6F1FB;background:rgba(255,255,255,0.28)}
@@ -202,12 +187,10 @@ body{font-family:var(--font-sans);font-size:15px;color:var(--color-text-primary)
 .sdm{font-size:12px;color:#666;margin-top:2px;font-weight:500}
 .sdp{font-size:14px;font-weight:700;color:#185FA5}
 .sdnone{padding:13px 14px;font-size:14px;color:#666;font-weight:500}
-
 .spill{display:flex;align-items:center;gap:5px;font-size:12px;padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.12);color:#9FE1CB;white-space:nowrap;font-weight:600}
 .sdot{width:8px;height:8px;border-radius:50%;background:#1D9E75}
 .sdot.blink{background:#EF9F27;animation:blink .8s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-
 .tabs{display:flex;gap:3px;margin-bottom:1rem;background:#E6F1FB;padding:4px;border-radius:8px;flex-wrap:wrap}
 .tab{flex:1;min-width:80px;padding:8px 6px;border:none;border-radius:6px;background:transparent;color:#185FA5;font-size:13px;font-weight:600;cursor:pointer;text-align:center;white-space:nowrap}
 .tab.on{background:#185FA5;color:#E6F1FB;font-weight:700}
@@ -216,14 +199,12 @@ body{font-family:var(--font-sans);font-size:15px;color:var(--color-text-primary)
 .tabs.stf .tab{color:#0F6E56}
 .tabs.stf .tab.on{background:#1D9E75;color:#E1F5EE}
 .tabs.stf .tab:hover:not(.on){background:#9FE1CB}
-
 .sec{background:#fff;border:1.5px solid rgba(0,0,0,.1);border-radius:12px;padding:1.1rem 1.4rem;margin-bottom:1rem}
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;padding-bottom:10px;border-bottom:2.5px solid #E6F1FB;gap:8px;flex-wrap:wrap}
 .sh h3{font-size:16px;font-weight:700;color:#185FA5}
 .sh.g{border-bottom-color:#E1F5EE}.sh.g h3{color:#0F6E56}
 .sh.p{border-bottom-color:#EEEDFE}.sh.p h3{color:#3C3489}
 .sh.o{border-bottom-color:#FAEEDA}.sh.o h3{color:#854F0B}
-
 .mc4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1rem}
 .mc3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1rem}
 .mc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:1rem}
@@ -236,7 +217,6 @@ body{font-family:var(--font-sans);font-size:15px;color:var(--color-text-primary)
 .ml{font-size:13px;margin-bottom:4px;font-weight:600}
 .mv{font-size:22px;font-weight:700}
 .ms{font-size:12px;margin-top:3px;font-weight:500}
-
 .tw{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:14px}
 thead tr{background:#E6F1FB}
@@ -249,7 +229,6 @@ th{text-align:left;font-weight:700;font-size:13px;color:#0C447C;padding:10px 11p
 td{padding:9px 11px;border-bottom:1px solid #f0f0f0;vertical-align:middle;font-size:14px;font-weight:500}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#fafafa}
-
 .tag{display:inline-block;font-size:12px;padding:3px 9px;border-radius:6px;font-weight:700}
 .trx{background:#FAECE7;color:#712B13}.totc{background:#EAF3DE;color:#27500A}
 .tsu{background:#E1F5EE;color:#085041}.tlo{background:#FCEBEB;color:#791F1F}
@@ -259,7 +238,6 @@ tr:hover td{background:#fafafa}
 .tcos{background:#FCE4EC;color:#880E4F}.tmd{background:#E3F2FD;color:#0D47A1}.tsup{background:#F3E5F5;color:#6A1B9A}
 .rm{background:#EEEDFE;color:#3C3489;font-size:12px;padding:3px 10px;border-radius:6px;font-weight:700}
 .rs{background:#E1F5EE;color:#085041;font-size:12px;padding:3px 10px;border-radius:6px;font-weight:700}
-
 .btn{padding:8px 16px;border:1.5px solid #ddd;border-radius:8px;background:#fff;color:#333;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
 .btn:hover{background:#f5f5f5}
 .bbl{background:#185FA5;color:#fff;border-color:#185FA5}.bbl:hover{background:#0C447C}
@@ -272,7 +250,6 @@ tr:hover td{background:#fafafa}
 .bpu{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC}.bpu:hover{background:#CECBF6}
 .bor{background:#FFF3E0;color:#854F0B;border-color:#FFB74D}.bor:hover{background:#FFE0B2}
 .bsm{padding:5px 11px;font-size:13px}.bfw{width:100%}
-
 .field{margin-bottom:13px}
 .field label{display:block;font-size:13px;color:#444;margin-bottom:5px;font-weight:700}
 .field input,.field select,.field textarea{width:100%;padding:9px 11px;border:1.5px solid #ddd;border-radius:8px;background:#fff;color:#333;font-size:14px;font-weight:500}
@@ -280,61 +257,43 @@ tr:hover td{background:#fafafa}
 .hint{font-size:12px;color:#888;margin-top:3px;font-weight:500}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px}
-
 .ist{padding:7px 15px;border:1.5px solid #B5D4F4;border-radius:8px;background:transparent;color:#185FA5;font-size:13px;font-weight:700;cursor:pointer}
 .ist.on{background:#185FA5;color:#fff;border-color:#185FA5}
-
 .crow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f0f0f0}
 .crow:last-child{border-bottom:none}
 .qc{display:flex;align-items:center;gap:7px}
 .qc button{width:27px;height:27px;border:1.5px solid #ddd;border-radius:5px;background:#E6F1FB;cursor:pointer;font-size:16px;color:#0C447C;font-weight:700}
 .qc span{min-width:24px;text-align:center;font-weight:700;font-size:15px}
-
 .mwrap{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:5000;padding:1rem}
 .modal{background:#fff;border-radius:12px;padding:1.6rem;width:92%;max-width:500px;max-height:90vh;overflow-y:auto}
 .modal h3{font-size:17px;font-weight:700;margin-bottom:1rem;color:#185FA5}
 .modal h3.g{color:#0F6E56}.modal h3.o{color:#854F0B}
-
 .rrow{display:flex;justify-content:space-between;padding:5px 0;font-size:14px;font-weight:500}
 .rtot{display:flex;justify-content:space-between;padding:9px 0;margin-top:7px;border-top:2px solid #B5D4F4;font-weight:700;font-size:16px;color:#0C447C}
 .divider{height:1px;background:#eee;margin:11px 0}
-
 .alert{padding:11px 15px;border-radius:8px;font-size:14px;margin-bottom:11px;font-weight:600}
 .aok{background:#EAF3DE;color:#27500A;border:1.5px solid #97C459}
 .aer{background:#FCEBEB;color:#791F1F;border:1.5px solid #F09595}
 .awn{background:#FAEEDA;color:#633806;border:1.5px solid #EF9F27}
 .ain{background:#E6F1FB;color:#0C447C;border:1.5px solid #85B7EB}
-
 .lwrap{max-width:400px;margin:2rem auto;background:#fff;border:1.5px solid #ddd;border-radius:12px;padding:2.2rem}
-
 .dlbl{background:#E6F1FB;border-radius:8px;padding:8px 14px;font-size:15px;font-weight:700;color:#0C447C;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center}
 .dlbl.g{background:#E1F5EE;color:#085041}
-
 .blog{background:#f8f8f8;border-radius:8px;padding:1rem;font-size:13px;font-family:monospace;max-height:240px;overflow-y:auto;color:#555;line-height:1.8;font-weight:500}
-
 .rzone{border:2px dashed #F09595;border-radius:12px;padding:1.4rem;background:#FCEBEB}
 .rzone h4{color:#791F1F;font-size:16px;font-weight:700;margin-bottom:7px}
 .rzone p{color:#A32D2D;font-size:14px;margin-bottom:13px;line-height:1.6;font-weight:500}
-
-/* read-only inventory badge */
 .ro-badge{display:inline-flex;align-items:center;gap:5px;background:#EEEDFE;color:#3C3489;font-size:12px;padding:4px 10px;border-radius:6px;font-weight:700;margin-bottom:10px}
-
-/* idle overlay */
 .idle-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,30,70,0.92);z-index:10000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
 .idle-box{background:#fff;border-radius:16px;padding:2.5rem 2rem;max-width:380px;width:90%;text-align:center}
 .idle-box h2{font-size:20px;font-weight:800;color:#791F1F;margin-bottom:8px}
 .idle-box p{font-size:14px;color:#555;font-weight:500;margin-bottom:1.2rem;line-height:1.6}
-
 mark{background:#FFF3CD;color:inherit;border-radius:2px;padding:0 2px}
-
-/* dark mode toggle */
 .toggle-wrap{cursor:pointer;user-select:none}
 .toggle{width:50px;height:28px;border-radius:14px;background:#ccc;position:relative;transition:background .2s}
 .toggle.on{background:#185FA5}
 .toggle::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .toggle.on::after{left:25px}
-
-/* ── Sidebar navigation ── */
 .sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:4000;opacity:0;transition:opacity .25s;pointer-events:none}
 .sidebar-overlay.open{opacity:1;pointer-events:all}
 .sidebar{position:fixed;top:0;left:-280px;width:260px;height:100%;background:#185FA5;z-index:4001;transition:left .25s;display:flex;flex-direction:column;box-shadow:4px 0 20px rgba(0,0,0,.25)}
@@ -353,18 +312,14 @@ mark{background:#FFF3CD;color:inherit;border-radius:2px;padding:0 2px}
 html.dark .sidebar{background:#0c3060}
 html.dark .sidebar-item:hover{background:rgba(255,255,255,.08)}
 html.dark .sidebar-item.active{background:rgba(255,255,255,.15)}
-
-/* barcode scanner */{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:6000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:6000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
 #barcodeVideo{width:min(360px,90vw);height:min(280px,55vh);border-radius:12px;object-fit:cover;border:3px solid #185FA5}
 .scan-line{position:absolute;width:min(360px,90vw);height:3px;background:rgba(24,95,165,.8);animation:scanAnim 2s linear infinite}
 @keyframes scanAnim{0%{top:calc(50% - min(140px,27.5vh))}100%{top:calc(50% + min(140px,27.5vh))}}
 #barcodeSearch{width:min(360px,90vw);padding:10px 14px;border-radius:10px;border:1.5px solid #B5D4F4;font-size:16px;font-weight:600}
-
-/* EOD report */
 .eod-card{background:var(--table-head,#E6F1FB);border-radius:10px;padding:14px 18px;margin-bottom:10px}
 .eod-stat{display:flex;justify-content:space-between;padding:5px 0;font-size:14px;font-weight:600;border-bottom:1px solid rgba(0,0,0,.06)}
 .eod-stat:last-child{border-bottom:none;font-size:16px;font-weight:800;color:#0C447C}
-
 @media print{
   body>*{display:none!important}
   #pzone{display:block!important;position:static;width:100%;padding:24px;font-family:Arial,sans-serif;font-size:14px;color:#000}
@@ -397,17 +352,14 @@ html.dark .sidebar-item.active{background:rgba(255,255,255,.15)}
 <script>
 /* ════════════════════════════════════════
    SESSION MANAGEMENT
-   • 3 min no activity on page  → logout
-   • 5 min tab hidden / away    → logout
 ════════════════════════════════════════ */
-const IDLE_LIMIT   = 180;   // 3 minutes on-page inactivity (seconds)
-const AWAY_LIMIT   = 300;   // 5 minutes away from site (seconds)
+const IDLE_LIMIT   = 180;
+const AWAY_LIMIT   = 300;
 
 let idleSeconds  = 0;
 let idleInterval = null;
-let _awayStart   = null;   // timestamp when tab was hidden/blurred
+let _awayStart   = null;
 
-/* ── On-page idle countdown ── */
 function resetIdle(){
   idleSeconds = 0;
   updateIdleBar();
@@ -448,9 +400,7 @@ function updateIdleBar(){
 function triggerIdleLogout(reason){
   if(!D || !D.user) return;
   addLog('Auto logout', reason + ' — ' + D.user.name);
-  // Intentionally NOT calling saveDB() here — this tab may be stale after
-  // being idle/backgrounded, and a full save would risk overwriting newer
-  // data saved by other devices in the meantime.
+  saveDB();
   stopIdleTimer();
   if(auth) auth.signOut();
   D.cart = []; D.searchQ = ''; D.showSearch = false;
@@ -466,19 +416,15 @@ function dismissIdle(){
   render();
 }
 
-/* ── Reset idle on any user interaction on the page ── */
 ['click','keydown','mousemove','touchstart','scroll'].forEach(ev=>{
   document.addEventListener(ev, ()=>{ if(D && D.user) resetIdle(); }, {passive: true});
 });
 
-/* ── Away-from-site tracking (tab switch, phone lock, browser minimise) ── */
 function handleVisibilityChange(){
   if(!D || !D.user) return;
   if(document.hidden){
-    // User left the page — record when
     _awayStart = Date.now();
   } else {
-    // User came back — check how long they were gone
     if(_awayStart !== null){
       const awaySeconds = Math.floor((Date.now() - _awayStart) / 1000);
       _awayStart = null;
@@ -487,14 +433,12 @@ function handleVisibilityChange(){
         return;
       }
     }
-    // They came back within 5 min — reset idle timer
     resetIdle();
   }
 }
 
 document.addEventListener('visibilitychange', handleVisibilityChange);
 
-// Also catch window blur/focus (desktop: switching apps or minimising)
 window.addEventListener('blur', ()=>{
   if(D && D.user && _awayStart === null) _awayStart = Date.now();
 });
@@ -515,31 +459,25 @@ window.addEventListener('focus', ()=>{
 /* ════════════════════════════════════════
    STATE + PERSISTENCE
 ════════════════════════════════════════ */
-// TODAY is always the real current date — recalculates every time it's used
 function getToday(){
   const n=new Date();
   return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
 }
-// Keep TODAY as a getter so existing code still works
 Object.defineProperty(window,'TODAY',{get:()=>getToday()});
 
-/* ── Auto reload at midnight so the date always resets ── */
 function scheduleReloadAtMidnight(){
   const now = new Date();
   const midnight = new Date(now);
-  midnight.setHours(24, 0, 0, 0); // next midnight
+  midnight.setHours(24, 0, 0, 0);
   const msUntilMidnight = midnight - now;
   console.log('Auto reload scheduled in', Math.round(msUntilMidnight/60000), 'minutes');
   setTimeout(()=>{
-    // Do NOT save here — this tab may hold a stale copy of shared data if it's
-    // been backgrounded for a long time, and pushing it would risk overwriting
-    // newer data saved by other devices. Just reload; the listener re-syncs fresh.
-    location.reload();
+    if(db && window._docRef) saveDB();
+    setTimeout(()=>{ location.reload(); }, 1000);
   }, msUntilMidnight);
 }
 scheduleReloadAtMidnight();
 
-/* ── 12-hour clock helpers ── */
 function fmt12(date){
   let h=date.getHours(),m=date.getMinutes(),s=date.getSeconds();
   const ampm=h>=12?'PM':'AM';h=h%12||12;
@@ -551,7 +489,6 @@ function fmt12hm(date){
   return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+' '+ampm;
 }
 
-/* ── Friendly date: "Monday 20th April 2026" ── */
 function friendlyDate(dateStr){
   const [y,mo,d]=dateStr.split('-').map(Number);
   const dt=new Date(y,mo-1,d);
@@ -561,7 +498,6 @@ function friendlyDate(dateStr){
   return days[dt.getDay()]+' '+ord(d)+' '+months[mo-1]+' '+y;
 }
 
-/* ── Time-of-day greeting ── */
 function timeGreeting(){
   const h=new Date().getHours();
   if(h>=5&&h<12)return'Good morning';
@@ -575,9 +511,6 @@ const hm=()=>fmt12hm(new Date());
 const DEF_INV=[];
 const DEF_TXN=[];
 
-// USERS is now populated from Firestore's 'accounts' collection (no passwords —
-// those live only inside Firebase Authentication, never in your synced data).
-// Shape: {uid, name, role, email}
 let USERS=[];
 
 /* ════════════════════════════════════════
@@ -587,6 +520,17 @@ let db = null;
 let auth = null;
 let _unsubscribe = null;
 let _unsubscribeAccounts = null;
+
+// SAFETY GUARD: becomes true only once we've genuinely received the real
+// pharmacy data from Firestore (or confirmed the document is brand new and
+// we're deliberately initializing it). Every write path (saveDB) checks
+// this before touching the cloud. Without this guard, any code that calls
+// autoSave()/saveNow() — like the login handler — could fire before the
+// real-time listener's first snapshot has arrived, and silently overwrite
+// real inventory/transactions/suppliers in Firestore with the empty local
+// defaults. This is exactly what happened when logging in on a device that
+// hadn't yet pulled the latest cloud data.
+let _cloudSynced = false;
 
 const DEF_SUPPLIERS = [];
 
@@ -617,16 +561,34 @@ const D={
   sidebarOpen: false,
 };
 
-/* ── pill / alert ── */
 function pill(){
   const e=document.getElementById('spill');if(!e)return;
   e.innerHTML=D.saveStatus==='saving'?'<span class="sdot blink"></span>Saving…':D.saveStatus==='error'?'<span class="sdot" style="background:#E24B4A"></span>Sync error':`<span class="sdot"></span>Synced ${D.lastSaved}`;
 }
 function addLog(a,d=''){D.log.unshift({ts:ts(),action:a,detail:d,user:D.user?D.user.name:'System'});if(D.log.length>600)D.log.length=600;}
 
-/* ── Save entire state to Firestore ── */
 function saveDB(retries=3){
   if(!db) return;
+  // ══════════════════════════════════════════════════════════════
+  // CRITICAL SAFETY GUARD — do not remove.
+  // Never let a full save fire before we've received the real cloud
+  // data at least once this session. Without this guard, any save
+  // triggered in that early window (e.g. right after login, before
+  // the Firestore listener's first snapshot has arrived — which is
+  // slower on mobile networks) would overwrite the ENTIRE document
+  // with whatever is still sitting in local memory, which at that
+  // point is just the empty default state. That silently wiped real
+  // inventory/transactions/suppliers data in production. If a save
+  // is requested before data has loaded, queue it and it will fire
+  // automatically the moment the first real snapshot arrives (see
+  // attachDataListeners()'s onSnapshot handler).
+  // ══════════════════════════════════════════════════════════════
+  if(!_cloudSynced){
+    console.warn('saveDB() deferred: real cloud data has not loaded yet, refusing to write until it does');
+    D._pendingSaveAfterLoad = true;
+    D.saveStatus='saving'; pill();
+    return;
+  }
   const payload = {
     inventory:D.inventory,
     transactions:D.transactions,
@@ -645,7 +607,6 @@ function saveDB(retries=3){
     .catch(e=>{
       console.error('Firestore save error',e);
       if(retries>0){
-        // Retry with exponential backoff
         const delay=(4-retries)*1000;
         setTimeout(()=>saveDB(retries-1), delay);
       } else {
@@ -654,44 +615,40 @@ function saveDB(retries=3){
     });
 }
 
-/* ── Urgent save for account changes (blockedUsers only — real accounts   */
-/* live in the separate 'accounts' collection, synced automatically) ── */
-/* Uses update() instead of set() to avoid overwriting other data */
 function saveAccountsUrgent(){
   if(!db) return;
+  if(!_cloudSynced){
+    console.warn('saveAccountsUrgent() deferred: real cloud data has not loaded yet');
+    D._pendingSaveAfterLoad = true;
+    D.saveStatus='saving'; pill();
+    return;
+  }
   window._docRef.update({
     blockedUsers: D.blockedUsers||[],
     updatedAt: Date.now(),
   })
   .then(()=>{ D.lastSaved=hm(); D.saveStatus='saved'; pill(); })
   .catch(e=>{
-    // If update fails (doc doesn't exist yet), fall back to full save
     console.warn('Urgent update failed, falling back to full save:', e.message);
     saveDB();
   });
 }
 
-/* ── Debounced auto-save (for typing/form changes) ── */
 function autoSave(){
   D.saveStatus='saving'; pill();
   clearTimeout(D._t);
   D._t=setTimeout(()=>{ saveDB(); },800);
 }
 
-/* ── Immediate save (for sales, stock changes, transactions) ── */
 function saveNow(){
   clearTimeout(D._t);
   D.saveStatus='saving'; pill();
   saveDB();
 }
 
-/* ── Apply cloud data into D (called by real-time listener) ── */
 function applyCloudData(data){
   if(!data) return;
-
-  // Use hasOwnProperty so empty arrays [] and 0 values still apply
   const has = k => Object.prototype.hasOwnProperty.call(data, k);
-
   if(has('inventory'))    D.inventory    = data.inventory    || [];
   if(has('transactions')) D.transactions = data.transactions || [];
   if(has('logins'))       D.logins       = data.logins       || [];
@@ -702,11 +659,8 @@ function applyCloudData(data){
   if(has('nextSup'))      D.nextSup      = data.nextSup      || 1;
   if(has('pharmacy'))     D.pharmacy     = data.pharmacy     || D.pharmacy;
   D.blockedUsers = data.blockedUsers || [];
-
   D.lastSaved = hm();
   D.saveStatus = 'saved';
-
-  // Force logout check using fresh cloud data (blockedUsers now stores uids)
   if(D.user){
     const isBlocked = D.blockedUsers.includes(D.user.uid);
     if(isBlocked){
@@ -725,7 +679,6 @@ function applyCloudData(data){
   }
 }
 
-/* ── Loading screen ── */
 function showLoadingScreen(){
   document.getElementById('root').innerHTML=`
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:18px">
@@ -741,7 +694,6 @@ function showLoadingScreen(){
     </div>`;
 }
 
-/* ── BARCODE SCANNER ── */
 let _scanStream = null;
 let _scanInterval = null;
 
@@ -760,7 +712,6 @@ async function openBarcodeScanner(){
   try{
     _scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});
     if(video){video.srcObject=_scanStream;video.play();}
-    // Use BarcodeDetector if available (Chrome Android)
     if('BarcodeDetector' in window){
       const detector=new BarcodeDetector({formats:['ean_13','ean_8','code_128','code_39','upc_a','upc_e','qr_code']});
       _scanInterval=setInterval(async()=>{
@@ -794,7 +745,6 @@ function closeBarcodeScanner(){
   if(video){video.srcObject=null;}
 }
 
-/* ── Bootstrap Firebase then start real-time listener ── */
 function initFirebase(){
   const firebaseConfig = {
     apiKey: "AIzaSyBLFI8yzmsXCwm3c2qRrN674TH3ScC0hrY",
@@ -809,30 +759,81 @@ function initFirebase(){
   const fbApp = firebase.initializeApp(firebaseConfig);
   db = firebase.firestore(fbApp);
   auth = firebase.auth(fbApp);
-  // SESSION persistence: login lasts only while this browser window/tab stays
-  // open. Closing the browser fully signs everyone out — important since
-  // this app runs on shared shop computers. Combined with the 3-minute idle
-  // timeout, sessions never linger indefinitely on a device.
   auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
   window._docRef = db.collection('pharmacy').doc('data');
   window._accountsRef = db.collection('accounts');
 
-  // Keep the staff list (USERS) live-synced from the accounts collection.
-  // No passwords ever live here — only {uid, name, role, email}.
-  _unsubscribeAccounts = window._accountsRef.onSnapshot(qs=>{
-    USERS = qs.docs.map(d=>({uid:d.id, ...d.data()}));
-    if(D.dbLoaded) render();
-  });
+  // ── Data listeners are only safe to attach once we know the user is
+  // authenticated (Firestore rules require it). Attaching them at page
+  // load — before login finishes — causes a permission-denied error that
+  // permanently kills the listener and silently falls back to defaults,
+  // even after the user successfully logs in. So these are (re)attached
+  // from inside onAuthStateChanged below instead of at the top level. ──
+  function attachDataListeners(){
+    if(_unsubscribe){ _unsubscribe(); _unsubscribe=null; }
+    if(_unsubscribeAccounts){ _unsubscribeAccounts(); _unsubscribeAccounts=null; }
 
-  // Show loading screen while first data arrives
+    _unsubscribeAccounts = window._accountsRef.onSnapshot(qs=>{
+      USERS = qs.docs.map(d=>({uid:d.id, ...d.data()}));
+      if(D.dbLoaded) render();
+    }, err=>{
+      console.error('Accounts listener error:', err);
+    });
+
+    _unsubscribe = window._docRef.onSnapshot(snap => {
+      // Mark _cloudSynced BEFORE deciding what to do with the snapshot —
+      // by this point we have a definitive, authenticated read of the
+      // cloud state (either real data, or a confirmed-empty/new
+      // document), so it's now safe for saveDB() to write. This is a
+      // SEPARATE flag from D.dbLoaded on purpose: D.dbLoaded also gets
+      // set true while logged out just to dismiss the loading spinner
+      // and show the login screen, which happens before any real data
+      // has been read. Using D.dbLoaded as the write-safety check would
+      // (and did) let saveDB() fire before real cloud data ever loaded.
+      const firstLoad = !D.dbLoaded;
+      D.dbLoaded = true;
+      _cloudSynced = true;
+
+      if(snap.exists){
+        applyCloudData(snap.data());
+      } else {
+        console.log('No Firestore data — writing defaults…');
+        saveDB();
+      }
+
+      if(firstLoad){
+        render();
+      } else {
+        if(!D.receipt && !D.editItem && !D.editSup && !D.showResetDialog){
+          render();
+        } else {
+          pill();
+        }
+      }
+
+      // If something tried to save earlier while we were still waiting
+      // to confirm real cloud state (e.g. login fired autoSave() before
+      // this snapshot arrived), run that save now instead of dropping it.
+      if(D._pendingSaveAfterLoad){
+        D._pendingSaveAfterLoad = false;
+        saveDB();
+      }
+    }, err => {
+      console.error('Firestore listener error:', err);
+      D.saveStatus = 'error';
+      // Don't mark dbLoaded / render defaults here — a permission error
+      // usually just means auth hasn't finished yet. Once login completes,
+      // onAuthStateChanged will call attachDataListeners() again.
+      pill();
+    });
+  }
+
   showLoadingScreen();
 
-  // ── Auth state — restores session on reload, and drives login/logout ──
   auth.onAuthStateChanged(fbUser=>{
     if(fbUser){
       window._accountsRef.doc(fbUser.uid).get().then(doc=>{
         if(!doc.exists){
-          // No role record yet — sign out, something is misconfigured
           console.warn('No account record for uid', fbUser.uid);
           auth.signOut();
           return;
@@ -847,43 +848,26 @@ function initFirebase(){
         D.user = {uid:fbUser.uid, email:fbUser.email, name:acc.name, role:acc.role};
         D.tab = D.tab==='login'?'dashboard':D.tab;
         if(!D._justLoggedIn){ D._justLoggedIn=true; }
+        // Now that we're authenticated, (re)connect the real-time data
+        // listeners. This runs every time someone logs in, so a fresh
+        // page load + login always gets a clean, working listener.
+        attachDataListeners();
         render();
+      }).catch(e=>{
+        console.error('Could not load account record:', e);
+        auth.signOut();
       });
     } else {
       D.user = null;
+      // Signed out — no authenticated listener needed. If a Manager wants
+      // to browse without logging in this stays blank, which is expected.
+      if(!D.dbLoaded){ D.dbLoaded = true; }
+      // Require a fresh, confirmed cloud read before the NEXT login is
+      // allowed to write anything — closes the exact race that wiped
+      // data when logging in on a device before its listener had synced.
+      _cloudSynced = false;
       render();
     }
-  });
-
-  // ── Real-time listener ──────────────────────────────────
-  _unsubscribe = window._docRef.onSnapshot(snap => {
-
-    if(snap.exists){
-      applyCloudData(snap.data());
-    } else {
-      // First ever run — no data yet, write defaults
-      console.log('No Firestore data — writing defaults…');
-      saveDB();
-    }
-
-    if(!D.dbLoaded){
-      D.dbLoaded = true;
-      render(); // first load
-    } else {
-      // Always re-render so all devices show latest data
-      // Only skip if a modal is open to avoid interrupting the user
-      if(!D.receipt && !D.editItem && !D.editSup && !D.showResetDialog){
-        render();
-      } else {
-        pill();
-      }
-    }
-
-  }, err => {
-    console.error('Firestore listener error:', err);
-    D.saveStatus = 'error';
-    if(!D.dbLoaded){ D.dbLoaded = true; render(); }
-    pill();
   });
 }
 
@@ -898,7 +882,6 @@ function typeTag(t){
     'Cosmetics':'tcos','OTC':'totc','Herbal':'the',
     'Prescription':'trx','Consumable':'tsu',
     'Medical Device':'tmd','Supplement':'tsup',
-    // legacy types
     'OTC / General':'totc','Prescription (POM)':'trx',
     'Specialist':'tsp','Rx':'trx',
   };
@@ -906,15 +889,10 @@ function typeTag(t){
 }
 function stockTag(i){return i.qty<=i.minQty?'<span class="tag tlo">Low</span>':'<span class="tag tok">OK</span>';}
 
-/* ── Expiry helpers ── */
-function getToday(){
-  const n=new Date();
-  return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
-}
 function expiryStatus(expiry){
   if(!expiry)return null;
   const [y,m]=expiry.split('-').map(Number);
-  const exp=new Date(y,m-1,1); // first of expiry month
+  const exp=new Date(y,m-1,1);
   const now=new Date(); now.setHours(0,0,0,0);
   const days=Math.floor((exp-now)/(1000*60*60*24));
   if(days<0)return{label:'Expired',cls:'tlo',days};
@@ -932,7 +910,6 @@ function hl(s,q){if(!q)return esc(s);const r=new RegExp('('+q.replace(/[.*+?^${}
 function filteredInv(){const q=D.searchQ.toLowerCase().trim();if(!q)return D.inventory;return D.inventory.filter(i=>i.name.toLowerCase().includes(q)||i.type.toLowerCase().includes(q)||(i.supplier||'').toLowerCase().includes(q));}
 function searchResults(){const q=D.searchQ.toLowerCase().trim();if(!q)return[];return D.inventory.filter(i=>i.name.toLowerCase().includes(q)||i.type.toLowerCase().includes(q)||(i.supplier||'').toLowerCase().includes(q)).slice(0,8);}
 
-/* ── EXCEL: single day ── */
 function exportDayExcel(date){
   if(typeof XLSX==='undefined'){showAlert('Excel library loading, try again.','aw');return;}
   const txns=D.transactions.filter(t=>t.date===date);
@@ -949,7 +926,6 @@ function exportDayExcel(date){
   showAlert('Daily Excel for '+date+' downloaded — save to your monthly folder.','ok');
 }
 
-/* ── EXCEL: reorder / low stock list ── */
 function exportReorderExcel(){
   if(typeof XLSX==='undefined'){showAlert('Excel library loading…','aw');return;}
   const today=getToday();
@@ -976,14 +952,11 @@ function exportReorderExcel(){
   showAlert('Reorder list downloaded.','ok');
 }
 
-
 function exportSupplierExcel(supId){
   if(typeof XLSX==='undefined'){showAlert('Excel library loading…','aw');return;}
   const wb=XLSX.utils.book_new();
   const stamp=ts();
-
   if(supId==='all'){
-    // All suppliers
     const rows=[
       ["God's Will OTC — Supplier Delivery Report (All Suppliers)"],
       ['Generated: '+friendlyDate(TODAY)+' at '+fmt12hm(new Date())],[],
@@ -1015,7 +988,6 @@ function exportSupplierExcel(supId){
   showAlert('Supplier Excel downloaded with datestamp.','ok');
 }
 
-/* ── EXCEL: full backup ── */
 function exportFullExcel(){
   if(typeof XLSX==='undefined'){showAlert('Excel loading…','aw');return;}
   const wb=XLSX.utils.book_new();
@@ -1039,7 +1011,6 @@ function exportFullExcel(){
   addLog('Full backup exported');autoSave();showAlert('Full Excel backup downloaded.','ok');
 }
 
-/* ── PRINT ── */
 function printReceipt(id){
   const t=D.transactions.find(x=>x.id===id);if(!t)return;
   const ph=D.pharmacy||{};
@@ -1118,8 +1089,6 @@ function idleBarHTML(){
 
 function mainUI(){
   const mgr=D.user.role==='manager';
-
-  // All nav items — sidebar shows everything
   const mainItems=[
     {k:'dashboard',  l:'Dashboard',    i:'🏠'},
     {k:'sales',      l:'Sales',        i:'🛒'},
@@ -1139,14 +1108,11 @@ function mainUI(){
     {k:'account',   l:'Account',       i:'👤'},
     {k:'settings',  l:'Settings',      i:'⚙️'},
   ];
-
-  // Build sidebar HTML
   const sidebarItems=[
     ...mainItems,
     ...(mgr?mgrItems:staffItems),
     ...bottomItems,
   ];
-
   const sidebarHTML=`
     <div class="sidebar-head">
       <div class="sidebar-logo">God's Will OTC</div>
@@ -1167,8 +1133,6 @@ function mainUI(){
         <span class="si-icon">🚪</span>Sign out
       </button>
     </div>`;
-
-  // Update sidebar DOM directly (outside root)
   const sidebarEl=document.getElementById('sidebar');
   const overlayEl=document.getElementById('sidebar-overlay');
   if(sidebarEl) sidebarEl.innerHTML=sidebarHTML;
@@ -1179,7 +1143,6 @@ function mainUI(){
     if(sidebarEl) sidebarEl.classList.remove('open');
     if(overlayEl) overlayEl.classList.remove('open');
   }
-
   const res=searchResults();const q=D.searchQ;
   return`
     <div class="topbar">
@@ -1234,7 +1197,6 @@ function pageContent(mgr){
   return '';
 }
 
-/* ── DASHBOARD ── */
 function dashboard(mgr){
   const today=getToday();
   const tQ=D.inventory.reduce((s,i)=>s+i.qty,0);
@@ -1243,13 +1205,10 @@ function dashboard(mgr){
   const myT=mgr?todT:todT.filter(t=>t.staff===D.user.name);
   const low=D.inventory.filter(i=>i.qty<=i.minQty);
   const expiring=D.inventory.filter(i=>i.expiry&&expiryStatus(i.expiry)!==null);
-
-  // Staff performance for today (manager only)
   const staffSummary=mgr?USERS.filter(u=>u.role==='staff').map(u=>{
     const st=todT.filter(t=>t.staff===u.name);
     return{name:u.name,sales:st.length,revenue:st.reduce((s,t)=>s+t.total,0)};
   }).filter(u=>u.sales>0):[];
-
   return`
     <div class="${mgr?'mc4':'mc2'}">
       <div class="mk bl"><div class="ml">Items in stock</div><div class="mv">${tQ}</div><div class="ms" style="color:#185FA5">${D.inventory.length} products</div></div>
@@ -1258,7 +1217,6 @@ function dashboard(mgr){
       ${mgr?`<div class="mk gn"><div class="ml">All time revenue</div><div class="mv" style="font-size:17px">${cur(D.transactions.filter(t=>!t.voided).reduce((s,t)=>s+t.total,0))}</div></div>`:''}
       <div class="mk ${low.length?'rd':'gn'}"><div class="ml">Low stock items</div><div class="mv">${low.length}</div><div class="ms">${low.length?'⚠ Need reorder':'All good'}</div></div>
     </div>
-
     ${expiring.length?`<div class="sec"><div class="sh o"><h3>⏰ Expiry alerts (${expiring.length})</h3>${mgr?`<button class="btn bsm bam" id="reorderExportBtn">⬇ Reorder list Excel</button>`:''}</div>
       <div class="tw"><table class="to"><thead><tr><th>Medicine</th><th>Type</th><th>Expiry</th><th>Status</th><th>In stock</th></tr></thead><tbody>
         ${expiring.map(i=>{const s=expiryStatus(i.expiry);return`<tr style="${s.days<0?'background:#FFF0F0':s.days<=30?'background:#FFF8F0':''}">
@@ -1268,17 +1226,14 @@ function dashboard(mgr){
           <td style="font-weight:700;${s.days<0?'color:#791F1F':''}">${i.qty}</td>
         </tr>`}).join('')}
       </tbody></table></div></div>`:''}
-
     ${low.length?`<div class="sec"><div class="sh"><h3>⚠ Low stock alerts (${low.length})</h3>${mgr?`<button class="btn bsm brd" id="lowStockExportBtn">⬇ Reorder Excel</button>`:''}</div>
       <div class="tw"><table><thead><tr><th>Medicine</th><th>Type</th><th>In stock</th><th>Min required</th>${!mgr?'<th>Action</th>':''}</tr></thead><tbody>
         ${low.map(i=>`<tr><td><strong>${esc(i.name)}</strong></td><td>${typeTag(i.type)}</td><td style="color:#791F1F;font-weight:700">${i.qty}</td><td>${i.minQty}</td>${!mgr?`<td><span style="font-size:12px;color:#791F1F;font-weight:600">Notify manager to reorder</span></td>`:''}</tr>`).join('')}
     </tbody></table></div></div>`:''}
-
     ${mgr&&staffSummary.length?`<div class="sec"><div class="sh g"><h3>👥 Staff performance today</h3></div>
       <div class="tw"><table class="tg"><thead><tr><th>Staff member</th><th>Sales today</th><th>Revenue today</th></tr></thead><tbody>
         ${staffSummary.map(u=>`<tr><td style="font-weight:700">${esc(u.name)}</td><td style="font-weight:700;color:#0F6E56">${u.sales} sale(s)</td><td style="font-weight:700;color:#085041">${cur(u.revenue)}</td></tr>`).join('')}
       </tbody></table></div></div>`:''}
-
     <div class="sec"><div class="sh ${mgr?'':'g'}"><h3>Today's transactions — ${friendlyDate(today)}</h3></div>
       ${myT.length?`<div class="tw"><table class="${mgr?'':'tg'}"><thead><tr><th>ID</th><th>Time</th><th>Items</th><th>Total</th>${mgr?'<th>Staff</th>':''}<th></th></tr></thead><tbody>
         ${myT.map(t=>`<tr ${t.voided?'style="opacity:0.5;text-decoration:line-through"':''}><td style="font-family:monospace;font-size:13px;color:#185FA5;font-weight:700">${t.id}${t.voided?'<span class="tag tlo" style="margin-left:4px">Voided</span>':''}</td><td style="color:#666">${t.time}</td><td>${t.items.length} item(s)</td><td style="font-weight:700">${cur(t.total)}</td>${mgr?`<td style="font-weight:600">${esc(t.staff)}</td>`:''}<td style="display:flex;gap:5px">
@@ -1289,15 +1244,12 @@ function dashboard(mgr){
     </div>`;
 }
 
-/* ── MANAGER INVENTORY ── */
 function inventoryPage(){
   const activeType = D.invTypeFilter || MEDICINE_TYPES[0];
   const q = D.searchQ;
   const n = D.newMed;
   let items = filteredInv().filter(i=>i.type===activeType);
-
   return`
-    <!-- Category tabs — selecting sets the active type automatically -->
     <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px">
       ${MEDICINE_TYPES.map(t=>`<button class="ist ${activeType===t?'on':''}" data-itf="${t}">${t}</button>`).join('')}
     </div>
@@ -1307,7 +1259,6 @@ function inventoryPage(){
       <button class="ist ${D.invTab==='list'?'on':''}" data-it="list">View all</button>
       <button class="btn bda bsm" id="clearAllInvBtn" style="margin-left:auto">🗑 Clear all</button>
     </div>
-
     ${D.invTab==='add'?`<div class="sec"><div class="sh"><h3>Add new ${activeType} product</h3>
       <span style="font-size:13px;color:#666">Category: <strong>${activeType}</strong> — selected automatically</span>
     </div>
@@ -1329,7 +1280,6 @@ function inventoryPage(){
         <button class="btn" id="clrNew">Clear</button>
         <button class="btn bgn" id="addNew">Add to ${activeType}</button>
       </div></div>`:''}
-
     ${D.invTab!=='add'?`<div class="sec"><div class="sh">
       <h3>${D.invTab==='restock'?'Restock':'All'} — ${activeType}</h3>
       <span style="font-size:13px;color:#666;font-weight:600">${items.length} product(s)</span>
@@ -1345,7 +1295,6 @@ function inventoryPage(){
       </tbody></table></div>`}
     </div>`:''}`;
 }
-
 
 function staffInventoryPage(){
   const items=filteredInv();const q=D.searchQ;
@@ -1363,7 +1312,6 @@ function staffInventoryPage(){
     </div>`;
 }
 
-/* ── SALES ── */
 function salesPage(){
   const q=D.searchQ;
   const typeFilter=D.salesTypeFilter||'';
@@ -1401,7 +1349,6 @@ function salesPage(){
     </div></div></div>`;
 }
 
-/* ── MY SALES ── */
 function mySales(){
   const myT=D.transactions.filter(t=>t.staff===D.user.name);
   const fd=D.filterDate;const fil=fd?myT.filter(t=>t.date===fd):myT;
@@ -1437,7 +1384,6 @@ function mySales(){
     </div>`;
 }
 
-/* ── TRANSACTIONS ── */
 function txnPage(){
   const today=getToday();
   const all=[...D.transactions].reverse();
@@ -1468,7 +1414,6 @@ function txnPage(){
   </div>`;
 }
 
-/* ── REPORTS ── */
 function reportsPage(){
   const todT=D.transactions.filter(t=>t.date===getToday());
   const allRev=D.transactions.reduce((s,t)=>s+t.total,0);
@@ -1489,7 +1434,6 @@ function reportsPage(){
     </div>`;
 }
 
-/* ── SUPPLIERS PORTAL ── */
 function suppliersPage(){
   const st=D.supTab;
   return`
@@ -1499,7 +1443,6 @@ function suppliersPage(){
       <button class="ist ${st==='delivery'?'on':''}" data-st="delivery">+ Record delivery</button>
       <button class="btn bsm bgn" id="xlSupAllBtn" style="margin-left:auto">⬇ Export all suppliers Excel</button>
     </div>
-
     ${st==='list'?`
     <div class="sec"><div class="sh o"><h3>Supplier directory</h3></div>
       ${D.suppliers.length===0?`<div style="color:#888;font-size:14px;font-weight:500;padding:8px 0">No suppliers yet.</div>`:
@@ -1532,7 +1475,6 @@ function suppliersPage(){
         </div>`;
       }).join('')}
     </div>`:''}
-
     ${st==='add'?`
     <div class="sec"><div class="sh o"><h3>Add new supplier</h3></div>
       <div class="g2">
@@ -1548,7 +1490,6 @@ function suppliersPage(){
         <button class="btn bor" id="addSupBtn">Add supplier</button>
       </div>
     </div>`:''}
-
     ${st==='delivery'?`
     <div class="sec"><div class="sh o"><h3>Record new delivery</h3></div>
       ${D.suppliers.length===0?`<div class="alert awn">No suppliers yet — add a supplier first.</div>`:''}
@@ -1576,14 +1517,12 @@ function suppliersPage(){
   `;
 }
 
-/* ── LOGINS ── */
 function loginsPage(){
   return`<div class="sec"><div class="sh"><h3>Staff login log</h3></div><div class="tw"><table><thead><tr><th>User</th><th>Role</th><th>Login time</th></tr></thead><tbody>
     ${[...D.logins].reverse().map(l=>{const u=USERS.find(u=>u.email===l.user)||{role:'staff'};return`<tr><td style="font-weight:700">${esc(l.user)}</td><td><span class="${u.role==='manager'?'rm':'rs'}">${u.role==='manager'?'Manager':'Staff'}</span></td><td style="font-family:monospace;font-size:13px;color:#666">${l.time}</td></tr>`;}).join('')}
   </tbody></table></div></div>`;
 }
 
-/* ── BACKUP ── */
 function backupPage(){
   return`
     <div class="sec"><div class="sh"><h3>Download full Excel backup</h3></div>
@@ -1595,15 +1534,11 @@ function backupPage(){
     </div>`;
 }
 
-/* ── ACCOUNT ── */
 function accountPage(){
   const mgr=D.user.role==='manager';
   const staffUsers=USERS.filter(u=>u.uid!==D.user.uid);
-
   if(mgr){
-    /* ── MANAGER VIEW ── */
     return`
-      <!-- Staff accounts list -->
       <div class="sec"><div class="sh p"><h3>👥 Staff accounts (${staffUsers.length})</h3>
         <button class="btn bbl bsm" id="showCreateStaff">+ Create new staff account</button>
       </div>
@@ -1626,8 +1561,6 @@ function accountPage(){
         </tbody></table></div>`}
       <div class="alert ain" style="margin-top:10px;font-size:13px">Suspending blocks access instantly. Fully deleting an account requires the Firebase Console (Authentication tab), since that action isn't available from the app itself.</div>
       </div>
-
-      <!-- Create new staff account form (hidden by default) -->
       <div class="sec" id="createStaffForm" style="display:none;max-width:500px"><div class="sh p"><h3>➕ Create new staff account</h3></div>
         <div class="field"><label>Full name *</label><input type="text" id="newStaffName" placeholder="e.g. Kwame Asante"/></div>
         <div class="field"><label>Email *</label><input type="email" id="newStaffEmail" placeholder="staff@example.com"/></div>
@@ -1645,8 +1578,6 @@ function accountPage(){
           <button class="btn bgr" id="cancelCreateStaff">Cancel</button>
         </div>
       </div>
-
-      <!-- Edit staff (name/role only — passwords are never editable by anyone but the account owner) -->
       <div class="sec" id="editStaffForm" style="display:none;max-width:500px"><div class="sh p"><h3 id="editStaffTitle">✏️ Edit staff account</h3></div>
         <input type="hidden" id="editStaffUid"/>
         <div class="field"><label>Full name</label><input type="text" id="editStaffName" placeholder="Full name"/></div>
@@ -1661,8 +1592,6 @@ function accountPage(){
           <button class="btn bgr" id="cancelStaffEdit">Cancel</button>
         </div>
       </div>
-
-      <!-- Manager's own password -->
       <div class="sec" style="max-width:500px"><div class="sh p"><h3>🔒 Change my password</h3></div>
         <div class="field"><label>Current password</label><input type="password" id="pwCur" placeholder="Enter current password"/></div>
         <div class="field"><label>New password (min 6 characters)</label><input type="password" id="pwNew" placeholder="New password"/></div>
@@ -1670,13 +1599,10 @@ function accountPage(){
         <button class="btn bpu" id="pwSave">Update my password</button>
       </div>`;
   }
-
-  /* ── STAFF VIEW — password change only ── */
   return`
     <div class="alert ain" style="margin-bottom:1rem">
       👤 Logged in as <strong>${esc(D.user.name)}</strong> (${esc(D.user.email||'')}). You can update your password below. To change your name or role, contact the Manager.
     </div>
-
     <div class="sec" style="max-width:500px"><div class="sh p"><h3>🔒 Change my password</h3></div>
       <div class="field"><label>Current password</label><input type="password" id="pwCur" placeholder="Enter current password"/></div>
       <div class="field"><label>New password (min 6 characters)</label><input type="password" id="pwNew" placeholder="New password"/></div>
@@ -1685,14 +1611,11 @@ function accountPage(){
     </div>`;
 }
 
-/* ── END-OF-DAY REPORT ── */
 function buildEOD(date){
   const txns=D.transactions.filter(t=>t.date===date&&!t.voided);
   const allTxns=D.transactions.filter(t=>t.date===date);
   const voided=allTxns.filter(t=>t.voided);
   const total=txns.reduce((s,t)=>s+t.total,0);
-
-  // Top selling items
   const itemMap={};
   txns.forEach(t=>t.items.forEach(i=>{
     if(!itemMap[i.name])itemMap[i.name]={name:i.name,qty:0,revenue:0};
@@ -1700,8 +1623,6 @@ function buildEOD(date){
     itemMap[i.name].revenue+=i.price*i.qty;
   }));
   const topItems=Object.values(itemMap).sort((a,b)=>b.revenue-a.revenue).slice(0,5);
-
-  // Staff performance
   const staffMap={};
   txns.forEach(t=>{
     if(!staffMap[t.staff])staffMap[t.staff]={name:t.staff,sales:0,revenue:0};
@@ -1709,7 +1630,6 @@ function buildEOD(date){
     staffMap[t.staff].revenue+=t.total;
   });
   const staffPerf=Object.values(staffMap).sort((a,b)=>b.revenue-a.revenue);
-
   return{date,txns,voided,total,topItems,staffPerf,txnCount:txns.length};
 }
 
@@ -1738,8 +1658,6 @@ function exportEODExcel(date){
   const r=buildEOD(date);
   const wb=XLSX.utils.book_new();
   const ph=D.pharmacy||{};
-
-  // Summary sheet
   const sum=[
     [ph.name||"God's Will OTC"],['End-of-Day Report — '+friendlyDate(date)],['Generated: '+ts()],[],
     ['SUMMARY'],['Total transactions',r.txnCount],['Voided transactions',r.voided.length],['Total revenue (GH₵)',r.total],[],
@@ -1751,14 +1669,11 @@ function exportEODExcel(date){
   const ws1=XLSX.utils.aoa_to_sheet(sum);
   ws1['!cols']=[{wch:30},{wch:15},{wch:18}];
   XLSX.utils.book_append_sheet(wb,ws1,'Summary');
-
-  // Transactions sheet
   const txnRows=[['TXN ID','Time','Items','Total','Staff','Customer']];
   r.txns.forEach(t=>txnRows.push([t.id,t.time||'',t.items.map(i=>i.name+' ×'+i.qty).join(', '),t.total,t.staff,t.customer||'']));
   const ws2=XLSX.utils.aoa_to_sheet(txnRows);
   ws2['!cols']=[{wch:10},{wch:10},{wch:40},{wch:12},{wch:15},{wch:20}];
   XLSX.utils.book_append_sheet(wb,ws2,'Transactions');
-
   XLSX.writeFile(wb,'MediTrack_EOD_'+date+'.xlsx');
   addLog('EOD report exported',date);autoSave();
   showAlert('End-of-day report downloaded.','ok');
@@ -1788,7 +1703,6 @@ function printEOD(date){
   setTimeout(()=>{window.print();setTimeout(()=>{pa.style.display='none';pa.innerHTML='';},500);},100);
 }
 
-
 function settingsPage(){
   const ph=D.pharmacy||{};
   const today=getToday();
@@ -1802,7 +1716,6 @@ function settingsPage(){
       </div>
       <button class="btn bbl" id="savePharmacy">Save pharmacy details</button>
     </div>
-
     <div class="sec" style="max-width:520px"><div class="sh"><h3>🌙 Display</h3></div>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0">
         <div>
@@ -1815,7 +1728,6 @@ function settingsPage(){
         </label>
       </div>
     </div>
-
     <div class="sec"><div class="sh o"><h3>📊 End-of-day report</h3></div>
       <div class="field"><label>Select date</label>
         <input type="date" id="eodDate" value="${D.reportDate||today}" max="${today}"/>
@@ -1827,7 +1739,6 @@ function settingsPage(){
       </div>
       <div id="eodReport" style="margin-top:1rem"></div>
     </div>
-
     <div class="sec"><div class="sh"><h3>Auto-save &amp; session</h3></div>
       <div style="display:flex;align-items:center;gap:8px;font-size:14px;padding:9px 15px;border-radius:8px;background:#E1F5EE;color:#085041;margin-bottom:8px;font-weight:600"><span class="sdot"></span>Auto-save active · Last synced: <strong>${D.lastSaved||'—'}</strong></div>
       <div style="font-size:14px;color:var(--text-muted);font-weight:500;margin-bottom:12px">⏱ <strong>3 minutes</strong> of no activity on the page → auto logout. <strong>5 minutes</strong> away from the site (tab switch, phone lock) → auto logout. Any interaction resets the timer.</div>
@@ -1838,7 +1749,6 @@ function settingsPage(){
       <p>Permanently erases <strong>all</strong> inventory, transactions, suppliers, logins and logs. The site will be completely blank. This cannot be undone.</p>
       <button class="btn bda" id="resetBtn">Clear everything &amp; start fresh</button>
     </div>
-
     ${D.showResetDialog?`<div class="mwrap"><div class="modal">
       <h3 class="o">⚠ Confirm System Reset</h3>
       <div class="alert aer" style="margin-bottom:1rem">This will permanently delete ALL data — inventory, sales, transactions, suppliers, users and logs. The system will be completely blank.</div>
@@ -1856,10 +1766,9 @@ function settingsPage(){
           <button class="btn" id="resetCancel">Cancel</button>
         </div>`:''}
     </div></div>`:''}
-`; // end settingsPage return
+`;
 }
 
-/* ── MODALS ── */
 function receiptModal(){
   const t=D.transactions.find(x=>x.id===D.receipt);
   if(!t) return`<div class="mwrap"><div class="modal">
@@ -1938,8 +1847,6 @@ function editSupModal(){
 ════════════════════════════════════════ */
 function attachAll(){
   const $=id=>document.getElementById(id);
-
-  /* login — Firebase Authentication */
   const lb=$('loginBtn');
   if(lb)lb.onclick=()=>{
     const email=($('ln').value||'').trim();
@@ -1948,7 +1855,6 @@ function attachAll(){
     lb.disabled=true; lb.textContent='Signing in…';
     auth.signInWithEmailAndPassword(email,p)
       .then(cred=>{
-        // onAuthStateChanged (in initFirebase) picks up D.user, role, logging.
         D.logins.push({user:email,time:ts()});
         addLog('Login',email+' signed in');autoSave();
         startIdleTimer();
@@ -1964,14 +1870,10 @@ function attachAll(){
         render();
       });
   };
-
-  /* forgot password — Firebase sends a real reset email, no security questions */
   const fbtn=$('forgotBtn');
   if(fbtn)fbtn.onclick=()=>{D.forgotMode=true;D.forgotEmail='';D.alert=null;render();};
-
   const fpCancel=$('fpCancelBtn');
   if(fpCancel)fpCancel.onclick=()=>{D.forgotMode=false;D.forgotEmail='';D.alert=null;render();};
-
   const fpSend=$('fpSendBtn');
   if(fpSend)fpSend.onclick=()=>{
     const email=($('fpEmail').value||'').trim();
@@ -1984,23 +1886,18 @@ function attachAll(){
         render();
       })
       .catch(e=>{
-        // Same message regardless of whether the email exists, to avoid leaking which emails have accounts
         showAlert('✅ If an account exists for that email, a reset link has been sent.','ok');
         D.forgotMode=false;
         render();
       });
   };
-
   const lo=$('logoutBtn');
   if(lo)lo.onclick=()=>{
-    addLog('Logout',D.user.name+' signed out');
+    addLog('Logout',D.user.name+' signed out');autoSave();
     stopIdleTimer();
     auth.signOut();
     D.tab='dashboard';D.cart=[];D.searchQ='';D.showSearch=false;render();
   };
-
-  /* tabs */
-  /* ── Sidebar navigation ── */
   const menuBtn=$('menuBtn');
   if(menuBtn)menuBtn.onclick=(e)=>{
     e.stopPropagation();
@@ -2010,16 +1907,12 @@ function attachAll(){
     if(sb)sb.classList.toggle('open',D.sidebarOpen);
     if(ov)ov.classList.toggle('open',D.sidebarOpen);
   };
-
-  // Close sidebar on overlay click
   const ovEl=document.getElementById('sidebar-overlay');
   if(ovEl)ovEl.onclick=()=>{
     D.sidebarOpen=false;
     document.getElementById('sidebar').classList.remove('open');
     document.getElementById('sidebar-overlay').classList.remove('open');
   };
-
-  // Sidebar nav items
   document.querySelectorAll('[data-stab]').forEach(b=>b.onclick=()=>{
     D.tab=b.dataset.stab;
     D.sidebarOpen=false;
@@ -2028,11 +1921,9 @@ function attachAll(){
     document.getElementById('sidebar-overlay').classList.remove('open');
     render();
   });
-
-  // Sidebar sign out button
   const lbSide=$('logoutBtnSide');
   if(lbSide)lbSide.onclick=()=>{
-    addLog('Logout',D.user.name+' signed out');
+    addLog('Logout',D.user.name+' signed out');autoSave();
     D.user=null;D.cart=[];D.tab='dashboard';D.sidebarOpen=false;
     document.getElementById('sidebar').classList.remove('open');
     document.getElementById('sidebar-overlay').classList.remove('open');
@@ -2040,8 +1931,6 @@ function attachAll(){
   };
   document.querySelectorAll('[data-it]').forEach(t=>t.onclick=()=>{D.invTab=t.dataset.it;render();});
   document.querySelectorAll('[data-st]').forEach(t=>t.onclick=()=>{D.supTab=t.dataset.st;render();});
-
-  /* search */
   const si=$('searchInput');
   if(si){
     si.oninput=function(){
@@ -2076,8 +1965,6 @@ function attachAll(){
   }
   const sc=$('searchClear');if(sc)sc.onclick=()=>{D.searchQ='';D.showSearch=false;render();};
   document.addEventListener('click',function h(e){const w=document.getElementById('searchWrap');if(w&&!w.contains(e.target)){const d=document.getElementById('searchDrop');if(d){d.remove();D.showSearch=false;}document.removeEventListener('click',h);}});
-
-  /* clear all inventory */
   const cai=$('clearAllInvBtn');
   if(cai)cai.onclick=()=>{
     if(!confirm('⚠ Clear ALL inventory? Every medicine will be removed. Cannot be undone.'))return;
@@ -2085,13 +1972,11 @@ function attachAll(){
     D.inventory=[];D.nextId=1;addLog('Inventory cleared','All medicines removed');autoSave();
     showAlert('All inventory cleared.','ok');render();
   };
-
-  /* add medicine */
   const nn=$('nn');if(nn)nn.oninput=e=>{D.newMed.name=e.target.value;const v=e.target.value.toLowerCase().trim();D.dupWarn=v.length>2&&D.inventory.some(i=>i.name.toLowerCase().includes(v));};
   const an=$('addNew');
   if(an)an.onclick=()=>{
     const nm=($('nn').value||'').trim();
-    const ty=D.invTypeFilter||MEDICINE_TYPES[0]; // type comes from selected category tab
+    const ty=D.invTypeFilter||MEDICINE_TYPES[0];
     const pr=parseFloat($('np').value);
     const qt=parseInt($('nq').value);
     const mn=parseInt($('nm').value);
@@ -2102,58 +1987,17 @@ function attachAll(){
     if(isNaN(pr)||pr<0){showAlert('Enter a valid price.','er');render();return;}
     if(isNaN(qt)||qt<0){showAlert('Enter a valid quantity.','er');render();return;}
     if(isNaN(mn)||mn<0){showAlert('Enter a min stock level.','er');render();return;}
-    an.disabled=true;
-    D.saveStatus='saving';pill();
-    db.runTransaction(tx=>tx.get(window._docRef).then(doc=>{
-      const data=doc.data()||{};
-      const inv=data.inventory||[];
-      if(inv.find(i=>i.name.toLowerCase()===nm.toLowerCase())) throw{__dup:true};
-      const nextId=data.nextId||1;
-      inv.push({id:nextId,name:nm,type:ty,price:pr,qty:qt,minQty:mn,supplier:sp,expiry:ex,notes:nt});
-      tx.update(window._docRef,{inventory:inv,nextId:nextId+1,updatedAt:Date.now()});
-      return inv;
-    })).then(inv=>{
-      D.inventory=inv;D.nextId=Math.max(D.nextId,inv.reduce((m,i)=>Math.max(m,i.id),0)+1);
-      addLog('Added product',nm+' ('+ty+')');
-      D.lastSaved=hm();D.saveStatus='saved';pill();
-      D.newMed={name:'',type:ty,price:'',qty:'',minQty:'',supplier:'',expiry:'',notes:''};D.dupWarn=false;
-      an.disabled=false;
-      showAlert('"'+nm+'" added to '+ty+'.','ok');D.invTab='list';render();
-    }).catch(e=>{
-      an.disabled=false;
-      if(e&&e.__dup){showAlert('"'+nm+'" already exists.','er');}
-      else{console.error('Add item failed',e);showAlert('Save failed — check connection and try again.','er');D.saveStatus='error';}
-      pill();render();
-    });
+    if(D.inventory.find(i=>i.name.toLowerCase()===nm.toLowerCase())){showAlert('"'+nm+'" already exists.','er');render();return;}
+    D.inventory.push({id:D.nextId++,name:nm,type:ty,price:pr,qty:qt,minQty:mn,supplier:sp,expiry:ex,notes:nt});
+    addLog('Added product',nm+' ('+ty+')');saveNow();
+    D.newMed={name:'',type:ty,price:'',qty:'',minQty:'',supplier:'',expiry:'',notes:''};D.dupWarn=false;
+    showAlert('"'+nm+'" added to '+ty+'.','ok');D.invTab='list';render();
   };
   const cn=$('clrNew');if(cn)cn.onclick=()=>{D.newMed={name:'',type:D.invTypeFilter||MEDICINE_TYPES[0],price:'',qty:'',minQty:'',supplier:'',expiry:'',notes:''};D.dupWarn=false;render();};
-
   document.querySelectorAll('[data-restock]').forEach(b=>b.onclick=()=>{
-    const id=+b.dataset.restock;
-    const localItem=D.inventory.find(i=>i.id===id);
-    if(!localItem)return;
-    const a=prompt('Restock "'+localItem.name+'" (current: '+localItem.qty+')\nQty to add:');
-    const n=parseInt(a);
-    if(isNaN(n)||n<=0)return;
-    D.saveStatus='saving';pill();
-    db.runTransaction(tx=>tx.get(window._docRef).then(doc=>{
-      const data=doc.data()||{};
-      const inv=data.inventory||[];
-      const it=inv.find(i=>i.id===id);
-      if(!it) throw{__missing:true};
-      it.qty+=n;
-      tx.update(window._docRef,{inventory:inv,updatedAt:Date.now()});
-      return {inv,newQty:it.qty,name:it.name};
-    })).then(r=>{
-      D.inventory=r.inv;
-      addLog('Restock','"'+r.name+'" +'+n);
-      D.lastSaved=hm();D.saveStatus='saved';pill();
-      showAlert('+'+n+' added. Stock: '+r.newQty,'ok');render();
-    }).catch(e=>{
-      console.error('Restock failed',e);
-      showAlert('Restock failed — check connection and try again.','er');
-      D.saveStatus='error';pill();render();
-    });
+    const item=D.inventory.find(i=>i.id===+b.dataset.restock);
+    const a=prompt('Restock "'+item.name+'" (current: '+item.qty+')\nQty to add:');
+    const n=parseInt(a);if(!isNaN(n)&&n>0){item.qty+=n;addLog('Restock','"'+item.name+'" +'+n);saveNow();showAlert('+'+n+' added. Stock: '+item.qty,'ok');render();}
   });
   document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{D.editItem={...D.inventory.find(i=>i.id===+b.dataset.edit)};render();});
   const se=$('saveEdit');
@@ -2175,8 +2019,6 @@ function attachAll(){
     const it=D.inventory.find(i=>i.id===+b.dataset.del);
     if(confirm('Remove "'+it.name+'"?')){D.inventory=D.inventory.filter(i=>i.id!==+b.dataset.del);addLog('Removed',it.name);saveNow();showAlert('Removed.','ok');render();}
   });
-
-  /* sales */
   document.querySelectorAll('[data-ac]').forEach(b=>b.onclick=()=>{
     const id=+b.dataset.ac,item=D.inventory.find(i=>i.id===id);
     const ex=D.cart.find(c=>c.id===id);
@@ -2190,88 +2032,35 @@ function attachAll(){
   const co=$('checkout');
   if(co)co.onclick=()=>{
     if(!D.cart.length){showAlert('Add items first.','er');render();return;}
-    const today=getToday(); // always recalculate — handles midnight rollover
+    const today=getToday();
     const custInput=$('custName');
     const customer=(custInput?custInput.value:'').trim();
-    const cartSnapshot=D.cart.map(c=>({id:c.id,name:c.name,qty:c.qty,price:c.price}));
-    co.disabled=true;D.saveStatus='saving';pill();
-    db.runTransaction(tx=>tx.get(window._docRef).then(doc=>{
-      const data=doc.data()||{};
-      const inv=data.inventory||[];
-      const txns=data.transactions||[];
-      const nextTxn=data.nextTxn||1;
-      // Verify stock is still available using the FRESH server copy
-      for(const c of cartSnapshot){
-        const it=inv.find(i=>i.id===c.id);
-        if(!it||it.qty<c.qty) throw{__oos:true,name:c.name};
-      }
-      cartSnapshot.forEach(c=>{inv.find(i=>i.id===c.id).qty-=c.qty;});
-      const id='TXN'+String(nextTxn).padStart(3,'0');
-      const total=parseFloat(cartSnapshot.reduce((s,c)=>s+(c.price*c.qty),0).toFixed(2));
-      txns.push({id,date:today,time:hm(),items:cartSnapshot.map(c=>({name:c.name,qty:c.qty,price:c.price})),total,staff:D.user.name,customer,voided:false});
-      tx.update(window._docRef,{inventory:inv,transactions:txns,nextTxn:nextTxn+1,updatedAt:Date.now()});
-      return {inv,txns,id,total};
-    })).then(r=>{
-      D.inventory=r.inv;D.transactions=r.txns;D.custName='';
-      D.nextTxn=Math.max(D.nextTxn,r.txns.length+1);
-      addLog('Sale completed',r.id+' '+cur(r.total)+' by '+D.user.name+(customer?' for '+customer:''));
-      D.lastSaved=hm();D.saveStatus='saved';pill();
-      D.cart=[];D.receipt=r.id;showAlert('Sale '+r.id+' recorded!','ok');
-      co.disabled=false;render();
-    }).catch(e=>{
-      co.disabled=false;
-      if(e&&e.__oos){showAlert('"'+e.name+'" no longer has enough stock — someone else may have just sold it. Refresh and try again.','er');}
-      else{console.error('Checkout failed',e);showAlert('Sale failed to save — check connection and try again.','er');D.saveStatus='error';}
-      pill();render();
-    });
+    const id='TXN'+String(D.nextTxn++).padStart(3,'0');
+    const items=D.cart.map(c=>({name:c.name,qty:c.qty,price:c.price}));
+    const total=parseFloat(D.cart.reduce((s,c)=>s+(c.price*c.qty),0).toFixed(2));
+    D.cart.forEach(c=>{const inv=D.inventory.find(i=>i.id===c.id);if(inv)inv.qty-=c.qty;});
+    D.transactions.push({id,date:today,time:hm(),items,total,staff:D.user.name,customer,voided:false});
+    D.custName='';
+    addLog('Sale completed',id+' '+cur(total)+' by '+D.user.name+(customer?' for '+customer:''));saveNow();
+    D.cart=[];D.receipt=id;showAlert('Sale '+id+' recorded!','ok');render();
   };
-
-  /* inventory type filter */
   document.querySelectorAll('[data-itf]').forEach(b=>b.onclick=()=>{D.invTypeFilter=b.dataset.itf;render();});
-
-  /* sales type filter */
   document.querySelectorAll('[data-stf]').forEach(b=>b.onclick=()=>{D.salesTypeFilter=b.dataset.stf;render();});
-
-  /* customer name live save */
   const custNameEl=$('custName');if(custNameEl)custNameEl.oninput=()=>{D.custName=custNameEl.value;};
   document.querySelectorAll('[data-receipt]').forEach(b=>b.onclick=()=>{D.receipt=b.dataset.receipt;render();});
   const cr=$('closeR');if(cr)cr.onclick=()=>{D.receipt=null;render();};
   document.querySelectorAll('[data-print]').forEach(b=>b.onclick=()=>printReceipt(b.dataset.print));
-
-  /* void transaction */
   document.querySelectorAll('[data-void]').forEach(b=>b.onclick=()=>{
     const id=b.dataset.void;
-    const localT=D.transactions.find(x=>x.id===id);if(!localT)return;
+    const t=D.transactions.find(x=>x.id===id);if(!t)return;
     if(!confirm('Void transaction '+id+'?\nThis will return items to stock. Cannot be undone.'))return;
-    D.saveStatus='saving';pill();
-    db.runTransaction(tx=>tx.get(window._docRef).then(doc=>{
-      const data=doc.data()||{};
-      const inv=data.inventory||[];
-      const txns=data.transactions||[];
-      const t=txns.find(x=>x.id===id);
-      if(!t) throw{__missing:true};
-      if(t.voided) throw{__already:true};
-      t.voided=true;
-      t.items.forEach(item=>{const it=inv.find(i=>i.name===item.name);if(it)it.qty+=item.qty;});
-      tx.update(window._docRef,{inventory:inv,transactions:txns,updatedAt:Date.now()});
-      return {inv,txns};
-    })).then(r=>{
-      D.inventory=r.inv;D.transactions=r.txns;
-      addLog('Transaction voided',id+' by '+D.user.name);
-      D.lastSaved=hm();D.saveStatus='saved';pill();
-      showAlert('Transaction '+id+' voided and stock restored.','ok');render();
-    }).catch(e=>{
-      if(e&&e.__already){showAlert('Already voided.','aw');}
-      else{console.error('Void failed',e);showAlert('Void failed — check connection and try again.','er');D.saveStatus='error';}
-      pill();render();
-    });
+    t.voided=true;
+    t.items.forEach(item=>{const inv=D.inventory.find(i=>i.name===item.name);if(inv)inv.qty+=item.qty;});
+    addLog('Transaction voided',id+' by '+D.user.name);saveNow();
+    showAlert('Transaction '+id+' voided and stock restored.','ok');render();
   });
-
-  /* reorder / low stock export */
   const reb=$('reorderExportBtn');if(reb)reb.onclick=()=>exportReorderExcel();
   const lsb=$('lowStockExportBtn');if(lsb)lsb.onclick=()=>exportReorderExcel();
-
-  /* pharmacy settings save */
   const sph=$('savePharmacy');
   if(sph)sph.onclick=()=>{
     const n=($('phName').value||'').trim();
@@ -2279,8 +2068,6 @@ function attachAll(){
     D.pharmacy={name:n,address:($('phAddr').value||'').trim(),phone:($('phPhone').value||'').trim(),email:($('phEmail').value||'').trim()};
     addLog('Pharmacy details updated',n);autoSave();showAlert('Pharmacy details saved. Receipts will now show "'+n+'".','ok');render();
   };
-
-  /* dark mode toggle */
   const dmt=$('darkToggle');
   if(dmt)dmt.onchange=()=>{
     D.darkMode=dmt.checked;
@@ -2288,8 +2075,6 @@ function attachAll(){
     document.documentElement.classList.toggle('dark',D.darkMode);
     const tog=dmt.nextElementSibling;if(tog)tog.classList.toggle('on',D.darkMode);
   };
-
-  /* EOD report */
   const eodV=$('eodViewBtn');const eodE=$('eodExcelBtn');const eodP=$('eodPrintBtn');const eodD=$('eodDate');
   if(eodV)eodV.onclick=()=>{
     const date=(eodD?eodD.value:'')||getToday();D.reportDate=date;
@@ -2297,8 +2082,6 @@ function attachAll(){
   };
   if(eodE)eodE.onclick=()=>exportEODExcel((eodD?eodD.value:'')||getToday());
   if(eodP)eodP.onclick=()=>printEOD((eodD?eodD.value:'')||getToday());
-
-  /* barcode scanner */
   const obtn=$('openBarcode');
   if(obtn)obtn.onclick=()=>openBarcodeScanner();
   const cbtn=$('closeBarcodeBtn');
@@ -2320,8 +2103,6 @@ function attachAll(){
       });
     };
   }
-
-  /* day excel + print day */
   document.querySelectorAll('[data-dayxl]').forEach(b=>b.onclick=()=>exportDayExcel(b.dataset.dayxl));
   document.querySelectorAll('[data-printday]').forEach(b=>b.onclick=()=>{
     const date=b.dataset.printday;const txns=D.transactions.filter(t=>t.date===date);
@@ -2335,12 +2116,8 @@ function attachAll(){
     setTimeout(()=>{window.print();setTimeout(()=>{pa.style.display='none';pa.innerHTML='';},500);},100);
     addLog('Day printed',date);autoSave();
   });
-
-  /* my sales filter */
   const fds=$('fdSel');if(fds)fds.onchange=e=>{D.filterDate=e.target.value;render();};
   const cfd=$('clrFd');if(cfd)cfd.onclick=()=>{D.filterDate='';render();};
-
-  /* suppliers */
   const asb=$('addSupBtn');
   if(asb)asb.onclick=()=>{
     const nm=($('spName').value||'').trim(),ph=($('spPhone').value||'').trim(),em=($('spEmail').value||'').trim(),lo=($('spLoc').value||'').trim();
@@ -2350,7 +2127,6 @@ function attachAll(){
     addLog('Supplier added',nm);saveNow();showAlert('"'+nm+'" added.','ok');D.supTab='list';render();
   };
   const csp=$('clrSup');if(csp)csp.onclick=()=>render();
-
   const rdb=$('recDelBtn');
   if(rdb)rdb.onclick=()=>{
     const supId=parseInt($('dlSupId').value);const invId=parseInt($('dlInvId').value);
@@ -2360,33 +2136,12 @@ function attachAll(){
     if(!invId){showAlert('Select a medicine.','er');render();return;}
     if(isNaN(qty)||qty<1){showAlert('Enter a valid quantity.','er');render();return;}
     if(isNaN(cost)||cost<0){showAlert('Enter a valid unit price.','er');render();return;}
-    rdb.disabled=true;D.saveStatus='saving';pill();
-    db.runTransaction(tx=>tx.get(window._docRef).then(doc=>{
-      const data=doc.data()||{};
-      const inv=data.inventory||[];
-      const suppliers=data.suppliers||[];
-      const sup=suppliers.find(s=>s.id===supId);
-      const med=inv.find(i=>i.id===invId);
-      if(!sup||!med) throw{__missing:true};
-      sup.products.push({invId,name:med.name,type,qtySupplied:qty,unitCost:cost,totalValue:parseFloat((qty*cost).toFixed(2)),date});
-      med.qty+=qty;
-      tx.update(window._docRef,{inventory:inv,suppliers:suppliers,updatedAt:Date.now()});
-      return {inv,suppliers,supName:sup.name,medName:med.name};
-    })).then(r=>{
-      D.inventory=r.inv;D.suppliers=r.suppliers;
-      addLog('Delivery recorded',r.supName+' → '+qty+' × '+r.medName);
-      D.lastSaved=hm();D.saveStatus='saved';pill();
-      rdb.disabled=false;
-      showAlert(qty+' units of "'+r.medName+'" from '+r.supName+' added to stock.','ok');D.supTab='list';render();
-    }).catch(e=>{
-      rdb.disabled=false;
-      console.error('Record delivery failed',e);
-      showAlert('Could not record delivery — check connection and try again.','er');
-      D.saveStatus='error';pill();render();
-    });
+    const sup=D.suppliers.find(s=>s.id===supId);const med=D.inventory.find(i=>i.id===invId);
+    sup.products.push({invId,name:med.name,type,qtySupplied:qty,unitCost:cost,totalValue:parseFloat((qty*cost).toFixed(2)),date});
+    med.qty+=qty;
+    addLog('Delivery recorded',sup.name+' → '+qty+' × '+med.name);saveNow();
+    showAlert(qty+' units of "'+med.name+'" from '+sup.name+' added to stock.','ok');D.supTab='list';render();
   };
-
-  /* supplier excel */
   const xlsa=$('xlSupAllBtn');if(xlsa)xlsa.onclick=()=>exportSupplierExcel('all');
   document.querySelectorAll('[data-xlsup]').forEach(b=>b.onclick=()=>exportSupplierExcel(b.dataset.xlsup));
   document.querySelectorAll('[data-editsup]').forEach(b=>b.onclick=()=>{D.editSup={...D.suppliers.find(s=>s.id===+b.dataset.editsup)};render();});
@@ -2401,8 +2156,6 @@ function attachAll(){
     const s=D.suppliers.find(s=>s.id===+b.dataset.delsup);
     if(confirm('Remove supplier "'+s.name+'"?')){D.suppliers=D.suppliers.filter(x=>x.id!==+b.dataset.delsup);addLog('Supplier removed',s.name);autoSave();showAlert('Removed.','ok');render();}
   });
-
-  /* account / password — Firebase Auth (requires re-entering current password) */
   const pws=$('pwSave');
   if(pws)pws.onclick=()=>{
     const c=($('pwCur').value||'');const nw=($('pwNew').value||'').trim();const cn=($('pwCon').value||'').trim();
@@ -2416,8 +2169,6 @@ function attachAll(){
       .then(()=>{addLog('Password changed',D.user.name);showAlert('Password updated.','ok');render();})
       .catch(e=>{showAlert(e.code==='auth/wrong-password'?'Current password incorrect.':'Could not update password: '+e.message,'er');render();});
   };
-
-  /* ── MANAGER: staff account management ── */
   const scb=$('showCreateStaff');
   if(scb)scb.onclick=()=>{
     const f=$('createStaffForm');
@@ -2425,9 +2176,6 @@ function attachAll(){
   };
   const ccb=$('cancelCreateStaff');
   if(ccb)ccb.onclick=()=>{const f=$('createStaffForm');if(f)f.style.display='none';};
-
-  // Create new staff account — uses a secondary Firebase app instance so the
-  // Manager's own session isn't replaced by the new account's session.
   const csb=$('createStaffBtn');
   if(csb)csb.onclick=()=>{
     const nm=($('newStaffName').value||'').trim();
@@ -2456,8 +2204,6 @@ function attachAll(){
       .catch(e=>{showAlert('Could not create account: '+e.message,'er');})
       .finally(()=>{secondaryApp.delete().catch(()=>{});csb.disabled=false;csb.textContent='Create account';render();});
   };
-
-  // Show edit form for a staff member (name/role only)
   document.querySelectorAll('[data-editstaff]').forEach(b=>b.onclick=()=>{
     const uid=b.dataset.editstaff;
     const u=USERS.find(x=>x.uid===uid);if(!u)return;
@@ -2471,8 +2217,6 @@ function attachAll(){
       f.scrollIntoView({behavior:'smooth',block:'start'});
     }
   });
-
-  // Save staff edit — updates the accounts/{uid} Firestore doc only
   const sse2=$('saveStaffEdit');
   if(sse2)sse2.onclick=()=>{
     const uid=($('editStaffUid').value||'').trim();
@@ -2493,8 +2237,6 @@ function attachAll(){
   };
   const cse2=$('cancelStaffEdit');
   if(cse2)cse2.onclick=()=>{const f=$('editStaffForm');if(f)f.style.display='none';};
-
-  // Send a password reset email on behalf of a staff member
   document.querySelectorAll('[data-resetstaff]').forEach(b=>b.onclick=()=>{
     const email=b.dataset.resetstaff;
     if(!email){showAlert('No email on file for this account.','er');render();return;}
@@ -2502,8 +2244,6 @@ function attachAll(){
       .then(()=>{showAlert('✅ Reset link sent to '+email+'.','ok');render();})
       .catch(e=>{showAlert('Could not send reset link: '+e.message,'er');render();});
   });
-
-  // Suspend / unsuspend staff — instant force logout on their device (by uid)
   document.querySelectorAll('[data-suspendstaff]').forEach(b=>b.onclick=()=>{
     const uid=b.dataset.suspendstaff;
     const u=USERS.find(x=>x.uid===uid);
@@ -2520,25 +2260,15 @@ function attachAll(){
     }
     saveAccountsUrgent();render();
   });
-
-  /* backup + settings */
   [$('xlFullBtn'),$('xlFullBtn2')].forEach(b=>{if(b)b.onclick=exportFullExcel;});
   const clg=$('clrLog');if(clg)clg.onclick=()=>{if(confirm('Clear activity log?')){D.log=[];autoSave();showAlert('Log cleared.','ok');render();}};
   const ms=$('manSave');if(ms)ms.onclick=()=>{saveDB();addLog('Manual save');showAlert('Saved.','ok');render();};
-
-  // Reset button — show dialog step 1
   const rb=$('resetBtn');
   if(rb)rb.onclick=()=>{D.showResetDialog=true;D.resetStep=1;render();};
-
-  // Reset cancel
   const rc=$('resetCancel');
   if(rc)rc.onclick=()=>{D.showResetDialog=false;D.resetStep=1;render();};
-
-  // Reset confirm step 1
   const rc1=$('resetConfirm1');
   if(rc1)rc1.onclick=()=>{D.resetStep=2;render();};
-
-  // Reset confirm step 2 — verify password via Firebase Auth then wipe
   const rc2=$('resetConfirm2');
   if(rc2)rc2.onclick=()=>{
     const pwd=($('resetPwd').value||'').trim();
@@ -2547,7 +2277,6 @@ function attachAll(){
     const cred=firebase.auth.EmailAuthProvider.credential(D.user.email,pwd);
     auth.currentUser.reauthenticateWithCredential(cred)
       .then(()=>{
-        // Wipe everything
         D.inventory=[];
         D.transactions=[];
         D.logins=[];
@@ -2568,7 +2297,7 @@ function attachAll(){
   };
 }
 
-/* ── Live clock — reliable update using multiple methods ── */
+/* ── Live clock ── */
 function updateClock(){
   const now=new Date();
   const d=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
@@ -2578,24 +2307,13 @@ function updateClock(){
   const lc=document.getElementById('loginClock');
   if(lc) lc.textContent=timeStr;
 }
-
-// Update every second via setInterval
 setInterval(updateClock, 1000);
-
-// Also update immediately when tab becomes visible again
-// (fixes throttled/paused timers when tab was in background)
 document.addEventListener('visibilitychange', ()=>{
   if(!document.hidden) updateClock();
 });
-
-// Also update on any user interaction (click, key, scroll)
-// so clock is always fresh when user is active
 ['click','keydown','mousemove'].forEach(ev=>{
   document.addEventListener(ev, updateClock, {passive:true});
 });
-
-// Force re-sync from Firebase when window regains focus
-// This ensures data is always fresh when coming back to the tab or next day
 window.addEventListener('focus', ()=>{
   if(db && window._docRef && D.dbLoaded){
     window._docRef.get().then(snap=>{
@@ -2607,9 +2325,32 @@ window.addEventListener('focus', ()=>{
   }
   updateClock();
 });
-
-// Run once immediately
 updateClock();
+
+/* ══════════════════════════════════════════════════════════
+   FIX — prevent data loss when the browser is closed / the
+   tab is backgrounded before an in-progress cloud save (Firestore
+   write) has finished. This is what was causing newly-added
+   inventory to "disappear" after fully quitting the browser and
+   reopening the site: the write was still in flight and got
+   killed when the page unloaded.
+══════════════════════════════════════════════════════════ */
+window.addEventListener('beforeunload', function(e){
+  if (typeof D !== 'undefined' && D.saveStatus === 'saving') {
+    clearTimeout(D._t);
+    saveDB(); // force the pending write to fire immediately
+    e.preventDefault();
+    e.returnValue = 'Your changes are still saving — please wait a second before closing.';
+    return e.returnValue;
+  }
+});
+
+document.addEventListener('visibilitychange', function(){
+  if (document.hidden && typeof D !== 'undefined' && D.saveStatus === 'saving') {
+    clearTimeout(D._t);
+    saveDB(); // flush any pending debounced save the instant the tab is backgrounded
+  }
+});
 
 // Firebase will call render() once data is loaded
 </script>
@@ -2620,28 +2361,21 @@ updateClock();
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
 <script>
-// Start Firebase after SDKs load
 initFirebase();
 </script>
 
 </div><!-- /app-shell -->
 
 <script>
-/* ══════════════════════════════════════════
-   SERVICE WORKER REGISTRATION
-══════════════════════════════════════════ */
 if('serviceWorker' in navigator){
-  // Inline service worker as a blob so no separate file is needed
   const swCode = `
-const CACHE = 'meditrack-v10';
-const ASSETS = [self.location.href];
-
+const CACHE = 'meditrack-v11';
 self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
-  );
+  // Don't pre-cache anything up front — just activate immediately.
+  // We only want the cache as an OFFLINE FALLBACK, never as the
+  // primary source, so there's nothing to eagerly warm here.
+  e.waitUntil(self.skipWaiting());
 });
-
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
@@ -2649,19 +2383,23 @@ self.addEventListener('activate', e => {
     ).then(() => self.clients.claim())
   );
 });
-
 self.addEventListener('fetch', e => {
+  // NETWORK-FIRST: always try to fetch the latest version from the
+  // internet first. Only fall back to a cached copy if the network
+  // request fails (i.e. genuinely offline). This is the opposite of
+  // the old cache-first strategy, which — once a device visited the
+  // site a single time — would keep serving that exact frozen
+  // snapshot forever, even after new versions were deployed. That
+  // was why some devices kept showing old/blank data no matter what
+  // was fixed and redeployed.
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      if(cached) return cached;
-      return fetch(e.request).then(resp => {
-        if(resp && resp.status === 200 && resp.type === 'basic'){
-          const clone = resp.clone();
-          caches.open(CACHE).then(c => c.put(e.request, clone));
-        }
-        return resp;
-      }).catch(() => cached);
-    })
+    fetch(e.request).then(resp => {
+      if(resp && resp.status === 200 && resp.type === 'basic'){
+        const clone = resp.clone();
+        caches.open(CACHE).then(c => c.put(e.request, clone));
+      }
+      return resp;
+    }).catch(() => caches.match(e.request))
   );
 });
 `;
@@ -2672,15 +2410,11 @@ self.addEventListener('fetch', e => {
     .catch(e => console.log('SW reg failed (normal for file://):', e));
 }
 
-/* ══════════════════════════════════════════
-   INSTALL TO HOME SCREEN PROMPT
-══════════════════════════════════════════ */
 let deferredPrompt = null;
 const banner = document.getElementById('install-banner');
 const installBtn = document.getElementById('install-btn');
 const dismissBtn = document.getElementById('install-dismiss');
 
-// Android / Chrome: capture beforeinstallprompt
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   deferredPrompt = e;
@@ -2701,13 +2435,11 @@ dismissBtn.addEventListener('click', () => {
   sessionStorage.setItem('installDismissed','1');
 });
 
-// iOS Safari: show manual instructions if not already installed
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 const isInStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 const dismissed = sessionStorage.getItem('installDismissed');
 
 if(isIOS && !isInStandalone && !dismissed){
-  // Override install button for iOS with share instructions
   setTimeout(() => {
     banner.style.display = 'flex';
     installBtn.textContent = 'How to install';
@@ -2717,9 +2449,6 @@ if(isIOS && !isInStandalone && !dismissed){
   }, 2500);
 }
 
-/* ══════════════════════════════════════════
-   OFFLINE / ONLINE DETECTION
-══════════════════════════════════════════ */
 const offlineBar = document.getElementById('offline-bar');
 function updateOnlineStatus(){
   offlineBar.style.display = navigator.onLine ? 'none' : 'block';
@@ -2728,15 +2457,10 @@ window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', updateOnlineStatus);
 updateOnlineStatus();
 
-/* ══════════════════════════════════════════
-   EXTRA MOBILE UX
-══════════════════════════════════════════ */
-// Prevent double-tap zoom on buttons
 document.addEventListener('dblclick', e => {
   if(e.target.tagName === 'BUTTON') e.preventDefault();
 }, {passive: false});
 
-// Add bottom padding so install banner doesn't cover content
 if(!isInStandalone){
   document.getElementById('app-shell').style.paddingBottom = '4rem';
 }
